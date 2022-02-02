@@ -19,6 +19,7 @@
 		4C7D6B9827A377880016C962 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C7D6B9627A377880016C962 /* Main.storyboard */; };
 		4C7D6B9A27A3778A0016C962 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7D6B9927A3778A0016C962 /* Assets.xcassets */; };
 		4C7D6B9D27A3778A0016C962 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C7D6B9B27A3778A0016C962 /* LaunchScreen.storyboard */; };
+		4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8BD29427AAB93400A6D829 /* PlanetMovementBehavior.swift */; };
 		4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */; };
 		4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826C27A809E700689BB8 /* CGPoint+.swift */; };
 		4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */; };
@@ -31,7 +32,7 @@
 		4C2E57B127A76D6500136B4B /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		4C2E57B327A76E1E00136B4B /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
 		4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldLayer.swift; sourceTree = "<group>"; };
-		4C7D6B8927A377880016C962 /* OneMorePlanet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneMorePlanet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C7D6B8927A377880016C962 /* One More Planet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One More Planet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7D6B8C27A377880016C962 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C7D6B8E27A377880016C962 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		4C7D6B9227A377880016C962 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -39,6 +40,7 @@
 		4C7D6B9727A377880016C962 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C7D6B9927A3778A0016C962 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C7D6B9C27A3778A0016C962 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4C8BD29427AAB93400A6D829 /* PlanetMovementBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetMovementBehavior.swift; sourceTree = "<group>"; };
 		4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayConfiguration.swift; sourceTree = "<group>"; };
 		4CD7826C27A809E700689BB8 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SIMD2+.swift"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		4C2E57A927A7579100136B4B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				4C8BD29327AAB91800A6D829 /* Behaviors */,
 				4C62CED027AA302900E1D2B2 /* Helpers */,
 				4C9746B027A960D900679315 /* Scenes */,
 				4C2E57AC27A75FCC00136B4B /* Components */,
@@ -102,7 +105,6 @@
 			children = (
 				4C2E57AF27A76B9C00136B4B /* Player.swift */,
 				4C2E57B127A76D6500136B4B /* Planet.swift */,
-				4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */,
+				4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -135,7 +138,7 @@
 		4C7D6B8A27A377880016C962 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C7D6B8927A377880016C962 /* OneMorePlanet.app */,
+				4C7D6B8927A377880016C962 /* One More Planet.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,6 +150,14 @@
 				4C2E57A627A7574600136B4B /* Sources */,
 			);
 			path = OneMorePlanet;
+			sourceTree = "<group>";
+		};
+		4C8BD29327AAB91800A6D829 /* Behaviors */ = {
+			isa = PBXGroup;
+			children = (
+				4C8BD29427AAB93400A6D829 /* PlanetMovementBehavior.swift */,
+			);
+			path = Behaviors;
 			sourceTree = "<group>";
 		};
 		4C9746B027A960D900679315 /* Scenes */ = {
@@ -184,7 +195,7 @@
 			);
 			name = OneMorePlanet;
 			productName = OneMorePlanet;
-			productReference = 4C7D6B8927A377880016C962 /* OneMorePlanet.app */;
+			productReference = 4C7D6B8927A377880016C962 /* One More Planet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -247,6 +258,7 @@
 				4C7D6B8D27A377880016C962 /* AppDelegate.swift in Sources */,
 				4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */,
 				4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */,
+				4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */,
 				4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */,
 				4C2E57B227A76D6500136B4B /* Planet.swift in Sources */,
 				4C2E57B027A76B9C00136B4B /* Player.swift in Sources */,
@@ -414,7 +426,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.OneMorePlanet;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "One More Planet";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -443,7 +455,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.OneMorePlanet;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "One More Planet";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

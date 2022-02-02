@@ -12,13 +12,14 @@ class GameViewController: UIViewController {
 
             scene.scaleMode = .resizeFill
 
-            // Present the scene
             view.presentScene(scene)
 
             view.ignoresSiblingOrder = true
-            
+
+#if DEBUG
             view.showsFPS = true
             view.showsNodeCount = true
+#endif
         }
     }
 

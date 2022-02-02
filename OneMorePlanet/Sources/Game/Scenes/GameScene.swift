@@ -37,6 +37,19 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         addChild(backgroundStarsNode)
 
         addWorldLayers()
+
+        // Spawn action
+        let interval = SKAction.wait(forDuration: 0.5)
+        let action = SKAction.run { [weak self] in
+            guard let self = self else { return }
+            let initialPosition: SIMD2<Float> = .init(x: 20.0, y: self.frame.size.height)
+            let targetPosition: SIMD2<Float> = .init(x: 40.0, y: self.frame.size.height * 0.0)
+            let newPlanet = Planet(imageName: "Images/planet1", initialPosition: initialPosition, targetPosition: targetPosition)
+            self.entityCoordinator.addEntity(newPlanet)
+        }
+        let sequence = SKAction.sequence([interval, action])
+
+        run(sequence)
     }
 
     func touchDown(atPoint pos : CGPoint) {

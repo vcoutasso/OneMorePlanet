@@ -10,7 +10,9 @@ final class EntityCoordinator {
     // MARK: Component Systems
 
     private lazy var componentSystems: [GKComponentSystem] = {
-        return [GKComponentSystem]()
+        let movementSystem = GKComponentSystem(componentClass: MovementComponent.self)
+
+        return [movementSystem]
     }()
 
     // MARK: Initialization
@@ -38,14 +40,15 @@ final class EntityCoordinator {
     }
 
     func removeEntity(_ entity: GKEntity) {
-        if let renderNode = entity.component(ofType: RenderComponent.self)?.node {
-            renderNode.removeFromParent()
-        }
-
         entities.remove(entity)
 
         for componentSystem in componentSystems {
             componentSystem.removeComponent(foundIn: entity)
+        }
+
+        if let renderNode = entity.component(ofType: RenderComponent.self)?.node {
+            // FIXME: This doesn't remove the reference from worldLayerNodes
+            renderNode.removeFromParent()
         }
     }
 }

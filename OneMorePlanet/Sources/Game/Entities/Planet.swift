@@ -2,27 +2,21 @@ import GameKit
 
 final class Planet: GKEntity {
 
-    // MARK: - Components
-
-    private let renderComponent: RenderComponent
-
     // MARK: - Initialization
 
-    init(imageName: String) {
-        let texture = SKTexture(imageNamed: imageName)
-        renderComponent = RenderComponent(texture: texture)
-
+    init(imageName: String, initialPosition: SIMD2<Float>, targetPosition: SIMD2<Float>) {
         super.init()
-        addComponents()
+
+        let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
+        addComponent(renderComponent)
+
+        let movementBehavior = PlanetMovementBehavior(points: [initialPosition, targetPosition])
+        let movementComponent = MovementComponent(behavior: movementBehavior)
+        addComponent(movementComponent)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Helper methods
-
-    private func addComponents() {
-        addComponent(renderComponent)
-    }
 }
