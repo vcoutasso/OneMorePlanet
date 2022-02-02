@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  OneMorePlanet
-//
-//  Created by Vinícius Couto on 27/01/22.
-//
-
 import UIKit
 
 @main
