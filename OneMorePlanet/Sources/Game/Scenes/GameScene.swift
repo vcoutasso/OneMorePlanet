@@ -18,15 +18,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private let maxUpdateTimeInterval: TimeInterval = 1.0 / 60.0
 
     private lazy var stateMachine: GKStateMachine = GKStateMachine(states: [
-
     ])
 
     private lazy var entityCoordinator = EntityCoordinator(scene: self)
+
+    private var repeatingAction: SKAction!
 
     // MARK: Scene Life Cycle
 
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+
+        anchorPoint = CGPoint(x: 0.0, y: 0.0)
 
         // Add background
         backgroundColor = UIColor(named: "Colors/SpaceBackground")!
@@ -38,18 +41,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         addWorldLayers()
 
-        // Spawn action
-        let interval = SKAction.wait(forDuration: 0.5)
-        let action = SKAction.run { [weak self] in
-            guard let self = self else { return }
-            let initialPosition: SIMD2<Float> = .init(x: 20.0, y: self.frame.size.height)
-            let targetPosition: SIMD2<Float> = .init(x: 40.0, y: self.frame.size.height * 0.0)
-            let newPlanet = Planet(imageName: "Images/planet1", initialPosition: initialPosition, targetPosition: targetPosition)
-            self.entityCoordinator.addEntity(newPlanet)
+        let planetSpawnInterval = SKAction.wait(forDuration: GameplayConfiguration.Planet.spawnInterval)
+        let planetSpawnAction = SKAction.run { [weak self] in
+            self?.spawnPlanet()
         }
-        let sequence = SKAction.sequence([interval, action])
+        let planetSpawnSequence = SKAction.sequence([planetSpawnAction, planetSpawnInterval])
 
-        run(sequence)
+        run(SKAction.repeatForever(planetSpawnSequence))
     }
 
     func touchDown(atPoint pos : CGPoint) {
@@ -102,6 +100,19 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         for layer in WorldLayer.allLayers {
             addChild(worldLayerNodes[layer]!)
         }
+    }
+
+    private func spawnPlanet() {
+        let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
+        let randomInteger = GKRandomDistribution(lowestValue: 10, highestValue: 90).nextInt()
+
+        let xCoordinate = frame.size.width * (CGFloat(randomInteger) / 100.0)
+
+        let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate), y: Float(frame.size.height))
+        let targetPosition: SIMD2<Float> = .init(x: Float(xCoordinate), y: 0.0)
+        let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition, targetPosition: targetPosition)
+
+        entityCoordinator.addEntity(newPlanet)
     }
 
     func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {

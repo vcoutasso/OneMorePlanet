@@ -10,12 +10,12 @@ struct GameplayConfiguration {
         static let maxPredictionTimeWhenFollowingPath: TimeInterval = 0.0
 
         /// How often planets spawn
-        static let spawnInterval: TimeInterval = 0.5
+        static let spawnInterval: TimeInterval = 1
 
         /// Maximum acceleration
         static let maxAcceleration: Float = 0.0
 
         /// Maximum speed
-        static let maxSpeed: Float = 300.0
+        static let maxSpeed: Float = -300.0
     }
 }

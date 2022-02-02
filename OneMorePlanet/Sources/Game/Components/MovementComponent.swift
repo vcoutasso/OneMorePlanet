@@ -9,9 +9,6 @@ final class MovementComponent: GKAgent2D {
 
         self.delegate = self
         self.behavior = behavior
-        self.maxAcceleration = GameplayConfiguration.Planet.maxAcceleration
-        self.maxSpeed = GameplayConfiguration.Planet.maxSpeed
-        self.speed = GameplayConfiguration.Planet.maxSpeed
     }
 
     required init?(coder: NSCoder) {
