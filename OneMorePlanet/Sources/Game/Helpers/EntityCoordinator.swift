@@ -31,7 +31,7 @@ final class EntityCoordinator {
                 guard let movementComponent = component as? MovementComponent else {
                     return
                 }
-                if movementComponent.position.y < -50 {
+                if movementComponent.position.y < -5000 {
                     removeEntity(movementComponent.entity!)
                 }
             }
@@ -46,7 +46,7 @@ final class EntityCoordinator {
         }
 
         if let renderNode = entity.component(ofType: RenderComponent.self)?.node {
-            scene.addNode(node: renderNode, toWorldLayer: .middle)
+            scene.addNode(node: renderNode, toWorldLayer: .planets)
         }
     }
 

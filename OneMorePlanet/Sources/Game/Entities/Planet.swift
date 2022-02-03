@@ -3,18 +3,15 @@ import GameKit
 final class Planet: GKEntity {
     // MARK: - Initialization
 
-    init(imageName: String, initialPosition: SIMD2<Float>, targetPosition: SIMD2<Float>) {
+    init(imageName: String, initialPosition: SIMD2<Float>) {
         super.init()
 
         let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
         addComponent(renderComponent)
 
-        let movementBehavior = PlanetMovementBehavior(points: [initialPosition, targetPosition])
-        let movementComponent = MovementComponent(behavior: movementBehavior)
-        movementComponent.maxAcceleration = GameplayConfiguration.Planet.maxAcceleration
-        movementComponent.maxSpeed = GameplayConfiguration.Planet.maxSpeed
-        movementComponent.speed = GameplayConfiguration.Planet.maxSpeed
-        addComponent(movementComponent)
+        let physicsBody =  SKPhysicsBody(circleOfRadius: renderComponent.node.frame.width / 2)
+        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Obstacle)
+        addComponent(physicsComponent)
 
         let gravitationalComponent = GravitionalComponent()
         addComponent(gravitationalComponent)

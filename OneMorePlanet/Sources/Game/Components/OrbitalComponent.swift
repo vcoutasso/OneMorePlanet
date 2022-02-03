@@ -35,8 +35,8 @@ final class OrbitalComponent: GKComponent {
         let gravitationalComponents = coordinator.components(ofType: GravitionalComponent.self)
 
         for gravitationalComponent in gravitationalComponents {
-            let movementComponent = gravitationalComponent.movementComponent
-            let distance = (CGPoint(movementComponent.position) - CGPoint(currentPosition)).length()
+            let renderComponent = gravitationalComponent.renderComponent
+            let distance = (renderComponent.node.position - CGPoint(currentPosition)).length()
             if closestGravitationalComponent == nil || distance < closestDistance {
                 closestGravitationalComponent = gravitationalComponent
                 closestDistance = distance

@@ -1,9 +1,10 @@
 import CoreGraphics
 
 enum WorldLayer: CGFloat {
-    case bottom = -100
-    case middle = 0
-    case top = 100
+    case background = -100
+    case planets = 0
+    case player = 100
+    case overlay = 1000
 
-    static var allLayers = [bottom, middle, top]
+    static var allLayers = [background, planets, player, overlay]
 }

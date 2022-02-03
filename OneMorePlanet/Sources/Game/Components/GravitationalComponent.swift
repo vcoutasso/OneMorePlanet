@@ -9,11 +9,4 @@ final class GravitionalComponent: GKComponent {
         }
         return renderComponent
     }
-
-    var movementComponent: MovementComponent {
-        guard let movementComponent = entity?.component(ofType: MovementComponent.self) else {
-            fatalError("A GravitationComponent's entity must have a MovementComponent")
-        }
-        return movementComponent
-    }
 }

@@ -3,7 +3,14 @@ import GameplayKit
 final class PhysicsComponent: GKComponent {
     // MARK: Properties
 
-    private(set) var physicsBody: SKPhysicsBody
+    let physicsBody: SKPhysicsBody
+
+    var renderComponent: RenderComponent {
+        guard let renderComponent = entity?.component(ofType: RenderComponent.self) else {
+            fatalError("A MovementComponent's entity must have a RenderComponent")
+        }
+        return renderComponent
+    }
 
     // MARK: Initialization
 
