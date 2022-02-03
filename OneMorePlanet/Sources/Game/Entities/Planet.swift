@@ -7,7 +7,6 @@ final class Planet: GKEntity {
         super.init()
 
         let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
-        renderComponent.node.position = CGPoint(x: initialPosition.x, y: initialPosition.y)
         addComponent(renderComponent)
 
         let movementBehavior = PlanetMovementBehavior(points: [initialPosition, targetPosition])
@@ -16,10 +15,12 @@ final class Planet: GKEntity {
         movementComponent.maxSpeed = GameplayConfiguration.Planet.maxSpeed
         movementComponent.speed = GameplayConfiguration.Planet.maxSpeed
         addComponent(movementComponent)
+
+        let gravitationalComponent = GravitionalComponent()
+        addComponent(gravitationalComponent)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

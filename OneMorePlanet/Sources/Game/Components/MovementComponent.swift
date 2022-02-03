@@ -2,13 +2,24 @@ import SpriteKit
 import GameKit
 
 final class MovementComponent: GKAgent2D {
+    // MARK: Properties
+
+    var renderComponent: RenderComponent {
+        guard let renderComponent = entity?.component(ofType: RenderComponent.self) else {
+            fatalError("A MovementComponent's entity must have a RenderComponent")
+        }
+        return renderComponent
+    }
+
     // MARK: Initialization
 
-    init(behavior: GKBehavior) {
+    init(behavior: GKBehavior?) {
         super.init()
 
         self.delegate = self
-        self.behavior = behavior
+        if let behavior = behavior {
+            self.behavior = behavior
+        }
     }
 
     required init?(coder: NSCoder) {

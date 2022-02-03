@@ -9,7 +9,7 @@ final class EntityCoordinator {
 
     // MARK: Component Systems
 
-    private lazy var componentSystems: [GKComponentSystem] = {
+    private(set) lazy var componentSystems: [GKComponentSystem] = {
         let movementSystem = GKComponentSystem(componentClass: MovementComponent.self)
 
         return [movementSystem]
@@ -50,5 +50,17 @@ final class EntityCoordinator {
             // FIXME: This doesn't remove the reference from worldLayerNodes
             renderNode.removeFromParent()
         }
+    }
+
+    func components<ComponentType>(ofType: ComponentType.Type) -> [ComponentType] where ComponentType: GKComponent {
+        var components = [ComponentType]()
+
+        for entity in entities {
+            if let component = entity.component(ofType: ComponentType.self) {
+                components.append(component)
+            }
+        }
+
+        return components
     }
 }

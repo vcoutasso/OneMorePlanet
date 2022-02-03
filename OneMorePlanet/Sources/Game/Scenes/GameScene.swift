@@ -48,6 +48,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         let planetSpawnSequence = SKAction.sequence([planetSpawnAction, planetSpawnInterval])
 
         run(SKAction.repeatForever(planetSpawnSequence))
+
+        entityCoordinator.addEntity(player)
+        setEntityNodePosition(entity: player, position: CGPoint(x: frame.size.width / 2,
+                                                                y: frame.size.height * 0.2))
     }
 
     func touchDown(atPoint pos : CGPoint) {
@@ -92,9 +96,17 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         stateMachine.update(deltaTime: deltaTime)
 
         entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
+
+        print(player.orbitalComponent.closestGravitationalComponent(in: entityCoordinator)?.movementComponent.position)
     }
 
     // MARK: Level Construction
+
+    func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {
+        guard let worldLayerNode = worldLayerNodes[worldLayer] else { return }
+
+        worldLayerNode.addChild(node)
+    }
 
     private func addWorldLayers() {
         for layer in WorldLayer.allLayers {
@@ -111,13 +123,14 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate), y: Float(frame.size.height))
         let targetPosition: SIMD2<Float> = .init(x: Float(xCoordinate), y: 0.0)
         let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition, targetPosition: targetPosition)
+        setEntityNodePosition(entity: newPlanet, position: CGPoint(x: initialPosition.x, y: initialPosition.y))
 
         entityCoordinator.addEntity(newPlanet)
     }
 
-    func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {
-        guard let worldLayerNode = worldLayerNodes[worldLayer] else { return }
+    private func setEntityNodePosition(entity: GKEntity, position: CGPoint) {
+        guard let renderComponent = entity.component(ofType: RenderComponent.self) else { return }
 
-        worldLayerNode.addChild(node)
+        renderComponent.node.position = position
     }
 }

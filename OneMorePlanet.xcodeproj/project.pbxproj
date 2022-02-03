@@ -11,6 +11,11 @@
 		4C2E57B027A76B9C00136B4B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57AF27A76B9C00136B4B /* Player.swift */; };
 		4C2E57B227A76D6500136B4B /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57B127A76D6500136B4B /* Planet.swift */; };
 		4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57B327A76E1E00136B4B /* MovementComponent.swift */; };
+		4C57300727ABF24D000407B2 /* OrbitalComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300627ABF24D000407B2 /* OrbitalComponent.swift */; };
+		4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300827ABF74D000407B2 /* PhysicsComponent.swift */; };
+		4C57300C27ABF7C1000407B2 /* ColliderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300B27ABF7C1000407B2 /* ColliderType.swift */; };
+		4C57300E27ABFB8D000407B2 /* ContactNotifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300D27ABFB8D000407B2 /* ContactNotifiableType.swift */; };
+		4C57301027AC0056000407B2 /* GravitationalComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300F27AC0056000407B2 /* GravitationalComponent.swift */; };
 		4C62CED227AA33A900E1D2B2 /* WorldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */; };
 		4C7D6B8D27A377880016C962 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D6B8C27A377880016C962 /* AppDelegate.swift */; };
 		4C7D6B8F27A377880016C962 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4C7D6B8E27A377880016C962 /* GameScene.sks */; };
@@ -31,6 +36,11 @@
 		4C2E57AF27A76B9C00136B4B /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		4C2E57B127A76D6500136B4B /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		4C2E57B327A76E1E00136B4B /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
+		4C57300627ABF24D000407B2 /* OrbitalComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitalComponent.swift; sourceTree = "<group>"; };
+		4C57300827ABF74D000407B2 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
+		4C57300B27ABF7C1000407B2 /* ColliderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderType.swift; sourceTree = "<group>"; };
+		4C57300D27ABFB8D000407B2 /* ContactNotifiableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactNotifiableType.swift; sourceTree = "<group>"; };
+		4C57300F27AC0056000407B2 /* GravitationalComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravitationalComponent.swift; sourceTree = "<group>"; };
 		4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldLayer.swift; sourceTree = "<group>"; };
 		4C7D6B8927A377880016C962 /* One More Planet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One More Planet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7D6B8C27A377880016C962 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +101,7 @@
 		4C2E57A927A7579100136B4B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				4C57300A27ABF79C000407B2 /* Physics */,
 				4C8BD29327AAB91800A6D829 /* Behaviors */,
 				4C62CED027AA302900E1D2B2 /* Helpers */,
 				4C9746B027A960D900679315 /* Scenes */,
@@ -114,8 +125,20 @@
 			children = (
 				4C2E57AD27A769A400136B4B /* RenderComponent.swift */,
 				4C2E57B327A76E1E00136B4B /* MovementComponent.swift */,
+				4C57300627ABF24D000407B2 /* OrbitalComponent.swift */,
+				4C57300827ABF74D000407B2 /* PhysicsComponent.swift */,
+				4C57300F27AC0056000407B2 /* GravitationalComponent.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		4C57300A27ABF79C000407B2 /* Physics */ = {
+			isa = PBXGroup;
+			children = (
+				4C57300B27ABF7C1000407B2 /* ColliderType.swift */,
+				4C57300D27ABFB8D000407B2 /* ContactNotifiableType.swift */,
+			);
+			path = Physics;
 			sourceTree = "<group>";
 		};
 		4C62CED027AA302900E1D2B2 /* Helpers */ = {
@@ -251,16 +274,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C7D6B9327A377880016C962 /* GameScene.swift in Sources */,
+				4C57301027AC0056000407B2 /* GravitationalComponent.swift in Sources */,
+				4C57300E27ABFB8D000407B2 /* ContactNotifiableType.swift in Sources */,
 				4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */,
 				4C7D6B9527A377880016C962 /* GameViewController.swift in Sources */,
 				4CD7827127A81EF700689BB8 /* EntityCoordinator.swift in Sources */,
 				4C62CED227AA33A900E1D2B2 /* WorldLayer.swift in Sources */,
+				4C57300727ABF24D000407B2 /* OrbitalComponent.swift in Sources */,
 				4C7D6B8D27A377880016C962 /* AppDelegate.swift in Sources */,
+				4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */,
 				4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */,
 				4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */,
 				4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */,
 				4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */,
 				4C2E57B227A76D6500136B4B /* Planet.swift in Sources */,
+				4C57300C27ABF7C1000407B2 /* ColliderType.swift in Sources */,
 				4C2E57B027A76B9C00136B4B /* Player.swift in Sources */,
 				4C2E57AE27A769A400136B4B /* RenderComponent.swift in Sources */,
 			);
