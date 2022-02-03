@@ -54,32 +54,14 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                                                                 y: frame.size.height * 0.2))
     }
 
-    func touchDown(atPoint pos : CGPoint) {
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-    }
-
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        print(player.orbitalComponent.closestGravitationalComponent(in: entityCoordinator)?.movementComponent.position)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -96,8 +78,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         stateMachine.update(deltaTime: deltaTime)
 
         entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
-
-        print(player.orbitalComponent.closestGravitationalComponent(in: entityCoordinator)?.movementComponent.position)
     }
 
     // MARK: Level Construction

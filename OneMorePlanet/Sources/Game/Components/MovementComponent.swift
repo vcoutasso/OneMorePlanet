@@ -26,6 +26,10 @@ final class MovementComponent: GKAgent2D {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func changeBehavior(behavior: GKBehavior?) {
+        self.behavior = behavior
+    }
+
     // MARK: GKAgent2D
 
     override func update(deltaTime seconds: TimeInterval) {

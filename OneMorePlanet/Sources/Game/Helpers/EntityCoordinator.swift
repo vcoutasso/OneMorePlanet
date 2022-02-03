@@ -24,6 +24,17 @@ final class EntityCoordinator {
     func updateComponentSystems(deltaTime: TimeInterval) {
         for componentSystem in componentSystems {
             componentSystem.update(deltaTime: deltaTime)
+
+            // FIXME: Clean  this up
+            let components = componentSystem.components
+            for component in components {
+                guard let movementComponent = component as? MovementComponent else {
+                    return
+                }
+                if movementComponent.position.y < -50 {
+                    removeEntity(movementComponent.entity!)
+                }
+            }
         }
     }
 
@@ -47,7 +58,6 @@ final class EntityCoordinator {
         }
 
         if let renderNode = entity.component(ofType: RenderComponent.self)?.node {
-            // FIXME: This doesn't remove the reference from worldLayerNodes
             renderNode.removeFromParent()
         }
     }
