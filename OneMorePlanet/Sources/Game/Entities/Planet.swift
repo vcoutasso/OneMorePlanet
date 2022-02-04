@@ -32,12 +32,14 @@ final class Planet: GKEntity {
         let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
         addComponent(renderComponent)
 
-        let physicsBody =  SKPhysicsBody(circleOfRadius: renderComponent.node.frame.width / 2)
+        let physicsBody =  SKPhysicsBody(rectangleOf: renderComponent.node.size)
         let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Obstacle)
         addComponent(physicsComponent)
 
         let gravitationalComponent = GravitionalComponent()
         addComponent(gravitationalComponent)
+
+        renderComponent.node.physicsBody = physicsBody
     }
 
     required init?(coder: NSCoder) {

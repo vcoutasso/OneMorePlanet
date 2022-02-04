@@ -35,6 +35,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
     private var nearestPlanetPosition: CGPoint = .zero
 
+    private var nearestPlanetSize: CGFloat = .zero
+
     private lazy var topY: CGFloat = 400
 
     private var score: Int = 0 {
@@ -79,9 +81,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         entityCoordinator.addEntity(player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
         entityCoordinator.addEntity(leftAsteroidBelt)
-        setEntityNodePosition(entity: leftAsteroidBelt, position: CGPoint(x: -size.width, y: 0.0))
+        setEntityNodePosition(entity: leftAsteroidBelt, position: CGPoint(x: -1.5*size.width, y: 0.0))
         entityCoordinator.addEntity(rightAsteroidBelt)
-        setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: size.width, y: 0.0))
+        setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: 1.5*size.width, y: 0.0))
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -94,6 +96,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         guard let nearestPlanet = player.orbitalComponent.closestGravitationalComponent(in: entityCoordinator) else { return }
 
         nearestPlanetPosition = nearestPlanet.renderComponent.node.position
+        nearestPlanetSize = nearestPlanet.renderComponent.node.size.width
         isInOrbit = true
 
         if isPaused {
@@ -134,9 +137,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
 
         if isInOrbit {
-            let direction = nearestPlanetPosition - player.renderComponent.node.position
+            let xOffset = CGFloat.random(in: -1.5*nearestPlanetSize...1.5*nearestPlanetSize)
+            let yOffset = CGFloat.random(in: -1.5*nearestPlanetSize...1.5*nearestPlanetSize)
+            let pointOfAttraction = CGPoint(x: nearestPlanetPosition.x + xOffset, y: nearestPlanetPosition.y + yOffset)
+            let direction = pointOfAttraction - player.renderComponent.node.position
             let normalizedDirection = direction / direction.length()
-            let force = 120 * normalizedDirection
+            let force = 100 * normalizedDirection
             player.renderComponent.node.physicsBody!.applyForce(CGVector(dx: force.x, dy: force.y))
         }
     }
