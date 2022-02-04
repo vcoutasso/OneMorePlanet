@@ -1,6 +1,29 @@
 import GameKit
 
 final class Planet: GKEntity {
+    // MARK: Properties
+
+    var renderComponent: RenderComponent {
+        guard let renderComponent = component(ofType: RenderComponent.self) else {
+            fatalError("A Planet must have a RenderComponent")
+        }
+        return renderComponent
+    }
+
+    var physicsComponent: PhysicsComponent {
+        guard let physicsComponent = component(ofType: PhysicsComponent.self) else {
+            fatalError("A Planet must have a PhysicsComponent")
+        }
+        return physicsComponent
+    }
+
+    var gravitationalComponent: GravitionalComponent {
+        guard let gravitationalComponent = component(ofType: GravitionalComponent.self) else {
+            fatalError("A Planet must have an GravitationalComponent")
+        }
+        return gravitationalComponent
+    }
+
     // MARK: - Initialization
 
     init(imageName: String, initialPosition: SIMD2<Float>) {

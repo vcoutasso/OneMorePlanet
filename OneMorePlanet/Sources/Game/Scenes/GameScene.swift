@@ -14,6 +14,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
     private let player = Player(imageName: "Images/alien")
 
+    private let leftAsteroidBelt = AsteroidBelt()
+    private let rightAsteroidBelt = AsteroidBelt()
+
     private var lastUpdateTimeInterval: TimeInterval = 0
     private let maxUpdateTimeInterval: TimeInterval = 1.0 / 60.0
 
@@ -46,23 +49,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         addWorldLayers()
 
-//        let planetSpawnInterval = SKAction.wait(forDuration: GameplayConfiguration.Planet.spawnInterval)
-//        let planetSpawnAction = SKAction.run { [weak self] in
-//            self?.spawnPlanet()
-//        }
-//        let planetSpawnSequence = SKAction.sequence([planetSpawnAction, planetSpawnInterval])
-
         addChild(backgroundStarsNode)
 
         let camera = SKCameraNode()
         self.camera = camera
         addChild(camera)
 
-//        run(SKAction.repeatForever(planetSpawnSequence))
-
         entityCoordinator.addEntity(player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
-//        player
+        entityCoordinator.addEntity(leftAsteroidBelt)
+        setEntityNodePosition(entity: leftAsteroidBelt, position: CGPoint(x: -size.width, y: 0.0))
+        entityCoordinator.addEntity(rightAsteroidBelt)
+        setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: size.width, y: 0.0))
 
         setCameraConstraints()
         player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
@@ -80,12 +78,16 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
+        isPaused = true
     }
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
 
         guard view != nil else { return }
+
+        leftAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
+        rightAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
 
         var deltaTime = currentTime - lastUpdateTimeInterval
 
@@ -106,10 +108,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         if isInOrbit {
             let direction = nearestPlanetPosition - player.renderComponent.node.position
             let normalizedDirection = direction / direction.length()
-            let force = 200 * normalizedDirection
+            let force = 120 * normalizedDirection
             player.renderComponent.node.physicsBody!.applyForce(CGVector(dx: force.x, dy: force.y))
-        } else {
-
         }
     }
 
@@ -130,9 +130,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
     private func spawnPlanet() {
         let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
-        let randomInteger = GKRandomDistribution(lowestValue: 10, highestValue: 90).nextInt()
 
-        let xCoordinate = frame.size.width * (CGFloat(randomInteger) / 100.0)
+        let xCoordinate = size.width * CGFloat.random(in: -0.45...0.45)
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate), y: Float(camera!.frame.maxY + view!.frame.height))
         let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition)

@@ -47,9 +47,9 @@ final class Player: GKEntity {
         addComponent(orbitalComponent)
 
         let physicsBody =  SKPhysicsBody(circleOfRadius: renderComponent.node.frame.width / 2)
+        physicsBody.linearDamping = 0.1
         let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Player)
         addComponent(physicsComponent)
-        physicsBody.linearDamping = 0
         renderComponent.node.physicsBody = physicsBody
 
     }

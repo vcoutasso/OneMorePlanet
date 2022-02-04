@@ -11,6 +11,7 @@
 		4C2E57B027A76B9C00136B4B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57AF27A76B9C00136B4B /* Player.swift */; };
 		4C2E57B227A76D6500136B4B /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57B127A76D6500136B4B /* Planet.swift */; };
 		4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57B327A76E1E00136B4B /* MovementComponent.swift */; };
+		4C41CDEA27AD549900057151 /* AsteroidBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41CDE927AD549900057151 /* AsteroidBelt.swift */; };
 		4C57300727ABF24D000407B2 /* OrbitalComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300627ABF24D000407B2 /* OrbitalComponent.swift */; };
 		4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300827ABF74D000407B2 /* PhysicsComponent.swift */; };
 		4C57300C27ABF7C1000407B2 /* ColliderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300B27ABF7C1000407B2 /* ColliderType.swift */; };
@@ -36,6 +37,7 @@
 		4C2E57AF27A76B9C00136B4B /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		4C2E57B127A76D6500136B4B /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		4C2E57B327A76E1E00136B4B /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
+		4C41CDE927AD549900057151 /* AsteroidBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidBelt.swift; sourceTree = "<group>"; };
 		4C57300627ABF24D000407B2 /* OrbitalComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitalComponent.swift; sourceTree = "<group>"; };
 		4C57300827ABF74D000407B2 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
 		4C57300B27ABF7C1000407B2 /* ColliderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderType.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				4C2E57AF27A76B9C00136B4B /* Player.swift */,
 				4C2E57B127A76D6500136B4B /* Planet.swift */,
+				4C41CDE927AD549900057151 /* AsteroidBelt.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */,
 				4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */,
 				4C2E57B227A76D6500136B4B /* Planet.swift in Sources */,
+				4C41CDEA27AD549900057151 /* AsteroidBelt.swift in Sources */,
 				4C57300C27ABF7C1000407B2 /* ColliderType.swift in Sources */,
 				4C2E57B027A76B9C00136B4B /* Player.swift in Sources */,
 				4C2E57AE27A769A400136B4B /* RenderComponent.swift in Sources */,
