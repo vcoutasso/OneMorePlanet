@@ -46,11 +46,11 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
 
     private lazy var scoreLabel: SKLabelNode = {
-        let node = SKLabelNode(fontNamed: "Fonts/aldotheapache")
+        let node = SKLabelNode(fontNamed: "aldotheapache")
         node.fontSize = 50
         node.text = "\(score)"
         node.zPosition = 1
-        let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero), to: CGPoint(x: 0, y: size.height / 2 - 50))
+        let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero), to: CGPoint(x: 0, y: size.height / 2 - 80))
         node.constraints = [positionConstraint]
 
         return node

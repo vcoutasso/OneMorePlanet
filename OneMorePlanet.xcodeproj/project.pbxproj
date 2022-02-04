@@ -14,6 +14,7 @@
 		4C41CDEA27AD549900057151 /* AsteroidBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41CDE927AD549900057151 /* AsteroidBelt.swift */; };
 		4C41CDEE27AD5C7F00057151 /* GameSceneActiveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41CDED27AD5C7F00057151 /* GameSceneActiveState.swift */; };
 		4C41CDF027AD5D0B00057151 /* GameScenePauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41CDEF27AD5D0B00057151 /* GameScenePauseState.swift */; };
+		4C41CDF327AD676A00057151 /* aldotheapache.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C41CDF227AD676A00057151 /* aldotheapache.ttf */; };
 		4C57300727ABF24D000407B2 /* OrbitalComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300627ABF24D000407B2 /* OrbitalComponent.swift */; };
 		4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300827ABF74D000407B2 /* PhysicsComponent.swift */; };
 		4C57300C27ABF7C1000407B2 /* ColliderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C57300B27ABF7C1000407B2 /* ColliderType.swift */; };
@@ -42,6 +43,8 @@
 		4C41CDE927AD549900057151 /* AsteroidBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidBelt.swift; sourceTree = "<group>"; };
 		4C41CDED27AD5C7F00057151 /* GameSceneActiveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneActiveState.swift; sourceTree = "<group>"; };
 		4C41CDEF27AD5D0B00057151 /* GameScenePauseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScenePauseState.swift; sourceTree = "<group>"; };
+		4C41CDF227AD676A00057151 /* aldotheapache.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = aldotheapache.ttf; sourceTree = "<group>"; };
+		4C41CDF427AD67E800057151 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4C57300627ABF24D000407B2 /* OrbitalComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitalComponent.swift; sourceTree = "<group>"; };
 		4C57300827ABF74D000407B2 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
 		4C57300B27ABF7C1000407B2 /* ColliderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderType.swift; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 		4C2E57A727A7574C00136B4B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C41CDF127AD674000057151 /* Fonts */,
 				4C7D6B8E27A377880016C962 /* GameScene.sks */,
 				4C7D6B9927A3778A0016C962 /* Assets.xcassets */,
 			);
@@ -158,6 +162,14 @@
 			path = States;
 			sourceTree = "<group>";
 		};
+		4C41CDF127AD674000057151 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4C41CDF227AD676A00057151 /* aldotheapache.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		4C57300A27ABF79C000407B2 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +207,7 @@
 		4C7D6B8B27A377880016C962 /* OneMorePlanet */ = {
 			isa = PBXGroup;
 			children = (
+				4C41CDF427AD67E800057151 /* Info.plist */,
 				4C2E57A727A7574C00136B4B /* Resources */,
 				4C2E57A627A7574600136B4B /* Sources */,
 			);
@@ -287,6 +300,7 @@
 				4C7D6B9827A377880016C962 /* Main.storyboard in Resources */,
 				4C7D6B8F27A377880016C962 /* GameScene.sks in Resources */,
 				4C7D6B9A27A3778A0016C962 /* Assets.xcassets in Resources */,
+				4C41CDF327AD676A00057151 /* aldotheapache.ttf in Resources */,
 				4C7D6B9D27A3778A0016C962 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +483,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneMorePlanet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -498,6 +513,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneMorePlanet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
