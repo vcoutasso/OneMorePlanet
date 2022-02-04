@@ -21,6 +21,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private let maxUpdateTimeInterval: TimeInterval = 1.0 / 60.0
 
     private lazy var stateMachine: GKStateMachine = GKStateMachine(states: [
+        GameSceneActiveState(gameScene: self),
+        GameScenePauseState(gameScene: self)
     ])
 
     private lazy var entityCoordinator = EntityCoordinator(scene: self)
@@ -34,6 +36,23 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private var nearestPlanetPosition: CGPoint = .zero
 
     private lazy var topY: CGFloat = 400
+
+    private var score: Int = 0 {
+        didSet {
+            scoreLabel.text = "\(score)"
+        }
+    }
+
+    private lazy var scoreLabel: SKLabelNode = {
+        let node = SKLabelNode(fontNamed: "Fonts/aldotheapache")
+        node.fontSize = 50
+        node.text = "\(score)"
+        node.zPosition = 1
+        let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero), to: CGPoint(x: 0, y: size.height / 2 - 50))
+        node.constraints = [positionConstraint]
+
+        return node
+    }()
 
     // MARK: Scene Life Cycle
 
@@ -55,6 +74,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.camera = camera
         addChild(camera)
 
+        camera.addChild(scoreLabel)
+
         entityCoordinator.addEntity(player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
         entityCoordinator.addEntity(leftAsteroidBelt)
@@ -62,7 +83,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         entityCoordinator.addEntity(rightAsteroidBelt)
         setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: size.width, y: 0.0))
 
+        stateMachine.enter(GameSceneActiveState.self)
+
         setCameraConstraints()
+
         player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
     }
 
@@ -71,6 +95,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         nearestPlanetPosition = nearestPlanet.renderComponent.node.position
         isInOrbit = true
+
+        if isPaused {
+            stateMachine.enter(GameSceneActiveState.self)
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -78,7 +106,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
-        isPaused = true
+        stateMachine.enter(GameScenePauseState.self)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -139,7 +167,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         entityCoordinator.addEntity(newPlanet)
 
-        topY += CGFloat.random(in: 100...300)
+        topY += CGFloat.random(in: 150...300)
+        score += 1
     }
 
     private func setEntityNodePosition(entity: GKEntity, position: CGPoint) {
