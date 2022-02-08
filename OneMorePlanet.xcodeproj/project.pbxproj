@@ -30,12 +30,17 @@
 		4C7D6B9D27A3778A0016C962 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C7D6B9B27A3778A0016C962 /* LaunchScreen.storyboard */; };
 		4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8BD29427AAB93400A6D829 /* PlanetMovementBehavior.swift */; };
 		4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */; };
+		4CB7207027B2B260008A29F1 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7206D27B2B260008A29F1 /* Strings.swift */; };
+		4CB7207127B2B260008A29F1 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7206E27B2B260008A29F1 /* Assets.swift */; };
+		4CB7207227B2B260008A29F1 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7206F27B2B260008A29F1 /* Fonts.swift */; };
 		4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826C27A809E700689BB8 /* CGPoint+.swift */; };
 		4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */; };
 		4CD7827127A81EF700689BB8 /* EntityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */; };
+		DC6C5561403DC1424EFB3FFA /* Pods_OneMorePlanet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		491CF5EF4A2B847A3A0D6BD4 /* Pods-OneMorePlanet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.release.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.release.xcconfig"; sourceTree = "<group>"; };
 		4C2E57AD27A769A400136B4B /* RenderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderComponent.swift; sourceTree = "<group>"; };
 		4C2E57AF27A76B9C00136B4B /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		4C2E57B127A76D6500136B4B /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
@@ -61,9 +66,14 @@
 		4C7D6B9C27A3778A0016C962 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C8BD29427AAB93400A6D829 /* PlanetMovementBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetMovementBehavior.swift; sourceTree = "<group>"; };
 		4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayConfiguration.swift; sourceTree = "<group>"; };
+		4CB7206D27B2B260008A29F1 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		4CB7206E27B2B260008A29F1 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		4CB7206F27B2B260008A29F1 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4CD7826C27A809E700689BB8 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SIMD2+.swift"; sourceTree = "<group>"; };
 		4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCoordinator.swift; sourceTree = "<group>"; };
+		A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneMorePlanet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA24520B4CD22E0C227C85CE /* Pods-OneMorePlanet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.debug.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,12 +81,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC6C5561403DC1424EFB3FFA /* Pods_OneMorePlanet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		303DBC442992FC8B283876AE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DA24520B4CD22E0C227C85CE /* Pods-OneMorePlanet.debug.xcconfig */,
+				491CF5EF4A2B847A3A0D6BD4 /* Pods-OneMorePlanet.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		3594AD0C228CB1226CB30086 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4C2E57A627A7574600136B4B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +118,7 @@
 		4C2E57A727A7574C00136B4B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4CB7206C27B2B260008A29F1 /* Generated */,
 				4C41CDF127AD674000057151 /* Fonts */,
 				4C7D6B8E27A377880016C962 /* GameScene.sks */,
 				4C7D6B9927A3778A0016C962 /* Assets.xcassets */,
@@ -193,6 +222,8 @@
 			children = (
 				4C7D6B8B27A377880016C962 /* OneMorePlanet */,
 				4C7D6B8A27A377880016C962 /* Products */,
+				303DBC442992FC8B283876AE /* Pods */,
+				3594AD0C228CB1226CB30086 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -230,6 +261,17 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
+		4CB7206C27B2B260008A29F1 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				4CB7206D27B2B260008A29F1 /* Strings.swift */,
+				4CB7206E27B2B260008A29F1 /* Assets.swift */,
+				4CB7206F27B2B260008A29F1 /* Fonts.swift */,
+			);
+			name = Generated;
+			path = OneMorePlanet/Resources/Generated;
+			sourceTree = SOURCE_ROOT;
+		};
 		4CD7826B27A809D000689BB8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,9 +288,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C7D6BA027A3778A0016C962 /* Build configuration list for PBXNativeTarget "OneMorePlanet" */;
 			buildPhases = (
+				C7976B7AEEAE6F938C051FAE /* [CP] Check Pods Manifest.lock */,
+				4CB7206227B2AFA2008A29F1 /* SwiftLint */,
+				4CB7206327B2AFD7008A29F1 /* SwiftGen */,
 				4C7D6B8527A377880016C962 /* Sources */,
 				4C7D6B8627A377880016C962 /* Frameworks */,
 				4C7D6B8727A377880016C962 /* Resources */,
+				97FC90C738411F7ABE90FD7A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -307,12 +353,91 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4CB7206227B2AFA2008A29F1 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" --config config/swiftlint.yml\n\n";
+		};
+		4CB7206327B2AFD7008A29F1 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftGen/bin/swiftgen\" config run --config config/swiftgen.yml\n";
+		};
+		97FC90C738411F7ABE90FD7A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7976B7AEEAE6F938C051FAE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneMorePlanet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4C7D6B8527A377880016C962 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4C7D6B9327A377880016C962 /* GameScene.swift in Sources */,
+				4CB7207127B2B260008A29F1 /* Assets.swift in Sources */,
 				4C57301027AC0056000407B2 /* GravitationalComponent.swift in Sources */,
 				4C57300E27ABFB8D000407B2 /* ContactNotifiableType.swift in Sources */,
 				4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */,
@@ -324,8 +449,10 @@
 				4C41CDF027AD5D0B00057151 /* GameScenePauseState.swift in Sources */,
 				4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */,
 				4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */,
+				4CB7207027B2B260008A29F1 /* Strings.swift in Sources */,
 				4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */,
 				4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */,
+				4CB7207227B2B260008A29F1 /* Fonts.swift in Sources */,
 				4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */,
 				4C41CDEE27AD5C7F00057151 /* GameSceneActiveState.swift in Sources */,
 				4C2E57B227A76D6500136B4B /* Planet.swift in Sources */,
@@ -409,7 +536,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -464,7 +591,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -476,6 +603,7 @@
 		};
 		4C7D6BA127A3778A0016C962 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA24520B4CD22E0C227C85CE /* Pods-OneMorePlanet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -495,7 +623,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.OneMorePlanet;
 				PRODUCT_NAME = "One More Planet";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -506,6 +634,7 @@
 		};
 		4C7D6BA227A3778A0016C962 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 491CF5EF4A2B847A3A0D6BD4 /* Pods-OneMorePlanet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -525,7 +654,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.OneMorePlanet;
 				PRODUCT_NAME = "One More Planet";
 				SWIFT_EMIT_LOC_STRINGS = YES;

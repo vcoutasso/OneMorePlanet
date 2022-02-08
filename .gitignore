@@ -90,3 +90,9 @@ fastlane/test_output
 iOSInjectionProject/
 
 .DS_Store
+
+Pods/
+
+**/Generated/*.swift
+
+GoogleService-Info.plist
