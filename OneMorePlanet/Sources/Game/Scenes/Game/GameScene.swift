@@ -1,17 +1,14 @@
-import UIKit
-import SpriteKit
 import GameplayKit
+import SpriteKit
+import UIKit
 
-protocol GameSceneProtocol {
-    func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer)
-}
-
-final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
+final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: Properties
 
-    private lazy var worldLayerNodes = WorldLayer.allLayers.reduce(into: [WorldLayer: SKNode]()) { partialResult, layer in
-        partialResult[layer] = SKNode()
-    }
+    private lazy var worldLayerNodes = WorldLayer.allLayers
+        .reduce(into: [WorldLayer: SKNode]()) { partialResult, layer in
+            partialResult[layer] = SKNode()
+        }
 
     var isReallyPaused: Bool = false {
         didSet {
@@ -27,9 +24,11 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private var lastUpdateTimeInterval: TimeInterval = 0
     private let maxUpdateTimeInterval: TimeInterval = 1.0 / 60.0
 
-    private lazy var stateMachine: GKStateMachine = GKStateMachine(states: [
+    private lazy var stateMachine = GKStateMachine(states: [
         GameSceneActiveState(gameScene: self),
-        GameScenePauseState(gameScene: self)
+        GameScenePauseState(gameScene: self),
+        GameSceneOverlayState(gameScene: self),
+        GameSceneGameOverState(gameScene: self),
     ])
 
     private lazy var entityCoordinator = EntityCoordinator(scene: self)
@@ -65,8 +64,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
     // MARK: Initializers
 
+    // FIXME: Minor memory leak going on here
     deinit {
         unregisterForPauseNotifications()
+        entityCoordinator.removeAllEntities()
+        removeAllChildren()
+        removeAllActions()
+        debugPrint("GameScene deinited")
     }
 
     // MARK: Scene Life Cycle
@@ -83,6 +87,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
 
+        let emitter = SKEmitterNode(fileNamed: "MyBokeh")!
+        player.renderComponent.node.addChild(emitter)
+        emitter.targetNode = self
+
         addWorldLayers()
 
         let camera = SKCameraNode()
@@ -95,18 +103,22 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         entityCoordinator.addEntity(player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
         entityCoordinator.addEntity(leftAsteroidBelt)
-        setEntityNodePosition(entity: leftAsteroidBelt, position: CGPoint(x: -1.5*size.width, y: 0.0))
+        setEntityNodePosition(entity: leftAsteroidBelt, position: CGPoint(x: -1.5 * size.width, y: 0.0))
         entityCoordinator.addEntity(rightAsteroidBelt)
-        setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: 1.5*size.width, y: 0.0))
+        setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: 1.5 * size.width, y: 0.0))
 
         stateMachine.enter(GameSceneActiveState.self)
 
         setCameraConstraints()
 
         player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+
+        #if DEBUG
+            view.showsPhysics = true
+        #endif
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_: Set<UITouch>, with _: UIEvent?) {
         guard let nearestPlanet = player.orbitalComponent.closestGravitationalComponent(in: entityCoordinator) else { return }
 
         nearestPlanetPosition = nearestPlanet.renderComponent.node.position
@@ -117,15 +129,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             stateMachine.enter(GameSceneActiveState.self)
         }
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    override func touchesEnded(_: Set<UITouch>, with _: UIEvent?) {
         isInOrbit = false
     }
 
-    func didBegin(_ contact: SKPhysicsContact) {
-        stateMachine.enter(GameScenePauseState.self)
+    func didBegin(_: SKPhysicsContact) {
+        stateMachine.enter(GameSceneGameOverState.self)
     }
-    
+
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
 
@@ -143,22 +155,29 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
 
-        backgroundStarsNode.position = self.camera!.position
-        leftAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
-        rightAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
+        backgroundStarsNode.position = camera!.position
+        leftAsteroidBelt.renderComponent.node.position.y = camera!.position.y
+        rightAsteroidBelt.renderComponent.node.position.y = camera!.position.y
 
         if topY - player.renderComponent.node.position.y < 400 {
             spawnPlanet()
         }
 
         if isInOrbit {
-            let xOffset = CGFloat.random(in: -1.5*nearestPlanetSize...1.5*nearestPlanetSize)
-            let yOffset = CGFloat.random(in: -1.5*nearestPlanetSize...1.5*nearestPlanetSize)
-            let pointOfAttraction = CGPoint(x: nearestPlanetPosition.x + xOffset, y: nearestPlanetPosition.y + yOffset)
-            let direction = pointOfAttraction - player.renderComponent.node.position
+            let direction = nearestPlanetPosition - player.renderComponent.node.position
+            let velocity = player.renderComponent.node.physicsBody!.velocity
+            let velocityPoint = CGPoint(x: velocity.dx, y: velocity.dy)
+            var velocityLength = velocityPoint.length()
+            let maxVelocity = 350.0
+            if velocityLength > maxVelocity {
+                print("Max velocity")
+                let newVelocityPoint = maxVelocity * (velocityPoint / velocityLength)
+                player.physicsComponent.physicsBody.velocity = CGVector(dx: newVelocityPoint.x, dy: newVelocityPoint.y)
+                velocityLength = maxVelocity
+            }
             let normalizedDirection = direction / direction.length()
-            let force = 100 * normalizedDirection
-            player.renderComponent.node.physicsBody!.applyForce(CGVector(dx: force.x, dy: force.y))
+            let force = deltaTime * 10 * velocityLength * normalizedDirection
+            player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
         }
     }
 
@@ -180,7 +199,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private func spawnPlanet() {
         let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
 
-        let xCoordinate = size.width * CGFloat.random(in: -0.45...0.45)
+        let xCoordinate = size.width * CGFloat.random(in: -0.45 ... 0.45)
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate), y: Float(camera!.frame.maxY + view!.frame.height))
         let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition)
@@ -188,7 +207,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         entityCoordinator.addEntity(newPlanet)
 
-        topY += CGFloat.random(in: 150...300)
+        topY += CGFloat.random(in: 150 ... 300)
         score += 1
     }
 
@@ -198,7 +217,14 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         renderComponent.node.position = position
     }
 
-    // MARK: Helper
+    // MARK: Convenience
+
+    func startNewGame() {
+        let newScene = GameScene(size: size)
+        newScene.scaleMode = scaleMode
+        let animation = SKTransition.fade(withDuration: 1.0)
+        view?.presentScene(newScene, transition: animation)
+    }
 
     private func setCameraConstraints() {
         guard let camera = camera else { return }

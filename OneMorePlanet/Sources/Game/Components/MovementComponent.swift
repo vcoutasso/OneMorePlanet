@@ -1,5 +1,5 @@
-import SpriteKit
 import GameKit
+import SpriteKit
 
 final class MovementComponent: GKAgent2D {
     // MARK: Properties
@@ -16,13 +16,14 @@ final class MovementComponent: GKAgent2D {
     init(behavior: GKBehavior?) {
         super.init()
 
-        self.delegate = self
+        delegate = self
         if let behavior = behavior {
             self.behavior = behavior
         }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -38,14 +39,14 @@ final class MovementComponent: GKAgent2D {
 }
 
 extension MovementComponent: GKAgentDelegate {
-    func agentWillUpdate(_ agent: GKAgent) {
+    func agentWillUpdate(_: GKAgent) {
         guard let renderComponent = entity?.component(ofType: RenderComponent.self) else { return }
 
         position = SIMD2<Float>(x: renderComponent.node.position.x,
                                 y: renderComponent.node.position.y)
     }
 
-    func agentDidUpdate(_ agent: GKAgent) {
+    func agentDidUpdate(_: GKAgent) {
         guard let renderComponent = entity?.component(ofType: RenderComponent.self) else { return }
 
         renderComponent.node.position = CGPoint(x: position.x, y: position.y)

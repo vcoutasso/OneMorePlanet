@@ -2,8 +2,8 @@ import GameplayKit
 
 final class EntityCoordinator {
     // MARK: Properties
-    
-    private let scene: GameSceneProtocol
+
+    private unowned let scene: GameScene
 
     private var entities = Set<GKEntity>()
 
@@ -17,15 +17,19 @@ final class EntityCoordinator {
 
     // MARK: Initialization
 
-    init(scene: GameSceneProtocol) {
+    init(scene: GameScene) {
         self.scene = scene
+    }
+
+    deinit {
+        debugPrint("EntityCoordinator deinited")
     }
 
     func updateComponentSystems(deltaTime: TimeInterval) {
         for componentSystem in componentSystems {
             componentSystem.update(deltaTime: deltaTime)
 
-            // FIXME: Clean  this up
+            // FIXME: Clean this up
             let components = componentSystem.components
             for component in components {
                 guard let movementComponent = component as? MovementComponent else {
@@ -62,7 +66,13 @@ final class EntityCoordinator {
         }
     }
 
-    func components<ComponentType>(ofType: ComponentType.Type) -> [ComponentType] where ComponentType: GKComponent {
+    func removeAllEntities() {
+        for entity in entities {
+            removeEntity(entity)
+        }
+    }
+
+    func components<ComponentType>(ofType _: ComponentType.Type) -> [ComponentType] where ComponentType: GKComponent {
         var components = [ComponentType]()
 
         for entity in entities {

@@ -35,7 +35,7 @@ final class Player: GKEntity {
 
     init(imageName: String) {
         super.init()
-        
+
         let texture = SKTexture(imageNamed: imageName)
         let renderComponent = RenderComponent(texture: texture)
         addComponent(renderComponent)
@@ -46,14 +46,20 @@ final class Player: GKEntity {
         let orbitalComponent = OrbitalComponent()
         addComponent(orbitalComponent)
 
-        let physicsBody =  SKPhysicsBody(rectangleOf: renderComponent.node.size)
-        physicsBody.linearDamping = 0.1
+        let physicsBody = SKPhysicsBody(circleOfRadius: 10)
+        physicsBody.linearDamping = 0.05
+        physicsBody.mass = 0.05
         let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Player)
         addComponent(physicsComponent)
         renderComponent.node.physicsBody = physicsBody
     }
 
-    required init?(coder: NSCoder) {
+    deinit {
+        debugPrint("Player deinited")
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

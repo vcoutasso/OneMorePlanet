@@ -16,20 +16,22 @@ final class OrbitalComponent: GKComponent {
         }
         return movementComponent
     }
+
     // MARK: Initialization
 
     override init() {
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: Orbital
 
     func closestGravitationalComponent(in coordinator: EntityCoordinator) -> GravitionalComponent? {
-        var closestGravitationalComponent: GravitionalComponent? = nil
+        var closestGravitationalComponent: GravitionalComponent?
         var closestDistance: CGFloat = 0.0
         let currentPosition = movementComponent.position
         let gravitationalComponents = coordinator.components(ofType: GravitionalComponent.self)

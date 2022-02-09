@@ -1,5 +1,5 @@
-import SpriteKit
 import GameKit
+import SpriteKit
 
 final class RenderComponent: GKComponent {
     // MARK: - Properties
@@ -9,11 +9,12 @@ final class RenderComponent: GKComponent {
     // MARK: - Initialization
 
     init(texture: SKTexture) {
-        self.node = SKSpriteNode(texture: texture)
+        node = SKSpriteNode(texture: texture)
         super.init()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
