@@ -30,9 +30,6 @@
 		4C7D6B9D27A3778A0016C962 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C7D6B9B27A3778A0016C962 /* LaunchScreen.storyboard */; };
 		4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8BD29427AAB93400A6D829 /* PlanetMovementBehavior.swift */; };
 		4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */; };
-		4CB7207027B2B260008A29F1 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7206D27B2B260008A29F1 /* Strings.swift */; };
-		4CB7207127B2B260008A29F1 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7206E27B2B260008A29F1 /* Assets.swift */; };
-		4CB7207227B2B260008A29F1 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7206F27B2B260008A29F1 /* Fonts.swift */; };
 		4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826C27A809E700689BB8 /* CGPoint+.swift */; };
 		4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */; };
 		4CD7827127A81EF700689BB8 /* EntityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */; };
@@ -66,9 +63,6 @@
 		4C7D6B9C27A3778A0016C962 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C8BD29427AAB93400A6D829 /* PlanetMovementBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetMovementBehavior.swift; sourceTree = "<group>"; };
 		4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayConfiguration.swift; sourceTree = "<group>"; };
-		4CB7206D27B2B260008A29F1 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
-		4CB7206E27B2B260008A29F1 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
-		4CB7206F27B2B260008A29F1 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4CD7826C27A809E700689BB8 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SIMD2+.swift"; sourceTree = "<group>"; };
 		4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCoordinator.swift; sourceTree = "<group>"; };
@@ -118,7 +112,7 @@
 		4C2E57A727A7574C00136B4B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CB7206C27B2B260008A29F1 /* Generated */,
+				4C84D4AD27B369AC00EF42EB /* Generated */,
 				4C41CDF127AD674000057151 /* Fonts */,
 				4C7D6B8E27A377880016C962 /* GameScene.sks */,
 				4C7D6B9927A3778A0016C962 /* Assets.xcassets */,
@@ -245,6 +239,13 @@
 			path = OneMorePlanet;
 			sourceTree = "<group>";
 		};
+		4C84D4AD27B369AC00EF42EB /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		4C8BD29327AAB91800A6D829 /* Behaviors */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,17 +261,6 @@
 			);
 			path = Scenes;
 			sourceTree = "<group>";
-		};
-		4CB7206C27B2B260008A29F1 /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-				4CB7206D27B2B260008A29F1 /* Strings.swift */,
-				4CB7206E27B2B260008A29F1 /* Assets.swift */,
-				4CB7206F27B2B260008A29F1 /* Fonts.swift */,
-			);
-			name = Generated;
-			path = OneMorePlanet/Resources/Generated;
-			sourceTree = SOURCE_ROOT;
 		};
 		4CD7826B27A809D000689BB8 /* Extensions */ = {
 			isa = PBXGroup;
@@ -437,7 +427,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C7D6B9327A377880016C962 /* GameScene.swift in Sources */,
-				4CB7207127B2B260008A29F1 /* Assets.swift in Sources */,
 				4C57301027AC0056000407B2 /* GravitationalComponent.swift in Sources */,
 				4C57300E27ABFB8D000407B2 /* ContactNotifiableType.swift in Sources */,
 				4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */,
@@ -449,10 +438,8 @@
 				4C41CDF027AD5D0B00057151 /* GameScenePauseState.swift in Sources */,
 				4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */,
 				4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */,
-				4CB7207027B2B260008A29F1 /* Strings.swift in Sources */,
 				4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */,
 				4C8BD29527AAB93400A6D829 /* PlanetMovementBehavior.swift in Sources */,
-				4CB7207227B2B260008A29F1 /* Fonts.swift in Sources */,
 				4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */,
 				4C41CDEE27AD5C7F00057151 /* GameSceneActiveState.swift in Sources */,
 				4C2E57B227A76D6500136B4B /* Planet.swift in Sources */,

@@ -1,3 +1,4 @@
+import UIKit
 import SpriteKit
 import GameplayKit
 
@@ -10,6 +11,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
     private lazy var worldLayerNodes = WorldLayer.allLayers.reduce(into: [WorldLayer: SKNode]()) { partialResult, layer in
         partialResult[layer] = SKNode()
+    }
+
+    var isReallyPaused: Bool = false {
+        didSet {
+            isPaused = isReallyPaused
+        }
     }
 
     private let player = Player(imageName: "Images/alien")
@@ -56,10 +63,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         return node
     }()
 
+    // MARK: Initializers
+
+    deinit {
+        unregisterForPauseNotifications()
+    }
+
     // MARK: Scene Life Cycle
 
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+
+        registerForPauseNotifications()
 
         backgroundColor = UIColor(named: "Colors/SpaceBackground")!
         backgroundStarsNode.position = .zero
@@ -70,13 +85,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         addWorldLayers()
 
-        addChild(backgroundStarsNode)
-
         let camera = SKCameraNode()
-        self.camera = camera
-        addChild(camera)
-
         camera.addChild(scoreLabel)
+        self.camera = camera
+
+        addChild(backgroundStarsNode)
+        addChild(camera)
 
         entityCoordinator.addEntity(player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
@@ -99,7 +113,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         nearestPlanetSize = nearestPlanet.renderComponent.node.size.width
         isInOrbit = true
 
-        if isPaused {
+        if stateMachine.currentState is GameScenePauseState {
             stateMachine.enter(GameSceneActiveState.self)
         }
     }
@@ -117,20 +131,21 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
 
         guard view != nil else { return }
 
-        leftAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
-        rightAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
-
         var deltaTime = currentTime - lastUpdateTimeInterval
 
         deltaTime = deltaTime > maxUpdateTimeInterval ? maxUpdateTimeInterval : deltaTime
 
         lastUpdateTimeInterval = currentTime
 
+        if isReallyPaused { return }
+
         stateMachine.update(deltaTime: deltaTime)
 
         entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
 
         backgroundStarsNode.position = self.camera!.position
+        leftAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
+        rightAsteroidBelt.renderComponent.node.position.y = self.camera!.position.y
 
         if topY - player.renderComponent.node.position.y < 400 {
             spawnPlanet()
@@ -193,5 +208,45 @@ final class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         let playerLocationConstraint = SKConstraint.distance(zeroRange, to: playerNode)
 
         camera.constraints = [playerLocationConstraint]
+    }
+}
+
+// MARK: - Extensions
+
+/// Pause
+extension GameScene {
+    // MARK: Properties
+
+    override var isPaused: Bool {
+        didSet {
+            if isPaused != isReallyPaused {
+                isPaused = isReallyPaused
+            }
+        }
+    }
+
+    private var pauseNotificationName: NSNotification.Name {
+        UIApplication.willResignActiveNotification
+    }
+
+    @objc private func pauseGame() {
+        stateMachine.enter(GameScenePauseState.self)
+    }
+
+    // MARK: Convenience methods
+
+    private func registerForPauseNotifications() {
+        NotificationCenter.default
+            .addObserver(self,
+                         selector: #selector(pauseGame),
+                         name: pauseNotificationName,
+                         object: nil)
+    }
+
+    private func unregisterForPauseNotifications() {
+        NotificationCenter.default
+            .removeObserver(self,
+                            name: pauseNotificationName,
+                            object: nil)
     }
 }
