@@ -1,10 +1,3 @@
-//
-//  TutorialViewController.swift
-//  OneMorePlanet
-//
-//  Created by Ana Paula Kessler  on 09/02/22.
-//
-
 import UIKit
 
 class TutorialViewController: UIViewController {
@@ -141,6 +134,6 @@ class TutorialViewController: UIViewController {
     }
 
     @objc private func checkButtonTapped() {
-        print("volta pro menu")
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -40,6 +40,8 @@ final class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.isNavigationBarHidden = true
+
         setupViews()
         setupHierarchy()
         setupConstraints()
@@ -101,7 +103,9 @@ final class MainMenuViewController: UIViewController {
         navigationController?.pushViewController(GameViewController(), animated: true)
     }
 
-    @objc private func tutorialButtonTapped() {}
+    @objc private func tutorialButtonTapped() {
+        navigationController?.pushViewController(TutorialViewController(), animated: true)
+    }
 
     @objc private func scoreboardButtonTapped() {}
 
