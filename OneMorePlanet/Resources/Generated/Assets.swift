@@ -23,17 +23,21 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Assets {
     internal static let accentColor = ColorAsset(name: "AccentColor")
     internal enum Colors {
+        internal static let buttonBackground = ColorAsset(name: "Colors/ButtonBackground")
         internal static let spaceBackground = ColorAsset(name: "Colors/SpaceBackground")
     }
 
     internal enum Images {
+        internal static let starsCover = ImageAsset(name: "Images/Stars-cover")
         internal static let stars = ImageAsset(name: "Images/Stars")
+        internal static let alienCover = ImageAsset(name: "Images/alien-cover")
         internal static let alien = ImageAsset(name: "Images/alien")
         internal static let asteroidBelt = ImageAsset(name: "Images/asteroidBelt")
         internal static let asteroids1 = ImageAsset(name: "Images/asteroids1")
         internal static let asteroids2 = ImageAsset(name: "Images/asteroids2")
         internal static let asteroids3 = ImageAsset(name: "Images/asteroids3")
         internal static let asteroids4 = ImageAsset(name: "Images/asteroids4")
+        internal static let planetCover = ImageAsset(name: "Images/planet-cover")
         internal static let planet1 = ImageAsset(name: "Images/planet1")
         internal static let planet10 = ImageAsset(name: "Images/planet10")
         internal static let planet11 = ImageAsset(name: "Images/planet11")
