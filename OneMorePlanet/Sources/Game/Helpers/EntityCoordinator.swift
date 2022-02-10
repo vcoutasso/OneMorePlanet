@@ -21,28 +21,13 @@ final class EntityCoordinator {
         self.scene = scene
     }
 
-    deinit {
-        debugPrint("EntityCoordinator deinited")
-    }
-
     func updateComponentSystems(deltaTime: TimeInterval) {
         for componentSystem in componentSystems {
             componentSystem.update(deltaTime: deltaTime)
-
-            // FIXME: Clean this up
-            let components = componentSystem.components
-            for component in components {
-                guard let movementComponent = component as? MovementComponent else {
-                    return
-                }
-                if movementComponent.position.y < -5000 {
-                    removeEntity(movementComponent.entity!)
-                }
-            }
         }
     }
 
-    func addEntity(_ entity: GKEntity) {
+    func addEntity(_ entity: GKEntity, to layer: WorldLayer) {
         entities.insert(entity)
 
         for componentSystem in componentSystems {
@@ -50,7 +35,7 @@ final class EntityCoordinator {
         }
 
         if let renderNode = entity.component(ofType: RenderComponent.self)?.node {
-            scene.addNode(node: renderNode, toWorldLayer: .planets)
+            scene.addNode(node: renderNode, toWorldLayer: layer)
         }
     }
 

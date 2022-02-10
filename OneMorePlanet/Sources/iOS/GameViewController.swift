@@ -7,7 +7,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
 
         if let view = view as! SKView? {
-            let scene = GameScene()
+            let scene = GameScene(size: view.frame.size)
             scene.scaleMode = .resizeFill
 
             view.presentScene(scene)

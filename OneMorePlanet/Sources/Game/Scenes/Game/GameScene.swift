@@ -1,4 +1,5 @@
 import GameplayKit
+import SnapKit
 import SpriteKit
 import UIKit
 
@@ -16,10 +17,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private let player = Player(imageName: "Images/alien")
+    private var player = Player(imageName: "Images/alien")
 
-    private let leftAsteroidBelt = AsteroidBelt()
-    private let rightAsteroidBelt = AsteroidBelt()
+    private lazy var leftAsteroidBelt = AsteroidBelt()
+    private lazy var rightAsteroidBelt = AsteroidBelt()
 
     private var lastUpdateTimeInterval: TimeInterval = 0
     private let maxUpdateTimeInterval: TimeInterval = 1.0 / 60.0
@@ -51,8 +52,20 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    lazy var blurEffect: SKEffectNode = {
+        let node = SKEffectNode()
+        let filter = CIFilter(name: "CIGaussianBlur")!
+        let blurAmount = 10.0
+        filter.setValue(blurAmount, forKey: kCIInputRadiusKey)
+        node.filter = filter
+        node.blendMode = .alpha
+        node.shouldEnableEffects = false
+
+        return node
+    }()
+
     private lazy var scoreLabel: SKLabelNode = {
-        let node = SKLabelNode(fontNamed: "aldotheapache")
+        let node = SKLabelNode(fontNamed: Fonts.AldoTheApache.regular.name)
         node.fontSize = 50
         node.text = "\(score)"
         node.zPosition = 1
@@ -63,15 +76,39 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return node
     }()
 
+    lazy var pauseButton: UIButton = {
+        let button = UIButton()
+        let symbolConfiguration = UIImage.SymbolConfiguration(textStyle: .title1)
+        let icon = UIImage(systemName: "pause.fill", withConfiguration: symbolConfiguration)
+        button.setImage(icon, for: .normal)
+        button.addTarget(self, action: #selector(pauseGame), for: .touchUpInside)
+
+        return button
+    }()
+
+    lazy var resumeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 35)
+        label.text = "TOUCH TO CONTINUE"
+        label.textColor = .white
+        label.isHidden = true
+
+        return label
+    }()
+
     // MARK: Initializers
 
-    // FIXME: Minor memory leak going on here
+    override init(size: CGSize) {
+        super.init(size: size)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     deinit {
         unregisterForPauseNotifications()
-        entityCoordinator.removeAllEntities()
-        removeAllChildren()
-        removeAllActions()
-        debugPrint("GameScene deinited")
     }
 
     // MARK: Scene Life Cycle
@@ -101,11 +138,11 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(backgroundStarsNode)
         addChild(camera)
 
-        entityCoordinator.addEntity(player)
+        entityCoordinator.addEntity(player, to: .player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
-        entityCoordinator.addEntity(leftAsteroidBelt)
+        entityCoordinator.addEntity(leftAsteroidBelt, to: .game)
         setEntityNodePosition(entity: leftAsteroidBelt, position: CGPoint(x: -1.5 * size.width, y: 0.0))
-        entityCoordinator.addEntity(rightAsteroidBelt)
+        entityCoordinator.addEntity(rightAsteroidBelt, to: .game)
         setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: 1.5 * size.width, y: 0.0))
 
         stateMachine.enter(GameSceneActiveState.self)
@@ -113,6 +150,19 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         setCameraConstraints()
 
         player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+
+        view.addSubview(pauseButton)
+        view.addSubview(resumeLabel)
+
+        pauseButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(20)
+            make.topMargin.equalToSuperview().offset(20)
+        }
+
+        resumeLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(view.snp.bottomMargin).offset(-50)
+        }
 
         #if DEBUG
             view.showsPhysics = true
@@ -130,14 +180,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         nearestPlanetPosition = nearestPlanet.renderComponent.node.position
         nearestPlanetSize = nearestPlanet.renderComponent.node.size.width
         isInOrbit = true
-
-        if stateMachine.currentState is GameScenePauseState {
-            stateMachine.enter(GameSceneActiveState.self)
-        }
     }
 
     override func touchesEnded(_: Set<UITouch>, with _: UIEvent?) {
         isInOrbit = false
+        if isReallyPaused {
+            resumeGame()
+        }
     }
 
     func didBegin(_: SKPhysicsContact) {
@@ -215,7 +264,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition)
         setEntityNodePosition(entity: newPlanet, position: CGPoint(x: initialPosition.x, y: initialPosition.y))
 
-        entityCoordinator.addEntity(newPlanet)
+        entityCoordinator.addEntity(newPlanet, to: .game)
 
         topY += CGFloat.random(in: 150 ... 300)
         score += 1
@@ -267,6 +316,10 @@ extension GameScene {
 
     @objc private func pauseGame() {
         stateMachine.enter(GameScenePauseState.self)
+    }
+
+    @objc private func resumeGame() {
+        stateMachine.enter(GameSceneActiveState.self)
     }
 
     // MARK: Convenience methods

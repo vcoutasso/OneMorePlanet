@@ -1,6 +1,6 @@
 excluded:
-    - ../App/OneMorePlanet/Resources/
-    - ../App/Pods
+    - ../OneMorePlanet/Resources/
+    - ../Pods
 disabled_rules:
     - trailing_comma
     - trailing_whitespace
