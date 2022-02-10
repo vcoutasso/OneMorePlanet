@@ -32,7 +32,7 @@ final class Planet: GKEntity {
         let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
         addComponent(renderComponent)
 
-        let physicsBody = SKPhysicsBody(circleOfRadius: 10)
+        let physicsBody = SKPhysicsBody(circleOfRadius: GameplayConfiguration.Planet.physicsBodyCircleRadius)
         let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Obstacle)
         addComponent(physicsComponent)
 

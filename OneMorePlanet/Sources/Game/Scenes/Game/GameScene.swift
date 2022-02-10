@@ -43,7 +43,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var nearestPlanetSize: CGFloat = .zero
 
-    private lazy var topY: CGFloat = 400
+    private lazy var topY: CGFloat = GameplayConfiguration.Planet.planetSpawnDistance
 
     private var score: Int = 0 {
         didSet {
@@ -56,7 +56,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         node.fontSize = 50
         node.text = "\(score)"
         node.zPosition = 1
-        let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero), to: CGPoint(x: 0, y: size.height / 2 - 80))
+        let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero),
+                                                       to: CGPoint(x: 0, y: size.height / 2 - 80))
         node.constraints = [positionConstraint]
 
         return node
@@ -118,8 +119,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         #endif
     }
 
-    override func touchesBegan(_: Set<UITouch>, with _: UIEvent?) {
-        guard let nearestPlanet = player.orbitalComponent.closestGravitationalComponent(in: entityCoordinator) else { return }
+    override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
+        var referencePoint = player.renderComponent.node.position
+        referencePoint = touches.first!.location(in: self)
+
+        guard let nearestPlanet = player.orbitalComponent
+            .nearestGravitationalComponent(in: entityCoordinator,
+                                           to: referencePoint) else { return }
 
         nearestPlanetPosition = nearestPlanet.renderComponent.node.position
         nearestPlanetSize = nearestPlanet.renderComponent.node.size.width
@@ -159,7 +165,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         leftAsteroidBelt.renderComponent.node.position.y = camera!.position.y
         rightAsteroidBelt.renderComponent.node.position.y = camera!.position.y
 
-        if topY - player.renderComponent.node.position.y < 400 {
+        if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {
             spawnPlanet()
         }
 
@@ -168,9 +174,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             let velocity = player.renderComponent.node.physicsBody!.velocity
             let velocityPoint = CGPoint(x: velocity.dx, y: velocity.dy)
             var velocityLength = velocityPoint.length()
-            let maxVelocity = 350.0
+            let maxVelocity = GameplayConfiguration.Player.maxSpeed
             if velocityLength > maxVelocity {
-                print("Max velocity")
                 let newVelocityPoint = maxVelocity * (velocityPoint / velocityLength)
                 player.physicsComponent.physicsBody.velocity = CGVector(dx: newVelocityPoint.x, dy: newVelocityPoint.y)
                 velocityLength = maxVelocity
@@ -178,6 +183,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             let normalizedDirection = direction / direction.length()
             let force = deltaTime * 10 * velocityLength * normalizedDirection
             player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
+        } else {
+            if player.renderComponent.node.physicsBody!.velocity == .zero {
+                stateMachine.enter(GameSceneGameOverState.self)
+            }
         }
     }
 
@@ -201,7 +210,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let xCoordinate = size.width * CGFloat.random(in: -0.45 ... 0.45)
 
-        let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate), y: Float(camera!.frame.maxY + view!.frame.height))
+        let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate),
+                                                  y: Float(camera!.frame.maxY + view!.frame.height))
         let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition)
         setEntityNodePosition(entity: newPlanet, position: CGPoint(x: initialPosition.x, y: initialPosition.y))
 

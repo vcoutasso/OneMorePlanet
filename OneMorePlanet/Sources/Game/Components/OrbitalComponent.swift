@@ -30,21 +30,22 @@ final class OrbitalComponent: GKComponent {
 
     // MARK: Orbital
 
-    func closestGravitationalComponent(in coordinator: EntityCoordinator) -> GravitionalComponent? {
-        var closestGravitationalComponent: GravitionalComponent?
-        var closestDistance: CGFloat = 0.0
-        let currentPosition = movementComponent.position
+    func nearestGravitationalComponent(in coordinator: EntityCoordinator,
+                                       to referencePoint: CGPoint) -> GravitionalComponent?
+    {
+        var nearestGravitationalComponent: GravitionalComponent?
+        var nearestDistance: CGFloat = 0.0
         let gravitationalComponents = coordinator.components(ofType: GravitionalComponent.self)
 
         for gravitationalComponent in gravitationalComponents {
             let renderComponent = gravitationalComponent.renderComponent
-            let distance = (renderComponent.node.position - CGPoint(currentPosition)).length()
-            if closestGravitationalComponent == nil || distance < closestDistance {
-                closestGravitationalComponent = gravitationalComponent
-                closestDistance = distance
+            let distance = (renderComponent.node.position - referencePoint).length()
+            if nearestGravitationalComponent == nil || distance < nearestDistance {
+                nearestGravitationalComponent = gravitationalComponent
+                nearestDistance = distance
             }
         }
 
-        return closestGravitationalComponent
+        return nearestGravitationalComponent
     }
 }
