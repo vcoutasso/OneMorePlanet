@@ -65,6 +65,9 @@ internal enum Assets {
         internal static let planet7 = ImageAsset(name: "Images/planet7")
         internal static let planet8 = ImageAsset(name: "Images/planet8")
         internal static let planet9 = ImageAsset(name: "Images/planet9")
+        internal static let tutorial1 = ImageAsset(name: "Images/tutorial1")
+        internal static let tutorial2 = ImageAsset(name: "Images/tutorial2")
+        internal static let tutorial3 = ImageAsset(name: "Images/tutorial3")
     }
 }
 
