@@ -2,8 +2,8 @@ import GameplayKit
 
 final class EntityCoordinator {
     // MARK: Properties
-    
-    private let scene: GameSceneProtocol
+
+    private unowned let scene: GameScene
 
     private var entities = Set<GKEntity>()
 
@@ -17,28 +17,17 @@ final class EntityCoordinator {
 
     // MARK: Initialization
 
-    init(scene: GameSceneProtocol) {
+    init(scene: GameScene) {
         self.scene = scene
     }
 
     func updateComponentSystems(deltaTime: TimeInterval) {
         for componentSystem in componentSystems {
             componentSystem.update(deltaTime: deltaTime)
-
-            // FIXME: Clean  this up
-            let components = componentSystem.components
-            for component in components {
-                guard let movementComponent = component as? MovementComponent else {
-                    return
-                }
-                if movementComponent.position.y < -5000 {
-                    removeEntity(movementComponent.entity!)
-                }
-            }
         }
     }
 
-    func addEntity(_ entity: GKEntity) {
+    func addEntity(_ entity: GKEntity, to layer: WorldLayer) {
         entities.insert(entity)
 
         for componentSystem in componentSystems {
@@ -46,7 +35,7 @@ final class EntityCoordinator {
         }
 
         if let renderNode = entity.component(ofType: RenderComponent.self)?.node {
-            scene.addNode(node: renderNode, toWorldLayer: .planets)
+            scene.addNode(node: renderNode, toWorldLayer: layer)
         }
     }
 
@@ -62,7 +51,13 @@ final class EntityCoordinator {
         }
     }
 
-    func components<ComponentType>(ofType: ComponentType.Type) -> [ComponentType] where ComponentType: GKComponent {
+    func removeAllEntities() {
+        for entity in entities {
+            removeEntity(entity)
+        }
+    }
+
+    func components<ComponentType>(ofType _: ComponentType.Type) -> [ComponentType] where ComponentType: GKComponent {
         var components = [ComponentType]()
 
         for entity in entities {

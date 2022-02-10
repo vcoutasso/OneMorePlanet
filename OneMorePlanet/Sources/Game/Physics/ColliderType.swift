@@ -9,6 +9,7 @@ struct ColliderType: OptionSet, Hashable {
 
         return notifications
     }()
+
     static let definedCollisions: [ColliderType: [ColliderType]] = {
         var collisions = [ColliderType: [ColliderType]]()
         collisions[.Player] = [.Obstacle]

@@ -29,11 +29,12 @@ final class AsteroidBelt: GKEntity {
         physicsBody.isDynamic = false
         let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Obstacle)
         addComponent(physicsComponent)
-        
+
         renderComponent.node.physicsBody = physicsBody
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

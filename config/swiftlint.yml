@@ -1,6 +1,6 @@
 excluded:
-    - ../App/OneMorePlanet/Resources/
-    - ../App/Pods
+    - ../OneMorePlanet/Resources/
+    - ../Pods
 disabled_rules:
     - trailing_comma
     - trailing_whitespace
@@ -15,4 +15,5 @@ opt_in_rules:
     - empty_string
     - file_name_no_space
 line_length:
+  warning: 150
   error: 300

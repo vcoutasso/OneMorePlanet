@@ -8,6 +8,8 @@ target 'OneMorePlanet' do
   pod 'SwiftFormat/CLI'
   pod 'SwiftLint'
   pod 'SwiftGen'
+
+  pod 'SnapKit'
 end
 
 post_install do |installer|

@@ -26,13 +26,13 @@ final class Planet: GKEntity {
 
     // MARK: - Initialization
 
-    init(imageName: String, initialPosition: SIMD2<Float>) {
+    init(imageName: String, initialPosition _: SIMD2<Float>) {
         super.init()
 
         let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
         addComponent(renderComponent)
 
-        let physicsBody =  SKPhysicsBody(rectangleOf: renderComponent.node.size)
+        let physicsBody = SKPhysicsBody(circleOfRadius: GameplayConfiguration.Planet.physicsBodyCircleRadius)
         let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Obstacle)
         addComponent(physicsComponent)
 
@@ -42,7 +42,8 @@ final class Planet: GKEntity {
         renderComponent.node.physicsBody = physicsBody
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
