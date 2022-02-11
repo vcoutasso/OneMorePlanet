@@ -166,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				4C57300A27ABF79C000407B2 /* Physics */,
-				4C62CED027AA302900E1D2B2 /* Helpers */,
+				4C62CED027AA302900E1D2B2 /* Configuration */,
 				4C9746B027A960D900679315 /* Scenes */,
 				4C2E57AC27A75FCC00136B4B /* Components */,
 				4C2E57AB27A75FC700136B4B /* Entities */,
@@ -196,13 +196,22 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		4C2FCB8827B6997400462666 /* Convenience */ = {
+			isa = PBXGroup;
+			children = (
+				4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */,
+				4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */,
+			);
+			path = Convenience;
+			sourceTree = "<group>";
+		};
 		4C41CDEB27AD5C5900057151 /* Game */ = {
 			isa = PBXGroup;
 			children = (
 				4C7D6B9427A377880016C962 /* GameViewController.swift */,
-				4C41CDEC27AD5C6200057151 /* States */,
 				4C7D6B9227A377880016C962 /* GameScene.swift */,
-				4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */,
+				4C41CDEC27AD5C6200057151 /* States */,
+				4C2FCB8827B6997400462666 /* Convenience */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -235,13 +244,12 @@
 			path = Physics;
 			sourceTree = "<group>";
 		};
-		4C62CED027AA302900E1D2B2 /* Helpers */ = {
+		4C62CED027AA302900E1D2B2 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */,
 				4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */,
 			);
-			path = Helpers;
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		4C7D6B8027A377880016C962 = {
@@ -646,7 +654,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.OneMorePlanet;
 				PRODUCT_NAME = "One More Planet";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -677,7 +685,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.OneMorePlanet;
 				PRODUCT_NAME = "One More Planet";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -22,4 +22,9 @@ struct GameplayConfiguration {
         /// Linear damping of the physics body
         static let physicsBodyLinearDamping: CGFloat = 0.05
     }
+
+    enum AsteroidBelt {
+        /// Speed
+        static let speed: CGFloat = -50.0
+    }
 }
