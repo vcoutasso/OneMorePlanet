@@ -31,8 +31,7 @@ final class OrbitalComponent: GKComponent {
     // MARK: Orbital
 
     func nearestGravitationalComponent(in coordinator: EntityCoordinator,
-                                       to referencePoint: CGPoint) -> GravitionalComponent?
-    {
+                                       to referencePoint: CGPoint) -> GravitionalComponent? {
         var nearestGravitationalComponent: GravitionalComponent?
         var nearestDistance: CGFloat = 0.0
         let gravitationalComponents = coordinator.components(ofType: GravitionalComponent.self)

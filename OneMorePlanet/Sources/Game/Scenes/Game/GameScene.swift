@@ -144,7 +144,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         setEntityNodePosition(entity: upperAsteroidBelt, position: CGPoint(x: -1.5 * size.width, y: 0.0))
         entityCoordinator.addEntity(lowerAsteroidBelt, to: .game)
         setEntityNodePosition(entity: lowerAsteroidBelt, position: CGPoint(x: -1.5 * size.width,
-                                                                           y: -lowerAsteroidBelt.renderComponent.node.size.height))
+                                                                           y: -lowerAsteroidBelt.renderComponent.node
+                                                                               .size.height))
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -276,7 +277,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private func spawnPlanet() {
         let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
 
-        let xCoordinate = size.width * CGFloat.random(in: -0.45 ... 0.45)
+        let xCoordinate = size.width * CGFloat.random(in: -0.45...0.45)
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate),
                                                   y: Float(camera!.frame.maxY + view!.frame.height))
@@ -285,7 +286,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         entityCoordinator.addEntity(newPlanet, to: .game)
 
-        topY += CGFloat.random(in: 150 ... 300)
+        topY += CGFloat.random(in: 150...300)
         score += 1
     }
 

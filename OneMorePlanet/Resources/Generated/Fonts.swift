@@ -19,7 +19,8 @@ internal typealias Font = FontConvertible.Font
 // swiftlint:disable identifier_name line_length type_body_length
 internal enum Fonts {
     internal enum AldoTheApache {
-        internal static let regular = FontConvertible(name: "AldotheApache", family: "Aldo the Apache", path: "aldotheapache.ttf")
+        internal static let regular = FontConvertible(name: "AldotheApache", family: "Aldo the Apache",
+                                                      path: "aldotheapache.ttf")
         internal static let all: [FontConvertible] = [regular]
     }
 

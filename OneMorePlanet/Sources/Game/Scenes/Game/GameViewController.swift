@@ -1,3 +1,4 @@
+import FBSDKCoreKit
 import GameplayKit
 import SpriteKit
 import UIKit
