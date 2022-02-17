@@ -3,12 +3,14 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'OneMorePlanet' do
+  pod 'FBSDKCoreKit'
+
   pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 
   pod 'SwiftFormat/CLI'
   pod 'SwiftLint'
   pod 'SwiftGen'
-
   pod 'SnapKit'
 end
 

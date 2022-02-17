@@ -1,3 +1,6 @@
+import AdSupport
+import AppTrackingTransparency
+import FBSDKCoreKit
 import UIKit
 
 final class MainMenuViewController: UIViewController {
@@ -39,6 +42,8 @@ final class MainMenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        requestTrackingPermission()
 
         navigationController?.isNavigationBarHidden = true
 
@@ -116,5 +121,30 @@ final class MainMenuViewController: UIViewController {
         static let buttonVerticalPadding: CGFloat = -60
         static let distanceBetweenButtons: CGFloat = -25
         static let distanceFromBotton: CGFloat = -65
+    }
+
+    private func requestTrackingPermission() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                switch status {
+                case .authorized:
+                    Settings.shared.isAdvertiserTrackingEnabled = true
+                    Settings.shared.isAutoLogAppEventsEnabled = true
+                    Settings.shared.isAdvertiserIDCollectionEnabled = true
+                    print("Authorized")
+                case .denied:
+                    Settings.shared.isAdvertiserTrackingEnabled = false
+                    Settings.shared.isAutoLogAppEventsEnabled = false
+                    Settings.shared.isAdvertiserIDCollectionEnabled = false
+                    print("Denied")
+                case .notDetermined:
+                    print("Not Determined")
+                case .restricted:
+                    print("Restricted")
+                @unknown default:
+                    print("Unknown")
+                }
+            })
+        }
     }
 }

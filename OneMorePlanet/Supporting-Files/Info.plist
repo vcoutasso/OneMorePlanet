@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb995350098083401</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>995350098083401</string>
+	<key>FacebookDisplayName</key>
+	<string>One More Planet</string>
+	<key>FacebookClientToken</key>
+	<string>2958ec06fa1d370bd2b18c7d232b2a3c</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fb-messenger-share-api</string>
+		<string>fbapi</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>aldotheapache.ttf</string>
+	</array>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<false/>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<false/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Need tracking for analytics and to deliver custom ads</string>
+	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+	<false/>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+</dict>
+</plist>

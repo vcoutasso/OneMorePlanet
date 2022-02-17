@@ -19,8 +19,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var player = Player(imageName: "Images/alien")
 
-    private lazy var leftAsteroidBelt = AsteroidBelt()
-    private lazy var rightAsteroidBelt = AsteroidBelt()
+    private lazy var upperAsteroidBelt = AsteroidBelt()
+    private lazy var lowerAsteroidBelt = AsteroidBelt()
 
     private var lastUpdateTimeInterval: TimeInterval = 0
     private let maxUpdateTimeInterval: TimeInterval = 1.0 / 60.0
@@ -140,10 +140,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         entityCoordinator.addEntity(player, to: .player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
-        entityCoordinator.addEntity(leftAsteroidBelt, to: .game)
-        setEntityNodePosition(entity: leftAsteroidBelt, position: CGPoint(x: -1.5 * size.width, y: 0.0))
-        entityCoordinator.addEntity(rightAsteroidBelt, to: .game)
-        setEntityNodePosition(entity: rightAsteroidBelt, position: CGPoint(x: 1.5 * size.width, y: 0.0))
+        entityCoordinator.addEntity(upperAsteroidBelt, to: .game)
+        setEntityNodePosition(entity: upperAsteroidBelt, position: CGPoint(x: -1.5 * size.width, y: 0.0))
+        entityCoordinator.addEntity(lowerAsteroidBelt, to: .game)
+        setEntityNodePosition(entity: lowerAsteroidBelt, position: CGPoint(x: -1.5 * size.width,
+                                                                           y: -lowerAsteroidBelt.renderComponent.node
+                                                                               .size.height))
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -211,8 +213,26 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
 
         backgroundStarsNode.position = camera!.position
-        leftAsteroidBelt.renderComponent.node.position.y = camera!.position.y
-        rightAsteroidBelt.renderComponent.node.position.y = camera!.position.y
+        upperAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
+        lowerAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
+//        print("upper: \(upperAsteroidBelt.renderComponent.node.frame.minY)")
+//        print("camera: \(camera!.frame.maxY)")
+        if upperAsteroidBelt.renderComponent.node.frame.maxY < camera!.frame.minY - size.height / 2 {
+            upperAsteroidBelt.renderComponent.node.position.y += 2 * upperAsteroidBelt.renderComponent.node.size.height
+        }
+        if lowerAsteroidBelt.renderComponent.node.frame.maxY < camera!.frame.minY - size.height / 2 {
+            lowerAsteroidBelt.renderComponent.node.position.y += 2 * lowerAsteroidBelt.renderComponent.node.size.height
+        }
+
+        if camera!.frame.midX > 0 {
+            upperAsteroidBelt.renderComponent.node.position.x = 1.5 * size.width
+            lowerAsteroidBelt.renderComponent.node.position.x = 1.5 * size.width
+        } else {
+            upperAsteroidBelt.renderComponent.node.position.x = -1.5 * size.width
+            lowerAsteroidBelt.renderComponent.node.position.x = -1.5 * size.width
+        }
+
+//        print("lower: \(lowerAsteroidBelt.renderComponent.node.position.y)")
 
         if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {
             spawnPlanet()
@@ -257,7 +277,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private func spawnPlanet() {
         let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
 
-        let xCoordinate = size.width * CGFloat.random(in: -0.45 ... 0.45)
+        let xCoordinate = size.width * CGFloat.random(in: -0.45...0.45)
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate),
                                                   y: Float(camera!.frame.maxY + view!.frame.height))
@@ -266,7 +286,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         entityCoordinator.addEntity(newPlanet, to: .game)
 
-        topY += CGFloat.random(in: 150 ... 300)
+        topY += CGFloat.random(in: 150...300)
         score += 1
     }
 

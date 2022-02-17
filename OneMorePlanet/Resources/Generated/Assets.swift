@@ -65,6 +65,7 @@ internal enum Assets {
         internal static let planet7 = ImageAsset(name: "Images/planet7")
         internal static let planet8 = ImageAsset(name: "Images/planet8")
         internal static let planet9 = ImageAsset(name: "Images/planet9")
+        internal static let shiningStar = ImageAsset(name: "Images/shiningStar")
         internal static let tutorial1 = ImageAsset(name: "Images/tutorial1")
         internal static let tutorial2 = ImageAsset(name: "Images/tutorial2")
         internal static let tutorial3 = ImageAsset(name: "Images/tutorial3")
@@ -76,7 +77,7 @@ internal enum Assets {
 // MARK: - Implementation Details
 
 internal final class ColorAsset {
-    internal fileprivate(set) var name: String
+    fileprivate(set) internal var name: String
 
     #if os(macOS)
         internal typealias Color = NSColor
@@ -85,7 +86,7 @@ internal final class ColorAsset {
     #endif
 
     @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
-    internal private(set) lazy var color: Color = {
+    private(set) internal lazy var color: Color = {
         guard let color = Color(asset: self) else {
             fatalError("Unable to load color asset named \(name).")
         }
@@ -123,7 +124,7 @@ internal extension ColorAsset.Color {
 }
 
 internal struct ImageAsset {
-    internal fileprivate(set) var name: String
+    fileprivate(set) internal var name: String
 
     #if os(macOS)
         internal typealias Image = NSImage

@@ -1,20 +1,58 @@
+import AppTrackingTransparency
+import FBSDKCoreKit
+import Firebase
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if #available(iOS 14, *) {
+            listenForDidBecomeActiveNotification()
+        }
 
-    func application(_: UIApplication,
-                     _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
-    {
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        FirebaseApp.configure()
+
         return true
     }
 
-    func applicationWillResignActive(_: UIApplication) {}
+    func application(_ application: UIApplication,
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    }
 
-    func applicationDidEnterBackground(_: UIApplication) {}
+    @available(iOS 14, *)
+    private func listenForDidBecomeActiveNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(requestTrackingPermission),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+    }
 
-    func applicationWillEnterForeground(_: UIApplication) {}
+    @available(iOS 14, *)
+    @objc private func requestTrackingPermission() {
+        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+            switch status {
+            case .authorized:
+                Settings.shared.isAdvertiserTrackingEnabled = true
+                Settings.shared.isAutoLogAppEventsEnabled = true
+                Settings.shared.isAdvertiserIDCollectionEnabled = true
 
-    func applicationDidBecomeActive(_: UIApplication) {}
+                Analytics.setUserProperty("true", forName: AnalyticsUserPropertyAllowAdPersonalizationSignals)
+                Analytics.setAnalyticsCollectionEnabled(true)
+            case .denied, .notDetermined, .restricted:
+                Settings.shared.isAdvertiserTrackingEnabled = false
+                Settings.shared.isAutoLogAppEventsEnabled = false
+                Settings.shared.isAdvertiserIDCollectionEnabled = false
+
+                Analytics.setUserProperty("false", forName: AnalyticsUserPropertyAllowAdPersonalizationSignals)
+                Analytics.setAnalyticsCollectionEnabled(false)
+            @unknown default:
+                break
+            }
+        })
+    }
 }
