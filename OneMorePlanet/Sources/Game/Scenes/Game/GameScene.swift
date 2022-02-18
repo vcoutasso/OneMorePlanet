@@ -6,6 +6,8 @@ import UIKit
 final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: Properties
 
+    unowned let interstitialDelegate: InterstitialAdDelegate
+
     private lazy var worldLayerNodes = WorldLayer.allLayers
         .reduce(into: [WorldLayer: SKNode]()) { partialResult, layer in
             partialResult[layer] = SKNode()
@@ -38,7 +40,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var isInOrbit = false
 
-    let backgroundStarsNode = SKSpriteNode(texture: SKTexture(imageNamed: "Images/Stars"))
+    private let backgroundStarsNode = SKSpriteNode(texture: SKTexture(imageNamed: "Images/Stars"))
 
     private var nearestPlanetPosition: CGPoint = .zero
 
@@ -98,7 +100,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Initializers
 
-    override init(size: CGSize) {
+    init(size: CGSize, delegate: InterstitialAdDelegate) {
+        self.interstitialDelegate = delegate
+
         super.init(size: size)
     }
 
@@ -192,7 +196,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_: SKPhysicsContact) {
-        stateMachine.enter(GameSceneGameOverState.self)
+        stateMachine.enter(GameSceneOverlayState.self)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -215,8 +219,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         backgroundStarsNode.position = camera!.position
         upperAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         lowerAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
-//        print("upper: \(upperAsteroidBelt.renderComponent.node.frame.minY)")
-//        print("camera: \(camera!.frame.maxY)")
         if upperAsteroidBelt.renderComponent.node.frame.maxY < camera!.frame.minY - size.height / 2 {
             upperAsteroidBelt.renderComponent.node.position.y += 2 * upperAsteroidBelt.renderComponent.node.size.height
         }
@@ -231,8 +233,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             upperAsteroidBelt.renderComponent.node.position.x = -1.5 * size.width
             lowerAsteroidBelt.renderComponent.node.position.x = -1.5 * size.width
         }
-
-//        print("lower: \(lowerAsteroidBelt.renderComponent.node.position.y)")
 
         if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {
             spawnPlanet()
@@ -298,8 +298,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Convenience
 
+    func interstitialAdDidDismiss() {
+        stateMachine.enter(GameSceneGameOverState.self)
+    }
+
     func startNewGame() {
-        let newScene = GameScene(size: size)
+        let newScene = GameScene(size: size, delegate: interstitialDelegate)
         newScene.scaleMode = scaleMode
         let animation = SKTransition.fade(withDuration: 1.0)
         view?.presentScene(newScene, transition: animation)

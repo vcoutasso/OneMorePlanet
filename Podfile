@@ -3,10 +3,12 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'OneMorePlanet' do
-  pod 'FBSDKCoreKit'
+  pod 'Google-Mobile-Ads-SDK'
 
-  pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
+  pod 'Firebase/Analytics'
+
+  pod 'FBSDKCoreKit'
 
   pod 'SwiftFormat/CLI'
   pod 'SwiftLint'

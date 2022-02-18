@@ -43,6 +43,7 @@
 		4CE37F9A27B4B0C3009EA7E6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE37F9727B4B0C3009EA7E6 /* Strings.swift */; };
 		4CE37F9B27B4B0C3009EA7E6 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */; };
 		4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CEB293027BE7F6A0076ADC4 /* GoogleService-Info.plist */; };
+		4CEB293727BF27870076ADC4 /* InterstitialAdDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB293627BF27870076ADC4 /* InterstitialAdDelegate.swift */; };
 		DC6C5561403DC1424EFB3FFA /* Pods_OneMorePlanet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		4CE37F9727B4B0C3009EA7E6 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4CEB293027BE7F6A0076ADC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4CEB293627BF27870076ADC4 /* InterstitialAdDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAdDelegate.swift; sourceTree = "<group>"; };
 		A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneMorePlanet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA24520B4CD22E0C227C85CE /* Pods-OneMorePlanet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.debug.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -220,6 +222,7 @@
 			children = (
 				4C7D6B9427A377880016C962 /* GameViewController.swift */,
 				4C7D6B9227A377880016C962 /* GameScene.swift */,
+				4CEB293527BF27770076ADC4 /* Ads */,
 				4C41CDEC27AD5C6200057151 /* States */,
 				4C2FCB8827B6997400462666 /* Convenience */,
 			);
@@ -325,6 +328,14 @@
 				4C41CDF427AD67E800057151 /* Info.plist */,
 			);
 			path = "Supporting-Files";
+			sourceTree = "<group>";
+		};
+		4CEB293527BF27770076ADC4 /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				4CEB293627BF27870076ADC4 /* InterstitialAdDelegate.swift */,
+			);
+			path = Ads;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -508,6 +519,7 @@
 				4C57301027AC0056000407B2 /* GravitationalComponent.swift in Sources */,
 				4C57300E27ABFB8D000407B2 /* ContactNotifiableType.swift in Sources */,
 				4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */,
+				4CEB293727BF27870076ADC4 /* InterstitialAdDelegate.swift in Sources */,
 				4C7D6B9527A377880016C962 /* GameViewController.swift in Sources */,
 				4CE37F9B27B4B0C3009EA7E6 /* Fonts.swift in Sources */,
 				4CD7827127A81EF700689BB8 /* EntityCoordinator.swift in Sources */,

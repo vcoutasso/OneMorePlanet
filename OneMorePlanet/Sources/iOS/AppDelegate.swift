@@ -1,6 +1,7 @@
 import AppTrackingTransparency
 import FBSDKCoreKit
 import Firebase
+import GoogleMobileAds
 import UIKit
 
 @main
@@ -10,6 +11,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 14, *) {
             listenForDidBecomeActiveNotification()
         }
+
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 

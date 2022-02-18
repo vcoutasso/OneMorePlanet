@@ -1,6 +1,8 @@
 import AdSupport
 import AppTrackingTransparency
 import FBSDKCoreKit
+import GoogleMobileAds
+import SnapKit
 import UIKit
 
 final class MainMenuViewController: UIViewController {
@@ -40,6 +42,18 @@ final class MainMenuViewController: UIViewController {
         return imageView
     }()
 
+    private lazy var bannerView: GADBannerView = {
+        let banner = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: 320, height: 50)))
+        banner.translatesAutoresizingMaskIntoConstraints = false
+        #if DEBUG
+            banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        #else
+            banner.adUnitID = "ca-app-pub-3502520160790339/7000888003"
+        #endif
+        banner.rootViewController = self
+        return banner
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,6 +65,8 @@ final class MainMenuViewController: UIViewController {
         setupHierarchy()
         setupConstraints()
 
+        addBannerView()
+
         view.addSubview(alien)
         let width = view.frame.width
         let height = view.frame.height
@@ -58,7 +74,11 @@ final class MainMenuViewController: UIViewController {
 
         view.addSubview(stars)
         view.addSubview(planet)
+
+        bannerView.load(GADRequest())
     }
+
+    // MARK: Private methods
 
     private func setupViews() {
         view.backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)
@@ -104,6 +124,15 @@ final class MainMenuViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
+    private func addBannerView() {
+        view.addSubview(bannerView)
+
+        bannerView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
+    }
+
     @objc private func playButtonTapped() {
         navigationController?.pushViewController(GameViewController(), animated: true)
     }
@@ -113,15 +142,6 @@ final class MainMenuViewController: UIViewController {
     }
 
     @objc private func scoreboardButtonTapped() {}
-
-    private enum LayoutMetrics {
-        static let buttonHeight: CGFloat = 55
-        static let buttonFontSize: CGFloat = 30
-        static let buttonHorizontalPadding: CGFloat = 80
-        static let buttonVerticalPadding: CGFloat = -60
-        static let distanceBetweenButtons: CGFloat = -25
-        static let distanceFromBotton: CGFloat = -65
-    }
 
     private func requestTrackingPermission() {
         if #available(iOS 14, *) {
@@ -146,5 +166,16 @@ final class MainMenuViewController: UIViewController {
                 }
             })
         }
+    }
+
+    // MARK: Layout Metrics
+
+    private enum LayoutMetrics {
+        static let buttonHeight: CGFloat = 55
+        static let buttonFontSize: CGFloat = 30
+        static let buttonHorizontalPadding: CGFloat = 80
+        static let buttonVerticalPadding: CGFloat = -60
+        static let distanceBetweenButtons: CGFloat = -25
+        static let distanceFromBotton: CGFloat = -65
     }
 }

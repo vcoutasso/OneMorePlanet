@@ -11,7 +11,14 @@ final class GameSceneOverlayState: GKState {
 
     // MARK: GKState Life Cycle
 
+    override func didEnter(from previousState: GKState?) {
+        super.didEnter(from: previousState)
+
+        gameScene.isReallyPaused = true
+        gameScene.interstitialDelegate.presentInterstitialAd()
+    }
+
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-        stateClass is GameSceneActiveState.Type
+        stateClass is GameSceneGameOverState.Type
     }
 }
