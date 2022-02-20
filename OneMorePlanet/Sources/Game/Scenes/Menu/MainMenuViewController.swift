@@ -1,6 +1,7 @@
 import AdSupport
 import AppTrackingTransparency
 import FBSDKCoreKit
+import GameKit
 import GoogleMobileAds
 import SnapKit
 import UIKit
@@ -58,6 +59,7 @@ final class MainMenuViewController: UIViewController {
         super.viewDidLoad()
 
         requestTrackingPermission()
+        gameCenterAuthentication()
 
         navigationController?.isNavigationBarHidden = true
 
@@ -79,6 +81,15 @@ final class MainMenuViewController: UIViewController {
     }
 
     // MARK: Private methods
+
+    private func gameCenterAuthentication() {
+        GKLocalPlayer.local.authenticateHandler = { [weak self] viewController, _ in
+            if let viewController = viewController {
+                self?.present(viewController, animated: true)
+                return
+            }
+        }
+    }
 
     private func setupViews() {
         view.backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)
@@ -141,10 +152,18 @@ final class MainMenuViewController: UIViewController {
         navigationController?.pushViewController(TutorialViewController(), animated: true)
     }
 
-    @objc private func scoreboardButtonTapped() {}
+    @objc private func scoreboardButtonTapped() {
+        let leaderboardID = "AllTimeBests"
+        let gcVC = GKGameCenterViewController(leaderboardID: leaderboardID, playerScope: .global, timeScope: .allTime)
+        gcVC.gameCenterDelegate = self
+        GKAccessPoint.shared.isActive = false
+
+//        navigationController?.pushViewController(gcVC, animated: true)
+        present(gcVC, animated: true)
+    }
 
     private func requestTrackingPermission() {
-        if #available(iOS 14, *) {
+        if #available(iOS 14.0, *) {
             ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                 switch status {
                 case .authorized:
@@ -177,5 +196,11 @@ final class MainMenuViewController: UIViewController {
         static let buttonVerticalPadding: CGFloat = -60
         static let distanceBetweenButtons: CGFloat = -25
         static let distanceFromBotton: CGFloat = -65
+    }
+}
+
+extension MainMenuViewController: GKGameCenterControllerDelegate {
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        dismiss(animated: true, completion: nil)
     }
 }

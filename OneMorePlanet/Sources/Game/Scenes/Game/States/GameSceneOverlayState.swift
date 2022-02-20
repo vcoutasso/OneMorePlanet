@@ -14,6 +14,9 @@ final class GameSceneOverlayState: GKState {
     override func didEnter(from previousState: GKState?) {
         super.didEnter(from: previousState)
 
+        Task {
+            await gameScene.submitScore()
+        }
         gameScene.isReallyPaused = true
         gameScene.interstitialDelegate.presentInterstitialAd()
     }

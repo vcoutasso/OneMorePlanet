@@ -27,6 +27,7 @@
 		4C59A50427BB3978003951A4 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59A50327BB3977003951A4 /* AppTrackingTransparency.framework */; };
 		4C59A50627BB3BAE003951A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59A50527BB3BAE003951A4 /* SceneDelegate.swift */; };
 		4C62CED227AA33A900E1D2B2 /* WorldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */; };
+		4C7D50C227BFD4BE00B491DF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7D50C127BFD4BE00B491DF /* GameKit.framework */; };
 		4C7D6B8D27A377880016C962 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D6B8C27A377880016C962 /* AppDelegate.swift */; };
 		4C7D6B9327A377880016C962 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D6B9227A377880016C962 /* GameScene.swift */; };
 		4C7D6B9527A377880016C962 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D6B9427A377880016C962 /* GameViewController.swift */; };
@@ -70,6 +71,7 @@
 		4C59A50327BB3977003951A4 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		4C59A50527BB3BAE003951A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldLayer.swift; sourceTree = "<group>"; };
+		4C7D50C127BFD4BE00B491DF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4C7D6B8927A377880016C962 /* One More Planet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One More Planet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7D6B8C27A377880016C962 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C7D6B9227A377880016C962 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				4C59A50427BB3978003951A4 /* AppTrackingTransparency.framework in Frameworks */,
 				DC6C5561403DC1424EFB3FFA /* Pods_OneMorePlanet.framework in Frameworks */,
 				4C59A50227BB396A003951A4 /* AdSupport.framework in Frameworks */,
+				4C7D50C227BFD4BE00B491DF /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +121,7 @@
 		3594AD0C228CB1226CB30086 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C7D50C127BFD4BE00B491DF /* GameKit.framework */,
 				4C59A50327BB3977003951A4 /* AppTrackingTransparency.framework */,
 				4C59A50127BB396A003951A4 /* AdSupport.framework */,
 				A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */,
@@ -129,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				3A0D11A327B343C4000467DB /* MainMenuViewController.swift */,
-				3A78303727B48879002B101E /* TutorialViewController.swift */,
 				4C2C86D627B54C4B00E150BC /* Components */,
 			);
 			path = Menu;
@@ -265,6 +268,14 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		4C7D50C027BFC9E400B491DF /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				3A78303727B48879002B101E /* TutorialViewController.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		4C7D6B8027A377880016C962 = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +317,7 @@
 		4C9746B027A960D900679315 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				4C7D50C027BFC9E400B491DF /* Tutorial */,
 				3A0D11A227B342B3000467DB /* Menu */,
 				4C41CDEB27AD5C5900057151 /* Game */,
 			);
@@ -612,7 +624,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -667,7 +679,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -688,12 +700,14 @@
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OneMorePlanet/Supporting-Files/Info.plist";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Need tracking for analytics and to deliver custom ads";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = gamekit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -718,12 +732,14 @@
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OneMorePlanet/Supporting-Files/Info.plist";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Need tracking for analytics and to deliver custom ads";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = gamekit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

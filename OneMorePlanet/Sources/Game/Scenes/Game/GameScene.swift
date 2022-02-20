@@ -1,3 +1,4 @@
+import GameKit
 import GameplayKit
 import SnapKit
 import SpriteKit
@@ -307,6 +308,11 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         newScene.scaleMode = scaleMode
         let animation = SKTransition.fade(withDuration: 1.0)
         view?.presentScene(newScene, transition: animation)
+    }
+
+    func submitScore() async {
+        try? await GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local,
+                                             leaderboardIDs: ["AllTimeBests"])
     }
 
     private func setCameraConstraints() {
