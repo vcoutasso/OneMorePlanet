@@ -47,6 +47,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var nearestPlanetSize: CGFloat = .zero
 
+    private var isFirstPlanet: Bool = true
+
     private lazy var topY: CGFloat = GameplayConfiguration.Planet.planetSpawnDistance
 
     private var score: Score = .zero {
@@ -165,11 +167,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         entityCoordinator.addEntity(player, to: .player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
         entityCoordinator.addEntity(upperAsteroidBelt, to: .game)
-        setEntityNodePosition(entity: upperAsteroidBelt, position: CGPoint(x: -1.5 * size.width, y: 0.0))
+        setEntityNodePosition(entity: upperAsteroidBelt,
+                              position: CGPoint(x: GameplayConfiguration.AsteroidBelt
+                                  .positionScreenWidthMultiplier * size.width,
+                                  y: 0.0))
         entityCoordinator.addEntity(lowerAsteroidBelt, to: .game)
-        setEntityNodePosition(entity: lowerAsteroidBelt, position: CGPoint(x: -1.5 * size.width,
-                                                                           y: -lowerAsteroidBelt.renderComponent.node
-                                                                               .size.height))
+        setEntityNodePosition(entity: lowerAsteroidBelt,
+                              position: CGPoint(x: -GameplayConfiguration.AsteroidBelt
+                                  .positionScreenWidthMultiplier * size.width,
+                                  y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -196,8 +202,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
-        var referencePoint = player.renderComponent.node.position
-        referencePoint = touches.first!.location(in: self)
+        let referencePoint = player.renderComponent.node.position
 
         guard let nearestPlanet = player.orbitalComponent
             .nearestGravitationalComponent(in: entityCoordinator,
@@ -247,11 +252,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         if camera!.frame.midX > 0 {
-            upperAsteroidBelt.renderComponent.node.position.x = 1.5 * size.width
-            lowerAsteroidBelt.renderComponent.node.position.x = 1.5 * size.width
+            upperAsteroidBelt.renderComponent.node.position.x = GameplayConfiguration.AsteroidBelt
+                .positionScreenWidthMultiplier * size.width
+            lowerAsteroidBelt.renderComponent.node.position.x = GameplayConfiguration.AsteroidBelt
+                .positionScreenWidthMultiplier * size.width
         } else {
-            upperAsteroidBelt.renderComponent.node.position.x = -1.5 * size.width
-            lowerAsteroidBelt.renderComponent.node.position.x = -1.5 * size.width
+            upperAsteroidBelt.renderComponent.node.position.x = -GameplayConfiguration.AsteroidBelt
+                .positionScreenWidthMultiplier * size.width
+            lowerAsteroidBelt.renderComponent.node.position.x = -GameplayConfiguration.AsteroidBelt
+                .positionScreenWidthMultiplier * size.width
         }
 
         if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {
@@ -297,7 +306,17 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private func spawnPlanet() {
         let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
 
-        let xCoordinate = size.width * CGFloat.random(in: -0.45...0.45)
+        let asteroidPosition = GameplayConfiguration.AsteroidBelt.positionScreenWidthMultiplier
+        let xCoordinateInterval: ClosedRange<CGFloat> = -asteroidPosition...asteroidPosition
+        var xCoordinate = size.width * CGFloat.random(in: xCoordinateInterval) * 0.7
+        if isFirstPlanet {
+            isFirstPlanet = false
+            let invalidRange = -0.2...0.2
+            xCoordinate = size.width * CGFloat.random(in: -0.5...0.5)
+            while invalidRange.contains(xCoordinate / size.width) {
+                xCoordinate = size.width * CGFloat.random(in: -0.5...0.5)
+            }
+        }
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate),
                                                   y: Float(camera!.frame.maxY + view!.frame.height))

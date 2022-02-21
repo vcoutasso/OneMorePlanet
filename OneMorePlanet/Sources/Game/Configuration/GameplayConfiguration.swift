@@ -3,10 +3,12 @@ import CoreGraphics
 struct GameplayConfiguration {
     enum Planet {
         /// Distance between planets to trigger a spawn
-        static let planetSpawnDistance: CGFloat = 400.0
+        static let planetSpawnDistance: CGFloat = 200.0
 
         /// The radius of  the physics body of the node
-        static let physicsBodyCircleRadius: CGFloat = 12
+        static let physicsBodyCircleRadius: CGFloat = 18
+
+        static let renderComponentScale: CGFloat = 1.5
     }
 
     enum Player {
@@ -26,5 +28,7 @@ struct GameplayConfiguration {
     enum AsteroidBelt {
         /// Speed
         static let speed: CGFloat = -50.0
+
+        static let positionScreenWidthMultiplier: CGFloat = 0.85
     }
 }

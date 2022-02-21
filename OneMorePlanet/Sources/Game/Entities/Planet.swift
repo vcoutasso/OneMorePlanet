@@ -30,6 +30,7 @@ final class Planet: GKEntity {
         super.init()
 
         let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
+        renderComponent.node.setScale(GameplayConfiguration.Planet.renderComponentScale)
         addComponent(renderComponent)
 
         let physicsBody = SKPhysicsBody(circleOfRadius: GameplayConfiguration.Planet.physicsBodyCircleRadius)
