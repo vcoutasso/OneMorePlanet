@@ -26,6 +26,7 @@
 		4C59A50227BB396A003951A4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59A50127BB396A003951A4 /* AdSupport.framework */; };
 		4C59A50427BB3978003951A4 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C59A50327BB3977003951A4 /* AppTrackingTransparency.framework */; };
 		4C59A50627BB3BAE003951A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59A50527BB3BAE003951A4 /* SceneDelegate.swift */; };
+		4C5F21BD27C3CC2700FB8C7D /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5F21BC27C3CC2700FB8C7D /* Strings.strings */; };
 		4C62CED227AA33A900E1D2B2 /* WorldLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */; };
 		4C7D50C227BFD4BE00B491DF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7D50C127BFD4BE00B491DF /* GameKit.framework */; };
 		4C7D6B8D27A377880016C962 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D6B8C27A377880016C962 /* AppDelegate.swift */; };
@@ -72,6 +73,7 @@
 		4C59A50127BB396A003951A4 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4C59A50327BB3977003951A4 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		4C59A50527BB3BAE003951A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		4C5F21BC27C3CC2700FB8C7D /* Strings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Strings.strings; sourceTree = "<group>"; };
 		4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldLayer.swift; sourceTree = "<group>"; };
 		4C7D50C127BFD4BE00B491DF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4C7D6B8927A377880016C962 /* One More Planet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "One More Planet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +165,7 @@
 		4C2E57A727A7574C00136B4B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C5F21BC27C3CC2700FB8C7D /* Strings.strings */,
 				4C996CEA27B40DEB00C88725 /* MyBokeh.sks */,
 				4C84D4AD27B369AC00EF42EB /* Generated */,
 				4C41CDF127AD674000057151 /* Fonts */,
@@ -432,6 +435,7 @@
 				4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */,
 				4C41CDF327AD676A00057151 /* aldotheapache.ttf in Resources */,
 				4C7D6B9D27A3778A0016C962 /* LaunchScreen.storyboard in Resources */,
+				4C5F21BD27C3CC2700FB8C7D /* Strings.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

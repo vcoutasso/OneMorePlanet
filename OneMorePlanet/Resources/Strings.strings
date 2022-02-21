@@ -4,3 +4,7 @@
 
   Created by Vinícius Couto on 08/02/22.
 */
+
+mainMenu.playButton.title = "PLAY";
+mainMenu.tutorialButton.title = "TUTORIAL";
+mainMenu.leaderboardButton.title = "LEADERBOARD";

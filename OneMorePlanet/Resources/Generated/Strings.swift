@@ -9,7 +9,24 @@ import Foundation
 
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
-internal enum Strings {}
+internal enum Strings {
+    internal enum MainMenu {
+        internal enum LeaderboardButton {
+            /// LEADERBOARD
+            internal static let title = Strings.tr("Strings", "mainMenu.leaderboardButton.title")
+        }
+
+        internal enum PlayButton {
+            /// PLAY
+            internal static let title = Strings.tr("Strings", "mainMenu.playButton.title")
+        }
+
+        internal enum TutorialButton {
+            /// TUTORIAL
+            internal static let title = Strings.tr("Strings", "mainMenu.tutorialButton.title")
+        }
+    }
+}
 
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

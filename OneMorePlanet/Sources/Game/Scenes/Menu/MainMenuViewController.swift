@@ -8,19 +8,19 @@ import UIKit
 
 final class MainMenuViewController: UIViewController {
     private lazy var playButton: RoundedButton = {
-        let button = RoundedButton.createPurpleButton(title: "PLAY")
+        let button = RoundedButton.createPurpleButton(title: Strings.MainMenu.PlayButton.title)
         button.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         return button
     }()
 
     private lazy var tutorialButton: RoundedButton = {
-        let button = RoundedButton.createPurpleButton(title: "TUTORIAL")
+        let button = RoundedButton.createPurpleButton(title: Strings.MainMenu.TutorialButton.title)
         button.addTarget(self, action: #selector(tutorialButtonTapped), for: .touchUpInside)
         return button
     }()
 
-    private lazy var scoreboardButton: RoundedButton = {
-        let button = RoundedButton.createPurpleButton(title: "SCOREBOARD")
+    private lazy var leaderboardButton: RoundedButton = {
+        let button = RoundedButton.createPurpleButton(title: Strings.MainMenu.LeaderboardButton.title)
         button.addTarget(self, action: #selector(scoreboardButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -98,7 +98,7 @@ final class MainMenuViewController: UIViewController {
     private func setupHierarchy() {
         // Adiciona botões como subview
         view.addSubview(playButton)
-        view.addSubview(scoreboardButton)
+        view.addSubview(leaderboardButton)
         view.addSubview(tutorialButton)
     }
 
@@ -119,17 +119,17 @@ final class MainMenuViewController: UIViewController {
             tutorialButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tutorialButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
                                                      constant: -LayoutMetrics.buttonHorizontalPadding),
-            tutorialButton.bottomAnchor.constraint(equalTo: scoreboardButton.topAnchor,
+            tutorialButton.bottomAnchor.constraint(equalTo: leaderboardButton.topAnchor,
                                                    constant: LayoutMetrics.distanceBetweenButtons),
 
-            scoreboardButton.heightAnchor.constraint(equalToConstant: LayoutMetrics.buttonHeight),
-            scoreboardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                      constant: LayoutMetrics.buttonHorizontalPadding),
-            scoreboardButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            scoreboardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                       constant: -LayoutMetrics.buttonHorizontalPadding),
-            scoreboardButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                     constant: LayoutMetrics.distanceFromBotton),
+            leaderboardButton.heightAnchor.constraint(equalToConstant: LayoutMetrics.buttonHeight),
+            leaderboardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                       constant: LayoutMetrics.buttonHorizontalPadding),
+            leaderboardButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            leaderboardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                        constant: -LayoutMetrics.buttonHorizontalPadding),
+            leaderboardButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                      constant: LayoutMetrics.distanceFromBotton),
         ]
 
         NSLayoutConstraint.activate(constraints)
