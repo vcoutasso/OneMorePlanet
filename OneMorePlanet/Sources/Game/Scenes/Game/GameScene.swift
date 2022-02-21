@@ -308,15 +308,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let asteroidPosition = GameplayConfiguration.AsteroidBelt.positionScreenWidthMultiplier
         let xCoordinateInterval: ClosedRange<CGFloat> = -asteroidPosition...asteroidPosition
-        var xCoordinate = size.width * CGFloat.random(in: xCoordinateInterval) * 0.7
+        var xCoordinate = CGFloat.random(in: xCoordinateInterval) * GameplayConfiguration.Planet
+            .asteroidPositionMultiplier
         if isFirstPlanet {
             isFirstPlanet = false
-            let invalidRange = -0.2...0.2
-            xCoordinate = size.width * CGFloat.random(in: -0.5...0.5)
-            while invalidRange.contains(xCoordinate / size.width) {
-                xCoordinate = size.width * CGFloat.random(in: -0.5...0.5)
+            let invalidRange = GameplayConfiguration.Planet.invalidInitialRange
+            let newPosition = { CGFloat.random(in: GameplayConfiguration.Planet.validInitialRange) }
+            xCoordinate = newPosition()
+            while invalidRange.contains(xCoordinate) {
+                xCoordinate = newPosition()
             }
         }
+        xCoordinate *= size.width
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate),
                                                   y: Float(camera!.frame.maxY + view!.frame.height))

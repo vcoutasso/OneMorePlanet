@@ -85,7 +85,7 @@ extension GameViewController: GADFullScreenContentDelegate {
 extension GameViewController: GameOverDelegate {
     func gameOver() {
         gamesPlayed += 1
-        if gamesPlayed % 5 == 0 {
+        if gamesPlayed % GameplayConfiguration.Ads.interstitialAdInterval == 0 {
             presentInterstitialAd()
         } else {
             gameScene.gameOverHandlingDidFinish()
