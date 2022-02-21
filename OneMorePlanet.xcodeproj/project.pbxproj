@@ -37,6 +37,8 @@
 		4C996CE327B3E4CD00C88725 /* GameSceneOverlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C996CE227B3E4CD00C88725 /* GameSceneOverlayState.swift */; };
 		4C996CE527B3EE5300C88725 /* GameSceneGameOverState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C996CE427B3EE5300C88725 /* GameSceneGameOverState.swift */; };
 		4C996CEB27B40DEB00C88725 /* MyBokeh.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4C996CEA27B40DEB00C88725 /* MyBokeh.sks */; };
+		4C9E62C727C2E4B1004DCD4D /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E62C627C2E4B1004DCD4D /* Score.swift */; };
+		4C9E62C927C2E522004DCD4D /* HighScoreStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E62C827C2E522004DCD4D /* HighScoreStore.swift */; };
 		4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826C27A809E700689BB8 /* CGPoint+.swift */; };
 		4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */; };
 		4CD7827127A81EF700689BB8 /* EntityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */; };
@@ -82,6 +84,8 @@
 		4C996CE227B3E4CD00C88725 /* GameSceneOverlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneOverlayState.swift; sourceTree = "<group>"; };
 		4C996CE427B3EE5300C88725 /* GameSceneGameOverState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneGameOverState.swift; sourceTree = "<group>"; };
 		4C996CEA27B40DEB00C88725 /* MyBokeh.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyBokeh.sks; sourceTree = "<group>"; };
+		4C9E62C627C2E4B1004DCD4D /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		4C9E62C827C2E522004DCD4D /* HighScoreStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreStore.swift; sourceTree = "<group>"; };
 		4CD7826C27A809E700689BB8 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SIMD2+.swift"; sourceTree = "<group>"; };
 		4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCoordinator.swift; sourceTree = "<group>"; };
@@ -216,6 +220,7 @@
 			children = (
 				4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */,
 				4C62CED127AA33A900E1D2B2 /* WorldLayer.swift */,
+				4C9E62C827C2E522004DCD4D /* HighScoreStore.swift */,
 			);
 			path = Convenience;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 			children = (
 				4C7D6B9427A377880016C962 /* GameViewController.swift */,
 				4C7D6B9227A377880016C962 /* GameScene.swift */,
+				4C9E62C527C2E4A1004DCD4D /* Models */,
 				4CEB293527BF27770076ADC4 /* Ads */,
 				4C41CDEC27AD5C6200057151 /* States */,
 				4C2FCB8827B6997400462666 /* Convenience */,
@@ -322,6 +328,14 @@
 				4C41CDEB27AD5C5900057151 /* Game */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		4C9E62C527C2E4A1004DCD4D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C9E62C627C2E4B1004DCD4D /* Score.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4CD7826B27A809D000689BB8 /* Extensions */ = {
@@ -534,7 +548,9 @@
 				4CEB293727BF27870076ADC4 /* InterstitialAdDelegate.swift in Sources */,
 				4C7D6B9527A377880016C962 /* GameViewController.swift in Sources */,
 				4CE37F9B27B4B0C3009EA7E6 /* Fonts.swift in Sources */,
+				4C9E62C927C2E522004DCD4D /* HighScoreStore.swift in Sources */,
 				4CD7827127A81EF700689BB8 /* EntityCoordinator.swift in Sources */,
+				4C9E62C727C2E4B1004DCD4D /* Score.swift in Sources */,
 				4C62CED227AA33A900E1D2B2 /* WorldLayer.swift in Sources */,
 				4C57300727ABF24D000407B2 /* OrbitalComponent.swift in Sources */,
 				4C7D6B8D27A377880016C962 /* AppDelegate.swift in Sources */,

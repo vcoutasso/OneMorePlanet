@@ -14,6 +14,8 @@ target 'OneMorePlanet' do
   pod 'SwiftLint'
   pod 'SwiftGen'
   pod 'SnapKit'
+
+  pod 'RealmSwift'
 end
 
 post_install do |installer|

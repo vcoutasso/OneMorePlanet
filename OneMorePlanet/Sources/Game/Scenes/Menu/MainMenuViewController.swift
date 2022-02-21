@@ -158,7 +158,6 @@ final class MainMenuViewController: UIViewController {
         gcVC.gameCenterDelegate = self
         GKAccessPoint.shared.isActive = false
 
-//        navigationController?.pushViewController(gcVC, animated: true)
         present(gcVC, animated: true)
     }
 
@@ -201,6 +200,6 @@ final class MainMenuViewController: UIViewController {
 
 extension MainMenuViewController: GKGameCenterControllerDelegate {
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        dismiss(animated: true, completion: nil)
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }

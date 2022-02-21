@@ -37,7 +37,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private lazy var entityCoordinator = EntityCoordinator(scene: self)
 
-    private var repeatingAction: SKAction!
+    private let highScoreStore = HighScoreStore()
 
     private var isInOrbit = false
 
@@ -49,9 +49,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private lazy var topY: CGFloat = GameplayConfiguration.Planet.planetSpawnDistance
 
-    private var score: Int = 0 {
+    private var score: Score = .zero {
         didSet {
-            scoreLabel.text = "\(score)"
+            scoreLabel.text = "\(score.value)"
+        }
+    }
+
+    private lazy var currentBest: Score = highScoreStore.fetchHighScore() {
+        didSet {
+            currentBestLabel.text = "Best: \(currentBest.value)"
         }
     }
 
@@ -70,10 +76,22 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private lazy var scoreLabel: SKLabelNode = {
         let node = SKLabelNode(fontNamed: Fonts.AldoTheApache.regular.name)
         node.fontSize = 50
-        node.text = "\(score)"
+        node.text = "\(score.value)"
         node.zPosition = 1
         let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero),
                                                        to: CGPoint(x: 0, y: size.height / 2 - 80))
+        node.constraints = [positionConstraint]
+
+        return node
+    }()
+
+    private lazy var currentBestLabel: SKLabelNode = {
+        let node = SKLabelNode(fontNamed: Fonts.AldoTheApache.regular.name)
+        node.fontSize = 20
+        node.text = "Best: \(currentBest.value)"
+        node.zPosition = 1
+        let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero),
+                                                       to: CGPoint(x: 0, y: size.height / 2 - 110))
         node.constraints = [positionConstraint]
 
         return node
@@ -138,6 +156,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let camera = SKCameraNode()
         camera.addChild(scoreLabel)
+        camera.addChild(currentBestLabel)
         self.camera = camera
 
         addChild(backgroundStarsNode)
@@ -288,7 +307,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         entityCoordinator.addEntity(newPlanet, to: .game)
 
         topY += CGFloat.random(in: 150...300)
-        score += 1
+        score = Score(value: score.value + 1)
     }
 
     private func setEntityNodePosition(entity: GKEntity, position: CGPoint) {
@@ -311,8 +330,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func submitScore() async {
-        try? await GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local,
+        try? await GKLeaderboard.submitScore(score.value, context: 0, player: GKLocalPlayer.local,
                                              leaderboardIDs: ["AllTimeBests"])
+        highScoreStore.tryToUpdateHighScore(with: score)
+        currentBest = highScoreStore.fetchHighScore()
     }
 
     private func setCameraConstraints() {
