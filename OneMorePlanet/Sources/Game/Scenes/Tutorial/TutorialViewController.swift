@@ -21,23 +21,25 @@ class TutorialViewController: UIViewController {
         let imageView = UIImageView(image: UIImage(asset: Assets.Images.tutorial1))
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         let label = UILabel()
         label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 15)
         label.text = "TAP NEAR THE PLANETS TO ACTIVATE\n THEIR GRAVITATIONAL FIELDS"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
-        
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        
-        let attributedString = NSMutableAttributedString(string: "TAP NEAR THE PLANETS TO ACTIVATE\n THEIR GRAVITATIONAL FIELDS")
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        
+
+        let attributedString =
+            NSMutableAttributedString(string: "TAP NEAR THE PLANETS TO ACTIVATE\n THEIR GRAVITATIONAL FIELDS")
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle,
+                                      range: NSMakeRange(0, attributedString.length))
+
         label.attributedText = attributedString
         label.textAlignment = .center
-        
+
         let stack = UIStackView(arrangedSubviews: [
             imageView,
             label,
@@ -52,38 +54,38 @@ class TutorialViewController: UIViewController {
         stack.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 100)
         stack.layoutMargins = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
         stack.isLayoutMarginsRelativeArrangement = true
-        
+
         NSLayoutConstraint.activate([
-            
-            label.widthAnchor.constraint(equalTo: imageView.widthAnchor)
+            label.widthAnchor.constraint(equalTo: imageView.widthAnchor),
         ])
-        
+
         return stack
     }()
 
     private lazy var tutorial2: UIStackView = {
         let imageView = UIImageView(image: UIImage(asset: Assets.Images.tutorial2))
         imageView.contentMode = .scaleAspectFit
-        
+
         let label = UILabel()
         label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 15)
         label.text = "DON'T HIT THE PLANETS OR\n ASTEROIDS DIRECTLY"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
-        
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        
+
         let attributedString = NSMutableAttributedString(string: "DON'T HIT THE PLANETS OR\n ASTEROIDS DIRECTLY")
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle,
+                                      range: NSMakeRange(0, attributedString.length))
+
         label.attributedText = attributedString
         label.textAlignment = .center
-        
+
         let stack = UIStackView(arrangedSubviews: [
             imageView,
-            label
+            label,
         ])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
@@ -95,10 +97,9 @@ class TutorialViewController: UIViewController {
         stack.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 100)
         stack.layoutMargins = UIEdgeInsets(top: 0, left: 12, bottom: 5, right: 12)
         stack.isLayoutMarginsRelativeArrangement = true
-        
+
         NSLayoutConstraint.activate([
-            
-            label.widthAnchor.constraint(equalTo: imageView.widthAnchor)
+            label.widthAnchor.constraint(equalTo: imageView.widthAnchor),
         ])
 
         return stack
@@ -132,14 +133,14 @@ class TutorialViewController: UIViewController {
             tutorial1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tutorial1.topAnchor.constraint(equalTo: titleStackView.bottomAnchor,
                                            constant: 30),
-            
+
             tutorial2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tutorial2.topAnchor.constraint(equalTo: tutorial1.bottomAnchor,
                                            constant: LayoutMetrics.distanceBetweenImages),
-            
+
             checkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             checkButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                             constant: -30),
+                                                constant: -30),
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -160,7 +161,6 @@ class TutorialViewController: UIViewController {
         static let titleFontSize: CGFloat = 35
         static let titleStackViewSpacing: CGFloat = 30
         static let distanceBetweenImages: CGFloat = 30
-        
     }
 
     @objc private func checkButtonTapped() {

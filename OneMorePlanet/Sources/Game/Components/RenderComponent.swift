@@ -9,7 +9,7 @@ final class RenderComponent: GKComponent {
     // MARK: - Initialization
 
     init(texture: SKTexture) {
-        node = SKSpriteNode(texture: texture)
+        self.node = SKSpriteNode(texture: texture)
         super.init()
     }
 

@@ -1,15 +1,21 @@
-platform :ios, '13.0'
+platform :ios, '14.0'
 use_frameworks!
 inhibit_all_warnings!
 
 target 'OneMorePlanet' do
+  pod 'Google-Mobile-Ads-SDK'
+
+  pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
+
+  pod 'FBSDKCoreKit'
 
   pod 'SwiftFormat/CLI'
   pod 'SwiftLint'
   pod 'SwiftGen'
-
   pod 'SnapKit'
+
+  pod 'RealmSwift'
 end
 
 post_install do |installer|
