@@ -68,7 +68,6 @@ internal enum Assets {
         internal static let shiningStar = ImageAsset(name: "Images/shiningStar")
         internal static let tutorial1 = ImageAsset(name: "Images/tutorial1")
         internal static let tutorial2 = ImageAsset(name: "Images/tutorial2")
-        internal static let tutorial3 = ImageAsset(name: "Images/tutorial3")
     }
 }
 
