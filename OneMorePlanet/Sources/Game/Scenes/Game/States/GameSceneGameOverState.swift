@@ -11,11 +11,17 @@ final class GameSceneGameOverState: GKState {
 
     // MARK: GKState Life Cycle
 
-    override func didEnter(from _: GKState?) {
-        gameScene.startNewGame()
+    override func didEnter(from previousState: GKState?) {
+        super.didEnter(from: previousState)
+
+        Task {
+            await gameScene.submitScore()
+        }
+        gameScene.isReallyPaused = true
+        gameScene.gameOverDelegate.gameOver()
     }
 
-    override func isValidNextState(_: AnyClass) -> Bool {
-        false
+    override func isValidNextState(_ stateClass: AnyClass) -> Bool {
+        stateClass is GameSceneNewGameState.Type
     }
 }

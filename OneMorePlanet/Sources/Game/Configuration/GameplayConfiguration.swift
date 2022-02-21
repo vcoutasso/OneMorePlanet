@@ -6,7 +6,7 @@ struct GameplayConfiguration {
         static let planetSpawnDistance: CGFloat = 200.0
 
         /// The radius of  the physics body of the node
-        static let physicsBodyCircleRadius: CGFloat = 18
+        static let physicsBodyCircleRadius: CGFloat = 12
 
         static let renderComponentScale: CGFloat = 1.5
     }

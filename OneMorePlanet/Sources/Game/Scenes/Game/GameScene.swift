@@ -7,7 +7,7 @@ import UIKit
 final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: Properties
 
-    unowned let interstitialDelegate: InterstitialAdDelegate
+    unowned let gameOverDelegate: GameOverDelegate
 
     private lazy var worldLayerNodes = WorldLayer.allLayers
         .reduce(into: [WorldLayer: SKNode]()) { partialResult, layer in
@@ -31,8 +31,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private lazy var stateMachine = GKStateMachine(states: [
         GameSceneActiveState(gameScene: self),
         GameScenePauseState(gameScene: self),
-        GameSceneOverlayState(gameScene: self),
         GameSceneGameOverState(gameScene: self),
+        GameSceneNewGameState(gameScene: self),
     ])
 
     private lazy var entityCoordinator = EntityCoordinator(scene: self)
@@ -121,8 +121,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Initializers
 
-    init(size: CGSize, delegate: InterstitialAdDelegate) {
-        self.interstitialDelegate = delegate
+    init(size: CGSize, delegate: GameOverDelegate) {
+        self.gameOverDelegate = delegate
 
         super.init(size: size)
     }
@@ -221,7 +221,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_: SKPhysicsContact) {
-        stateMachine.enter(GameSceneOverlayState.self)
+        stateMachine.enter(GameSceneGameOverState.self)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -283,7 +283,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
         } else {
             if player.renderComponent.node.physicsBody!.velocity == .zero {
-                stateMachine.enter(GameSceneGameOverState.self)
+                stateMachine.enter(GameSceneNewGameState.self)
             }
         }
     }
@@ -337,12 +337,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Convenience
 
-    func interstitialAdDidDismiss() {
-        stateMachine.enter(GameSceneGameOverState.self)
+    func gameOverHandlingDidFinish() {
+        stateMachine.enter(GameSceneNewGameState.self)
     }
 
     func startNewGame() {
-        let newScene = GameScene(size: size, delegate: interstitialDelegate)
+        let newScene = GameScene(size: size, delegate: gameOverDelegate)
         newScene.scaleMode = scaleMode
         let animation = SKTransition.fade(withDuration: 1.0)
         view?.presentScene(newScene, transition: animation)

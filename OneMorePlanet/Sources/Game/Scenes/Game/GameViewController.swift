@@ -18,6 +18,8 @@ final class GameViewController: UIViewController {
         ((view as? SKView)!.scene as? GameScene)!
     }
 
+    private var gamesPlayed: Int = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,7 +65,7 @@ extension GameViewController: GADFullScreenContentDelegate {
     /// Tells the delegate that the ad failed to present full screen content.
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         loadInterstitialAd()
-        gameScene.interstitialAdDidDismiss()
+        gameScene.gameOverHandlingDidFinish()
     }
 
     /// Tells the delegate that the ad presented full screen content.
@@ -74,13 +76,22 @@ extension GameViewController: GADFullScreenContentDelegate {
     /// Tells the delegate that the ad dismissed full screen content.
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         loadInterstitialAd()
-        gameScene.interstitialAdDidDismiss()
+        gameScene.gameOverHandlingDidFinish()
     }
 }
 
 // MARK: - InterstitialAdDelegate extension
 
-extension GameViewController: InterstitialAdDelegate {
+extension GameViewController: GameOverDelegate {
+    func gameOver() {
+        gamesPlayed += 1
+        if gamesPlayed % 5 == 0 {
+            presentInterstitialAd()
+        } else {
+            gameScene.gameOverHandlingDidFinish()
+        }
+    }
+
     func loadInterstitialAd() {
         let request = GADRequest()
         GADInterstitialAd.load(withAdUnitID: interstitialID,
