@@ -58,24 +58,16 @@ final class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.isNavigationBarHidden = true
+
         requestTrackingPermission()
         gameCenterAuthentication()
-
-        navigationController?.isNavigationBarHidden = true
 
         setupViews()
         setupHierarchy()
         setupConstraints()
 
         addBannerView()
-
-        view.addSubview(alien)
-        let width = view.frame.width
-        let height = view.frame.height
-        alien.layer.position = CGPoint(x: width * 0.6, y: height * 0.4)
-
-        view.addSubview(stars)
-        view.addSubview(planet)
 
         bannerView.load(GADRequest())
     }
@@ -96,7 +88,9 @@ final class MainMenuViewController: UIViewController {
     }
 
     private func setupHierarchy() {
-        // Adiciona botões como subview
+        view.addSubview(stars)
+        view.addSubview(planet)
+        view.addSubview(alien)
         view.addSubview(playButton)
         view.addSubview(leaderboardButton)
         view.addSubview(tutorialButton)
@@ -133,6 +127,11 @@ final class MainMenuViewController: UIViewController {
         ]
 
         NSLayoutConstraint.activate(constraints)
+
+        alien.snp.makeConstraints { make in
+            make.centerX.equalToSuperview().multipliedBy(1.2)
+            make.centerY.equalToSuperview().multipliedBy(0.8)
+        }
     }
 
     private func addBannerView() {

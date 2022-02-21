@@ -94,3 +94,5 @@ iOSInjectionProject/
 Pods/
 
 GoogleService-Info.plist
+
+OneMorePlanet/Resources/Generated/*.swift
