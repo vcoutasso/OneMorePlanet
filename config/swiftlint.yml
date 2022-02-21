@@ -14,6 +14,7 @@ opt_in_rules:
     - unavailable_function
     - empty_string
     - file_name_no_space
+    - weak_delegate
 line_length:
   warning: 150
   error: 300
