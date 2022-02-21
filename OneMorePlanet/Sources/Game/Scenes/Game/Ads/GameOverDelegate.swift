@@ -1,6 +1,7 @@
 import Foundation
 
-protocol InterstitialAdDelegate: AnyObject {
+protocol GameOverDelegate: AnyObject {
+    func gameOver()
     func loadInterstitialAd()
     func presentInterstitialAd()
 }
