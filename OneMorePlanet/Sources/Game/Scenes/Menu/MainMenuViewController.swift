@@ -59,7 +59,7 @@ final class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.isNavigationBarHidden = true
+        navigationController!.isNavigationBarHidden = true
 
         gameCenterAuthentication()
 
@@ -142,11 +142,11 @@ final class MainMenuViewController: UIViewController {
     }
 
     @objc private func playButtonTapped() {
-        navigationController?.pushViewController(GameViewController(), animated: true)
+        navigationController!.pushViewController(GameViewController(), animated: true)
     }
 
     @objc private func tutorialButtonTapped() {
-        navigationController?.pushViewController(TutorialViewController(), animated: true)
+        navigationController!.pushViewController(TutorialViewController(), animated: true)
     }
 
     @objc private func scoreboardButtonTapped() {
