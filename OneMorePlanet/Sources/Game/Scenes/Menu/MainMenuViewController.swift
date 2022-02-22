@@ -52,6 +52,7 @@ final class MainMenuViewController: UIViewController {
             banner.adUnitID = "ca-app-pub-3502520160790339/7000888003"
         #endif
         banner.rootViewController = self
+        banner.delegate = self
         return banner
     }()
 
@@ -60,14 +61,11 @@ final class MainMenuViewController: UIViewController {
 
         navigationController?.isNavigationBarHidden = true
 
-        requestTrackingPermission()
         gameCenterAuthentication()
 
         setupViews()
         setupHierarchy()
         setupConstraints()
-
-        addBannerView()
 
         bannerView.load(GADRequest())
     }
@@ -160,31 +158,6 @@ final class MainMenuViewController: UIViewController {
         present(gcVC, animated: true)
     }
 
-    private func requestTrackingPermission() {
-        if #available(iOS 14.0, *) {
-            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                switch status {
-                case .authorized:
-                    Settings.shared.isAdvertiserTrackingEnabled = true
-                    Settings.shared.isAutoLogAppEventsEnabled = true
-                    Settings.shared.isAdvertiserIDCollectionEnabled = true
-                    print("Authorized")
-                case .denied:
-                    Settings.shared.isAdvertiserTrackingEnabled = false
-                    Settings.shared.isAutoLogAppEventsEnabled = false
-                    Settings.shared.isAdvertiserIDCollectionEnabled = false
-                    print("Denied")
-                case .notDetermined:
-                    print("Not Determined")
-                case .restricted:
-                    print("Restricted")
-                @unknown default:
-                    print("Unknown")
-                }
-            })
-        }
-    }
-
     // MARK: Layout Metrics
 
     private enum LayoutMetrics {
@@ -200,5 +173,15 @@ final class MainMenuViewController: UIViewController {
 extension MainMenuViewController: GKGameCenterControllerDelegate {
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MainMenuViewController: GADBannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        addBannerView()
+    }
+
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
 }

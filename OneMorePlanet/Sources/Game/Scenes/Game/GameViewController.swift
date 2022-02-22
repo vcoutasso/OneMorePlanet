@@ -64,13 +64,8 @@ final class GameViewController: UIViewController {
 extension GameViewController: GADFullScreenContentDelegate {
     /// Tells the delegate that the ad failed to present full screen content.
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
-        loadInterstitialAd()
+        print("ad:didFailToPresentFullScreenContentWithError: \(error.localizedDescription)")
         gameScene.gameOverHandlingDidFinish()
-    }
-
-    /// Tells the delegate that the ad presented full screen content.
-    private func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        print("Ad did present full screen content.")
     }
 
     /// Tells the delegate that the ad dismissed full screen content.
@@ -107,6 +102,12 @@ extension GameViewController: GameOverDelegate {
     }
 
     func presentInterstitialAd() {
-        interstitialAdView?.present(fromRootViewController: self)
+        if let interstitialAdView = interstitialAdView {
+            interstitialAdView.present(fromRootViewController: self)
+        } else {
+            gameScene.gameOverHandlingDidFinish()
+        }
+
+        loadInterstitialAd()
     }
 }

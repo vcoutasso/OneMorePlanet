@@ -23,13 +23,13 @@
 	<string>2958ec06fa1d370bd2b18c7d232b2a3c</string>
 	<key>FacebookDisplayName</key>
 	<string>One More Planet</string>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3502520160790339~6386466872</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fb-messenger-share-api</string>
 		<string>fbapi</string>
 	</array>
+    <key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-3502520160790339~6386466872</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
