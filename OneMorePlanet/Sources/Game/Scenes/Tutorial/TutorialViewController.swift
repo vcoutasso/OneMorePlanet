@@ -164,6 +164,6 @@ class TutorialViewController: UIViewController {
     }
 
     @objc private func checkButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        navigationController!.popViewController(animated: true)
     }
 }
