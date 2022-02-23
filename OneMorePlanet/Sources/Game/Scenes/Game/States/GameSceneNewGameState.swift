@@ -1,3 +1,4 @@
+import FirebaseAnalytics
 import GameplayKit
 
 final class GameSceneNewGameState: GKState {
@@ -12,6 +13,7 @@ final class GameSceneNewGameState: GKState {
     // MARK: GKState Life Cycle
 
     override func didEnter(from _: GKState?) {
+        Analytics.logEvent("new_game", parameters: nil)
         gameScene.startNewGame()
     }
 

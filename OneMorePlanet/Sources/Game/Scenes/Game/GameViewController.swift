@@ -1,4 +1,5 @@
 import FBSDKCoreKit
+import FirebaseAnalytics
 import GameplayKit
 import GoogleMobileAds
 import SpriteKit
@@ -59,22 +60,6 @@ final class GameViewController: UIViewController {
     }
 }
 
-// MARK: - GADFullScreenContentDelegate extension
-
-extension GameViewController: GADFullScreenContentDelegate {
-    /// Tells the delegate that the ad failed to present full screen content.
-    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
-        print("ad:didFailToPresentFullScreenContentWithError: \(error.localizedDescription)")
-        gameScene.gameOverHandlingDidFinish()
-    }
-
-    /// Tells the delegate that the ad dismissed full screen content.
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        loadInterstitialAd()
-        gameScene.gameOverHandlingDidFinish()
-    }
-}
-
 // MARK: - InterstitialAdDelegate extension
 
 extension GameViewController: GameOverDelegate {
@@ -103,11 +88,30 @@ extension GameViewController: GameOverDelegate {
 
     func presentInterstitialAd() {
         if let interstitialAdView = interstitialAdView {
+            Analytics.logEvent("interstitial_success", parameters: nil)
             interstitialAdView.present(fromRootViewController: self)
         } else {
+            Analytics.logEvent("interstitial_fail", parameters: nil)
             gameScene.gameOverHandlingDidFinish()
         }
+    }
+}
 
+// MARK: - GADFullScreenContentDelegate extension
+
+extension GameViewController: GADFullScreenContentDelegate {
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("ad:didFailToPresentFullScreenContentWithError: \(error.localizedDescription)")
+        gameScene.gameOverHandlingDidFinish()
+        loadInterstitialAd()
+    }
+
+    func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
+        Analytics.logEvent("interstitial_clicked", parameters: nil)
+    }
+
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        gameScene.gameOverHandlingDidFinish()
         loadInterstitialAd()
     }
 }
