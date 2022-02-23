@@ -6,13 +6,18 @@ import SpriteKit
 import UIKit
 
 final class GameViewController: UIViewController {
-    private var interstitialAdView: GADInterstitialAd?
+    // MARK: Properties
 
     #if DEBUG
         private let interstitialID: String = "ca-app-pub-3940256099942544/4411468910"
+        private let rewardedID: String = "ca-app-pub-3940256099942544/1712485313"
     #else
         private let interstitialID: String = "ca-app-pub-3502520160790339/8584420650"
+        private let rewardedID: String = "ca-app-pub-3502520160790339/7067835606"
     #endif
+
+    private var interstitialAd: GADInterstitialAd?
+    private var rewardedAd: GADRewardedAd?
 
     // FIXME: Come on we can do better than this
     private var gameScene: GameScene {
@@ -81,13 +86,13 @@ extension GameViewController: GameOverDelegate {
                 return
             }
 
-            self?.interstitialAdView = loadedAd
-            self?.interstitialAdView?.fullScreenContentDelegate = self
+            self?.interstitialAd = loadedAd
+            self?.interstitialAd?.fullScreenContentDelegate = self
         }
     }
 
     func presentInterstitialAd() {
-        if let interstitialAdView = interstitialAdView {
+        if let interstitialAdView = interstitialAd {
             Analytics.logEvent("interstitial_success", parameters: nil)
             interstitialAdView.present(fromRootViewController: self)
         } else {

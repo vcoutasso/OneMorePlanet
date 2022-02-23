@@ -139,17 +139,24 @@
 			isa = PBXGroup;
 			children = (
 				3A0D11A327B343C4000467DB /* MainMenuViewController.swift */,
-				4C2C86D627B54C4B00E150BC /* Components */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
 		};
-		4C2C86D627B54C4B00E150BC /* Components */ = {
+		4C0026B327C6D958004DC741 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4C0026B427C6D95C004DC741 /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4C0026B427C6D95C004DC741 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				4C2C86D727B552AE00E150BC /* RoundedButton.swift */,
 			);
-			path = Components;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4C2E57A627A7574600136B4B /* Sources */ = {
@@ -190,6 +197,7 @@
 				4C57300A27ABF79C000407B2 /* Physics */,
 				4C62CED027AA302900E1D2B2 /* Configuration */,
 				4C9746B027A960D900679315 /* Scenes */,
+				4C0026B327C6D958004DC741 /* Common */,
 				4C2E57AC27A75FCC00136B4B /* Components */,
 				4C2E57AB27A75FC700136B4B /* Entities */,
 			);
