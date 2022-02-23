@@ -167,12 +167,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         entityCoordinator.addEntity(player, to: .player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
-        entityCoordinator.addEntity(upperAsteroidBelt, to: .game)
+        entityCoordinator.addEntity(upperAsteroidBelt, to: .interactable)
         setEntityNodePosition(entity: upperAsteroidBelt,
                               position: CGPoint(x: GameplayConfiguration.AsteroidBelt
                                   .positionScreenWidthMultiplier * size.width,
                                   y: 0.0))
-        entityCoordinator.addEntity(lowerAsteroidBelt, to: .game)
+        entityCoordinator.addEntity(lowerAsteroidBelt, to: .interactable)
         setEntityNodePosition(entity: lowerAsteroidBelt,
                               position: CGPoint(x: -GameplayConfiguration.AsteroidBelt
                                   .positionScreenWidthMultiplier * size.width,
@@ -325,7 +325,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition)
         setEntityNodePosition(entity: newPlanet, position: CGPoint(x: initialPosition.x, y: initialPosition.y))
 
-        entityCoordinator.addEntity(newPlanet, to: .game)
+        entityCoordinator.addEntity(newPlanet, to: .interactable)
 
         topY += CGFloat.random(in: 150...300)
         score = Score(value: score.value + 1)

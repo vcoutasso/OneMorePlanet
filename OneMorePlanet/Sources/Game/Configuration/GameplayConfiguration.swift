@@ -35,7 +35,7 @@ struct GameplayConfiguration {
         /// Linear damping of the physics body
         static let physicsBodyLinearDamping: CGFloat = 0.05
 
-        /// Scaling of planet nodes. Also used to calculate the scaled physicsBody
+        /// Scaling of player node. Also used to calculate the scaled physicsBody
         static let renderComponentScale: CGFloat = 0.2
     }
 
@@ -45,6 +45,11 @@ struct GameplayConfiguration {
 
         /// The screen width factor for the horizontal offset of asteroid belts
         static let positionScreenWidthMultiplier: CGFloat = 0.85
+    }
+
+    enum Star {
+        /// Scaling of star nodes
+        static let renderComponentScale: CGFloat = 1
     }
 
     enum Ads {

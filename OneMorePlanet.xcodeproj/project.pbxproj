@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		3A0D11A427B343C4000467DB /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0D11A327B343C4000467DB /* MainMenuViewController.swift */; };
 		3A78303827B48879002B101E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78303727B48879002B101E /* TutorialViewController.swift */; };
+		4C0026A827C66D95004DC741 /* StarAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C0026A727C66D95004DC741 /* StarAssets.xcassets */; };
+		4C0026AD27C67180004DC741 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026AB27C67180004DC741 /* Assets.swift */; };
+		4C0026AE27C67180004DC741 /* StarAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026AC27C67180004DC741 /* StarAssets.swift */; };
+		4C0026B227C6750D004DC741 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B127C6750D004DC741 /* Star.swift */; };
 		4C2C86D827B552AE00E150BC /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C86D727B552AE00E150BC /* RoundedButton.swift */; };
 		4C2E57AE27A769A400136B4B /* RenderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57AD27A769A400136B4B /* RenderComponent.swift */; };
 		4C2E57B027A76B9C00136B4B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57AF27A76B9C00136B4B /* Player.swift */; };
@@ -43,7 +47,6 @@
 		4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826C27A809E700689BB8 /* CGPoint+.swift */; };
 		4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */; };
 		4CD7827127A81EF700689BB8 /* EntityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */; };
-		4CE37F9927B4B0C3009EA7E6 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE37F9627B4B0C3009EA7E6 /* Assets.swift */; };
 		4CE37F9A27B4B0C3009EA7E6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE37F9727B4B0C3009EA7E6 /* Strings.swift */; };
 		4CE37F9B27B4B0C3009EA7E6 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */; };
 		4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CEB293027BE7F6A0076ADC4 /* GoogleService-Info.plist */; };
@@ -55,6 +58,10 @@
 		3A0D11A327B343C4000467DB /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		3A78303727B48879002B101E /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		491CF5EF4A2B847A3A0D6BD4 /* Pods-OneMorePlanet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.release.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.release.xcconfig"; sourceTree = "<group>"; };
+		4C0026A727C66D95004DC741 /* StarAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StarAssets.xcassets; sourceTree = "<group>"; };
+		4C0026AB27C67180004DC741 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		4C0026AC27C67180004DC741 /* StarAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarAssets.swift; sourceTree = "<group>"; };
+		4C0026B127C6750D004DC741 /* Star.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
 		4C2C86D727B552AE00E150BC /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		4C2E57AD27A769A400136B4B /* RenderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderComponent.swift; sourceTree = "<group>"; };
 		4C2E57AF27A76B9C00136B4B /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -91,7 +98,6 @@
 		4CD7826C27A809E700689BB8 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		4CD7826E27A80A8E00689BB8 /* SIMD2+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SIMD2+.swift"; sourceTree = "<group>"; };
 		4CD7827027A81EF700689BB8 /* EntityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCoordinator.swift; sourceTree = "<group>"; };
-		4CE37F9627B4B0C3009EA7E6 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		4CE37F9727B4B0C3009EA7E6 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4CEB293027BE7F6A0076ADC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -170,6 +176,7 @@
 				4C84D4AD27B369AC00EF42EB /* Generated */,
 				4C41CDF127AD674000057151 /* Fonts */,
 				4C7D6B9927A3778A0016C962 /* Assets.xcassets */,
+				4C0026A727C66D95004DC741 /* StarAssets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -202,6 +209,7 @@
 				4C2E57AF27A76B9C00136B4B /* Player.swift */,
 				4C2E57B127A76D6500136B4B /* Planet.swift */,
 				4C41CDE927AD549900057151 /* AsteroidBelt.swift */,
+				4C0026B127C6750D004DC741 /* Star.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -316,9 +324,10 @@
 		4C84D4AD27B369AC00EF42EB /* Generated */ = {
 			isa = PBXGroup;
 			children = (
-				4CE37F9627B4B0C3009EA7E6 /* Assets.swift */,
+				4C0026AB27C67180004DC741 /* Assets.swift */,
 				4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */,
 				4CE37F9727B4B0C3009EA7E6 /* Strings.swift */,
+				4C0026AC27C67180004DC741 /* StarAssets.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -432,6 +441,7 @@
 			files = (
 				4C7D6B9A27A3778A0016C962 /* Assets.xcassets in Resources */,
 				4C996CEB27B40DEB00C88725 /* MyBokeh.sks in Resources */,
+				4C0026A827C66D95004DC741 /* StarAssets.xcassets in Resources */,
 				4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */,
 				4C41CDF327AD676A00057151 /* aldotheapache.ttf in Resources */,
 				4C7D6B9D27A3778A0016C962 /* LaunchScreen.storyboard in Resources */,
@@ -544,11 +554,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0026AE27C67180004DC741 /* StarAssets.swift in Sources */,
 				4C7D6B9327A377880016C962 /* GameScene.swift in Sources */,
-				4CE37F9927B4B0C3009EA7E6 /* Assets.swift in Sources */,
 				4C57301027AC0056000407B2 /* GravitationalComponent.swift in Sources */,
 				4C57300E27ABFB8D000407B2 /* ContactNotifiableType.swift in Sources */,
 				4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */,
+				4C0026B227C6750D004DC741 /* Star.swift in Sources */,
 				4CEB293727BF27870076ADC4 /* GameOverDelegate.swift in Sources */,
 				4C7D6B9527A377880016C962 /* GameViewController.swift in Sources */,
 				4CE37F9B27B4B0C3009EA7E6 /* Fonts.swift in Sources */,
@@ -571,6 +582,7 @@
 				4C2E57B227A76D6500136B4B /* Planet.swift in Sources */,
 				4C41CDEA27AD549900057151 /* AsteroidBelt.swift in Sources */,
 				4C996CE527B3EE5300C88725 /* GameSceneNewGameState.swift in Sources */,
+				4C0026AD27C67180004DC741 /* Assets.swift in Sources */,
 				4C57300C27ABF7C1000407B2 /* ColliderType.swift in Sources */,
 				4C2E57B027A76B9C00136B4B /* Player.swift in Sources */,
 				4C2E57AE27A769A400136B4B /* RenderComponent.swift in Sources */,
