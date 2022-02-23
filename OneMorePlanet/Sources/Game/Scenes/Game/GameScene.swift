@@ -1,3 +1,4 @@
+import FirebaseAnalytics
 import GameKit
 import GameplayKit
 import SnapKit
@@ -252,15 +253,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         if camera!.frame.midX > 0 {
-            upperAsteroidBelt.renderComponent.node.position.x = GameplayConfiguration.AsteroidBelt
-                .positionScreenWidthMultiplier * size.width
-            lowerAsteroidBelt.renderComponent.node.position.x = GameplayConfiguration.AsteroidBelt
-                .positionScreenWidthMultiplier * size.width
+            let xPosition = GameplayConfiguration.AsteroidBelt.positionScreenWidthMultiplier * size.width
+            upperAsteroidBelt.renderComponent.node.position.x = xPosition
+            lowerAsteroidBelt.renderComponent.node.position.x = xPosition
         } else {
-            upperAsteroidBelt.renderComponent.node.position.x = -GameplayConfiguration.AsteroidBelt
-                .positionScreenWidthMultiplier * size.width
-            lowerAsteroidBelt.renderComponent.node.position.x = -GameplayConfiguration.AsteroidBelt
-                .positionScreenWidthMultiplier * size.width
+            let xPosition = -GameplayConfiguration.AsteroidBelt.positionScreenWidthMultiplier * size.width
+            upperAsteroidBelt.renderComponent.node.position.x = xPosition
+            lowerAsteroidBelt.renderComponent.node.position.x = xPosition
         }
 
         if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {

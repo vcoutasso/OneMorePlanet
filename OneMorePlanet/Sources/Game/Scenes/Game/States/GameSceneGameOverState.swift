@@ -1,3 +1,4 @@
+import FirebaseAnalytics
 import GameplayKit
 
 final class GameSceneGameOverState: GKState {
@@ -13,6 +14,7 @@ final class GameSceneGameOverState: GKState {
 
     override func didEnter(from previousState: GKState?) {
         super.didEnter(from: previousState)
+        Analytics.logEvent("game_over", parameters: nil)
 
         Task {
             await gameScene.submitScore()

@@ -1,6 +1,7 @@
 import AdSupport
 import AppTrackingTransparency
 import FBSDKCoreKit
+import FirebaseAnalytics
 import GameKit
 import GoogleMobileAds
 import SnapKit
@@ -142,19 +143,22 @@ final class MainMenuViewController: UIViewController {
     }
 
     @objc private func playButtonTapped() {
+        Analytics.logEvent("play_game", parameters: nil)
         navigationController!.pushViewController(GameViewController(), animated: true)
     }
 
     @objc private func tutorialButtonTapped() {
+        Analytics.logEvent("tutorial", parameters: nil)
         navigationController!.pushViewController(TutorialViewController(), animated: true)
     }
 
     @objc private func scoreboardButtonTapped() {
+        Analytics.logEvent("leaderboard", parameters: nil)
+
         let leaderboardID = "AllTimeBests"
+        GKAccessPoint.shared.isActive = false
         let gcVC = GKGameCenterViewController(leaderboardID: leaderboardID, playerScope: .global, timeScope: .allTime)
         gcVC.gameCenterDelegate = self
-        GKAccessPoint.shared.isActive = false
-
         present(gcVC, animated: true)
     }
 
@@ -178,10 +182,16 @@ extension MainMenuViewController: GKGameCenterControllerDelegate {
 
 extension MainMenuViewController: GADBannerViewDelegate {
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        Analytics.logEvent("banner_success", parameters: nil)
         addBannerView()
     }
 
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        Analytics.logEvent("banner_fail", parameters: nil)
         print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    func bannerViewDidRecordClick(_ bannerView: GADBannerView) {
+        Analytics.logEvent("banner_clicked", parameters: nil)
     }
 }
