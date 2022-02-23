@@ -37,7 +37,7 @@ final class RoundedButton: UIButton {
 
         setTitle(title, for: .normal)
         setTitleColor(.white, for: .normal)
-        titleLabel?.font = UIFont(name: Fonts.AldoTheApache.regular.name, size: LayoutMetrics.buttonTitleFontSize)
+        titleLabel?.font = Fonts.AldoTheApache.regular.font(size: LayoutMetrics.buttonTitleFontSize)
 
         let symbolConfiguration = UIImage.SymbolConfiguration(weight: .bold)
         let icon = UIImage(systemName: iconSystemName, withConfiguration: symbolConfiguration)?.withTintColor(.white,

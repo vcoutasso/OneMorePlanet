@@ -120,6 +120,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return label
     }()
 
+    private lazy var gameOverOverlay = GameOverOverlayView(score: score.value, bestScore: currentBest.value)
+
     // MARK: Initializers
 
     init(size: CGSize, delegate: GameOverDelegate) {
@@ -141,6 +143,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+
+        view.addSubview(gameOverOverlay)
+
+        gameOverOverlay.snp.makeConstraints { make in
+//            make.leadingMargin.equalToSuperview().inset(20)
+//            make.trailing.equalToSuperview().inset(20)
+//            make.topMargin.equalToSuperview().offset(200)
+//            make.bottomMargin.equalToSuperview().offset(200)
+            make.height.equalToSuperview().multipliedBy(0.6)
+            make.width.equalToSuperview().multipliedBy(0.8)
+            make.center.equalToSuperview()
+        }
 
         registerForPauseNotifications()
 
