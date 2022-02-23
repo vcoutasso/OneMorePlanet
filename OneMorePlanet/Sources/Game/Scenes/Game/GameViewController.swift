@@ -1,5 +1,6 @@
 import FBSDKCoreKit
 import FirebaseAnalytics
+import GameKit
 import GameplayKit
 import GoogleMobileAds
 import SpriteKit
@@ -100,6 +101,14 @@ extension GameViewController: GameOverDelegate {
             gameScene.gameOverHandlingDidFinish()
         }
     }
+
+    func presentLeaderboard() {
+        let leaderboardID = "AllTimeBests"
+        GKAccessPoint.shared.isActive = false
+        let gcVC = GKGameCenterViewController(leaderboardID: leaderboardID, playerScope: .global, timeScope: .allTime)
+        gcVC.gameCenterDelegate = self
+        present(gcVC, animated: true)
+    }
 }
 
 // MARK: - GADFullScreenContentDelegate extension
@@ -118,5 +127,11 @@ extension GameViewController: GADFullScreenContentDelegate {
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         gameScene.gameOverHandlingDidFinish()
         loadInterstitialAd()
+    }
+}
+
+extension GameViewController: GKGameCenterControllerDelegate {
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }

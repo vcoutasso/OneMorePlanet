@@ -19,7 +19,6 @@ final class GameSceneGameOverState: GKState {
         Task {
             await gameScene.submitScore()
         }
-        gameScene.isReallyPaused = true
         gameScene.gameOverDelegate.gameOver()
     }
 

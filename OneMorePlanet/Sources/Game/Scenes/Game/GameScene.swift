@@ -32,6 +32,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private lazy var stateMachine = GKStateMachine(states: [
         GameSceneActiveState(gameScene: self),
         GameScenePauseState(gameScene: self),
+        GameSceneOverlayState(gameScene: self),
         GameSceneGameOverState(gameScene: self),
         GameSceneNewGameState(gameScene: self),
     ])
@@ -52,13 +53,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private lazy var topY: CGFloat = GameplayConfiguration.Planet.planetSpawnDistance
 
-    private var score: Score = .zero {
+    private(set) var score: Score = .zero {
         didSet {
             scoreLabel.text = "\(score.value)"
         }
     }
 
-    private lazy var currentBest: Score = highScoreStore.fetchHighScore() {
+    private(set) lazy var currentBest: Score = highScoreStore.fetchHighScore() {
         didSet {
             currentBestLabel.text = "Best: \(currentBest.value)"
         }
@@ -120,8 +121,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return label
     }()
 
-    private lazy var gameOverOverlay = GameOverOverlayView(score: score.value, bestScore: currentBest.value)
-
     // MARK: Initializers
 
     init(size: CGSize, delegate: GameOverDelegate) {
@@ -143,18 +142,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-
-        view.addSubview(gameOverOverlay)
-
-        gameOverOverlay.snp.makeConstraints { make in
-//            make.leadingMargin.equalToSuperview().inset(20)
-//            make.trailing.equalToSuperview().inset(20)
-//            make.topMargin.equalToSuperview().offset(200)
-//            make.bottomMargin.equalToSuperview().offset(200)
-            make.height.equalToSuperview().multipliedBy(0.6)
-            make.width.equalToSuperview().multipliedBy(0.8)
-            make.center.equalToSuperview()
-        }
 
         registerForPauseNotifications()
 
@@ -230,13 +217,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func touchesEnded(_: Set<UITouch>, with _: UIEvent?) {
         isInOrbit = false
-        if isReallyPaused {
+        if stateMachine.currentState is GameScenePauseState {
             resumeGame()
         }
     }
 
     func didBegin(_: SKPhysicsContact) {
-        stateMachine.enter(GameSceneGameOverState.self)
+        stateMachine.enter(GameSceneOverlayState.self)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -369,6 +356,16 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                              leaderboardIDs: ["AllTimeBests"])
         highScoreStore.tryToUpdateHighScore(with: score)
         currentBest = highScoreStore.fetchHighScore()
+    }
+
+    @objc func extraLifeReward() {}
+
+    @objc func playAgain() {
+        stateMachine.enter(GameSceneGameOverState.self)
+    }
+
+    @objc func leaderboard() {
+        gameOverDelegate.presentLeaderboard()
     }
 
     private func setCameraConstraints() {

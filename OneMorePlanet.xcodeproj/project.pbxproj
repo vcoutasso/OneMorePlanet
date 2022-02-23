@@ -11,6 +11,7 @@
 		3A78303827B48879002B101E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78303727B48879002B101E /* TutorialViewController.swift */; };
 		4C0026B727C6DD11004DC741 /* GameOverOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B627C6DD11004DC741 /* GameOverOverlayView.swift */; };
 		4C0026B927C6E0CE004DC741 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B827C6E0CE004DC741 /* UIView+.swift */; };
+		4C0026BB27C6F4CC004DC741 /* GameSceneOverlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026BA27C6F4CC004DC741 /* GameSceneOverlayState.swift */; };
 		4C2C86D827B552AE00E150BC /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2C86D727B552AE00E150BC /* RoundedButton.swift */; };
 		4C2E57AE27A769A400136B4B /* RenderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57AD27A769A400136B4B /* RenderComponent.swift */; };
 		4C2E57B027A76B9C00136B4B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57AF27A76B9C00136B4B /* Player.swift */; };
@@ -59,6 +60,7 @@
 		491CF5EF4A2B847A3A0D6BD4 /* Pods-OneMorePlanet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.release.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.release.xcconfig"; sourceTree = "<group>"; };
 		4C0026B627C6DD11004DC741 /* GameOverOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverOverlayView.swift; sourceTree = "<group>"; };
 		4C0026B827C6E0CE004DC741 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		4C0026BA27C6F4CC004DC741 /* GameSceneOverlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneOverlayState.swift; sourceTree = "<group>"; };
 		4C2C86D727B552AE00E150BC /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		4C2E57AD27A769A400136B4B /* RenderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderComponent.swift; sourceTree = "<group>"; };
 		4C2E57AF27A76B9C00136B4B /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				4C41CDEF27AD5D0B00057151 /* GameScenePauseState.swift */,
 				4C996CE227B3E4CD00C88725 /* GameSceneGameOverState.swift */,
 				4C996CE427B3EE5300C88725 /* GameSceneNewGameState.swift */,
+				4C0026BA27C6F4CC004DC741 /* GameSceneOverlayState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				4C2E57AE27A769A400136B4B /* RenderComponent.swift in Sources */,
 				4C2C86D827B552AE00E150BC /* RoundedButton.swift in Sources */,
 				4C996CE327B3E4CD00C88725 /* GameSceneGameOverState.swift in Sources */,
+				4C0026BB27C6F4CC004DC741 /* GameSceneOverlayState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
