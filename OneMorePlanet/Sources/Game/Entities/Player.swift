@@ -38,6 +38,7 @@ final class Player: GKEntity {
 
         let texture = SKTexture(imageNamed: imageName)
         let renderComponent = RenderComponent(texture: texture)
+        renderComponent.node.setScale(GameplayConfiguration.Player.renderComponentScale)
         addComponent(renderComponent)
 
         let movementComponent = MovementComponent(behavior: nil)

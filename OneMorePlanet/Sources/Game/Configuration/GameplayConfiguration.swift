@@ -27,13 +27,16 @@ struct GameplayConfiguration {
         static let maxSpeed: CGFloat = 350.0
 
         /// The radius of  the physics body of the node
-        static let physicsBodyCircleRadius: CGFloat = 12
+        static let physicsBodyCircleRadius: CGFloat = 16
 
         /// Mass of the physics body
         static let physicsBodyMass: CGFloat = 0.05
 
         /// Linear damping of the physics body
         static let physicsBodyLinearDamping: CGFloat = 0.05
+
+        /// Scaling of planet nodes. Also used to calculate the scaled physicsBody
+        static let renderComponentScale: CGFloat = 0.2
     }
 
     enum AsteroidBelt {
