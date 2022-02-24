@@ -53,6 +53,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private lazy var topY: CGFloat = GameplayConfiguration.Planet.planetSpawnDistance
 
+    private var maxY: CGFloat = 0
+
     private(set) var score: Score = .zero {
         didSet {
             scoreLabel.text = "\(score.value)"
@@ -138,6 +140,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         registerForPauseNotifications()
 
         backgroundColor = UIColor(named: "Colors/SpaceBackground")!
+        backgroundStarsNode.setScale(1.2)
+        backgroundStarsNode.blendMode = .screen
         backgroundStarsNode.position = .zero
         backgroundStarsNode.zPosition = -1
 
@@ -159,18 +163,19 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(camera)
 
         entityCoordinator.addEntity(player, to: .player)
-        entityCoordinator.addEntity(upperAsteroidBelt, to: .game)
+        setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
+        entityCoordinator.addEntity(upperAsteroidBelt, to: .interactable)
         setEntityNodePosition(entity: upperAsteroidBelt,
                               position: CGPoint(x: GameplayConfiguration.AsteroidBelt
                                   .positionScreenWidthMultiplier * size.width,
                                   y: 0.0))
-        entityCoordinator.addEntity(lowerAsteroidBelt, to: .game)
+        entityCoordinator.addEntity(lowerAsteroidBelt, to: .interactable)
         setEntityNodePosition(entity: lowerAsteroidBelt,
                               position: CGPoint(x: -GameplayConfiguration.AsteroidBelt
                                   .positionScreenWidthMultiplier * size.width,
                                   y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
-        resetPlayer()
+        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -268,18 +273,38 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
         } else {
             if player.renderComponent.node.physicsBody!.velocity == .zero {
-                stateMachine.enter(GameSceneNewGameState.self)
+                // FIXME: Temporary solution
+                if stateMachine.currentState is GameSceneActiveState, isExtraLifeAvailable {
+                    stateMachine.enter(GameSceneNewGameState.self)
+                }
             }
+        }
+
+        let currentY = player.renderComponent.node.position.y
+        if currentY > maxY {
+            maxY = currentY
+        }
+
+        score = Score(value: Int(maxY / 100))
+
+        if score > currentBest {
+            currentBest = score
         }
     }
 
     // MARK: Level Construction
 
     func resetPlayer() {
-        setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
+        player.physicsComponent.updateColliderType(.none)
         player.physicsComponent.physicsBody.velocity = .zero
         player.physicsComponent.physicsBody.angularVelocity = .zero
+        setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: player.renderComponent.node.position.y))
         player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard let self = self else { return }
+            self.player.physicsComponent.updateColliderType(.player)
+        }
     }
 
     func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {
@@ -296,8 +321,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func spawnPlanet() {
-        let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
-
         let asteroidPosition = GameplayConfiguration.AsteroidBelt.positionScreenWidthMultiplier
         let xCoordinateInterval: ClosedRange<CGFloat> = -asteroidPosition...asteroidPosition
         var xCoordinate = CGFloat.random(in: xCoordinateInterval) * GameplayConfiguration.Planet
@@ -315,13 +338,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate),
                                                   y: Float(camera!.frame.maxY + view!.frame.height))
-        let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition)
+        let newPlanet = Planet(imageName: PlanetAssets.allImages.randomElement()!.name,
+                               initialPosition: initialPosition)
         setEntityNodePosition(entity: newPlanet, position: CGPoint(x: initialPosition.x, y: initialPosition.y))
 
-        entityCoordinator.addEntity(newPlanet, to: .game)
+        entityCoordinator.addEntity(newPlanet, to: .interactable)
 
         topY += CGFloat.random(in: 150...300)
-        score = Score(value: score.value + 1)
     }
 
     private func setEntityNodePosition(entity: GKEntity, position: CGPoint) {

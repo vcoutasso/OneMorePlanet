@@ -13,6 +13,8 @@ final class GameSceneActiveState: GKState {
 
     override func didEnter(from previousState: GKState?) {
         super.didEnter(from: previousState)
+
+        gameScene.isReallyPaused = false
     }
 
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {

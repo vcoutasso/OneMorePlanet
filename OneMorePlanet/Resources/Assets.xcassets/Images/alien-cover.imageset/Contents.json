@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "alien-cover.png",
+      "filename" : "menu-alien.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "alien-cover@2x.png",
+      "filename" : "menu-alien@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "alien-cover@3x.png",
+      "filename" : "menu-alien@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

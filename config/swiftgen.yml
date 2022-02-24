@@ -8,12 +8,30 @@ strings:
         params:
           enumName: Strings
 xcassets:
-  inputs: Assets.xcassets
-  outputs:
-    - templateName: swift5
+  - inputs: Assets.xcassets
+    outputs:
+      templateName: swift5
       output: Assets.swift
       params:
         enumName: Assets
+  - inputs: StarAssets.xcassets
+    outputs:
+      templateName: swift5
+      output: StarAssets.swift
+      params:
+        enumName: StarAssets
+        imageTypeName: StarImageAsset
+        imageAliasName: StarAssetImageTypeAlias
+        allValues: true
+  - inputs: PlanetAssets.xcassets
+    outputs:
+      templateName: swift5
+      output: PlanetAssets.swift
+      params:
+        enumName: PlanetAssets
+        imageTypeName: PlanetImageAsset
+        imageAliasName: PlanetAssetImageTypeAlias
+        allValues: true
 fonts:
   inputs: Fonts
   outputs:

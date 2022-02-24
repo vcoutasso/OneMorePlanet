@@ -141,12 +141,12 @@ extension GameViewController: GameOverDelegate {
     func presentRewardedAd() {
         isPresentingRewarded = true
         if let rewardedAd = rewardedAd {
-            Analytics.logEvent("rewarded_success", parameters: nil)
-            rewardedAd.present(fromRootViewController: self) { [weak self] in
-                self?.gameScene.continueWithExtraLife()
+            rewardedAd.present(fromRootViewController: self) {
+                Analytics.logEvent("rewarded_success", parameters: nil)
             }
         } else {
             Analytics.logEvent("rewarded_fail", parameters: nil)
+            isPresentingRewarded = false
             gameScene.gameOverHandlingDidFinish()
         }
     }
@@ -190,6 +190,7 @@ extension GameViewController: GADFullScreenContentDelegate {
             gameScene.continueWithExtraLife()
         }
         loadAds()
+        print("Did dismiss ad")
     }
 
     private func loadAds() {

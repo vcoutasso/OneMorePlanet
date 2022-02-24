@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "asteroidsbelt.png",
+      "filename" : "asteroidBelt.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "asteroidsbelt@2x.png",
+      "filename" : "asteroidBelt@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "asteroidsbelt@3x.png",
+      "filename" : "asteroidBelt@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

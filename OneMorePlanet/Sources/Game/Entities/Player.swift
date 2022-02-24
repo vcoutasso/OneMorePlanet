@@ -38,6 +38,7 @@ final class Player: GKEntity {
 
         let texture = SKTexture(imageNamed: imageName)
         let renderComponent = RenderComponent(texture: texture)
+        renderComponent.node.setScale(GameplayConfiguration.Player.renderComponentScale)
         addComponent(renderComponent)
 
         let movementComponent = MovementComponent(behavior: nil)
@@ -49,7 +50,7 @@ final class Player: GKEntity {
         let physicsBody = SKPhysicsBody(circleOfRadius: GameplayConfiguration.Player.physicsBodyCircleRadius)
         physicsBody.linearDamping = GameplayConfiguration.Player.physicsBodyLinearDamping
         physicsBody.mass = GameplayConfiguration.Player.physicsBodyMass
-        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Player)
+        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: .player)
         addComponent(physicsComponent)
         renderComponent.node.physicsBody = physicsBody
     }

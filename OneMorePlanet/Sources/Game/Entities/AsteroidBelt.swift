@@ -27,7 +27,7 @@ final class AsteroidBelt: GKEntity {
 
         let physicsBody = SKPhysicsBody(rectangleOf: renderComponent.node.size)
         physicsBody.isDynamic = false
-        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.Obstacle)
+        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.obstacle)
         addComponent(physicsComponent)
 
         renderComponent.node.physicsBody = physicsBody
