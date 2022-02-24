@@ -65,10 +65,6 @@ class TutorialViewController: UIViewController {
         setupConstraints()
     }
 
-    override func viewDidLayoutSubviews() {
-//        checkButton.layer.insertSublayer(backgroundGradientLayer, at: 0)
-    }
-
     private func setupConstraints() {
         titleStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -78,18 +74,18 @@ class TutorialViewController: UIViewController {
         tutorial1.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleStackView.snp.bottom).offset(50)
-            make.leadingMargin.trailingMargin.equalToSuperview().inset(30)
+            make.width.equalToSuperview().multipliedBy(0.8)
         }
 
         tutorial2.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(tutorial1.snp.bottom).offset(50)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.width.equalToSuperview().multipliedBy(0.8)
         }
 
         checkButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottomMargin.equalToSuperview().offset(-40)
+            make.bottom.equalToSuperview().offset(-35)
         }
     }
 

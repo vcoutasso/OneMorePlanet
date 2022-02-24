@@ -43,7 +43,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var isInOrbit = false
 
-    private let backgroundStarsNode = SKSpriteNode(texture: SKTexture(imageNamed: "Images/Stars"))
+    private let backgroundStarsNode = SKSpriteNode(texture: SKTexture(imageNamed: Assets.Images.stars.name))
 
     private var nearestPlanetPosition: CGPoint = .zero
 
@@ -139,7 +139,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         registerForPauseNotifications()
 
-        backgroundColor = UIColor(named: "Colors/SpaceBackground")!
+        backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)!
         backgroundStarsNode.setScale(1.2)
         backgroundStarsNode.blendMode = .screen
         backgroundStarsNode.position = .zero
