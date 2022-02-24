@@ -24,19 +24,17 @@ class TutorialViewController: UIViewController {
 
         let label = UILabel()
         label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 15)
-        label.text = "TAP NEAR THE PLANETS TO ACTIVATE\n THEIR GRAVITATIONAL FIELDS"
+        label.text = "HOLD ANYWHERE TO USE THE\n NEAREST GRAVITATIONAL FIELDS"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-
         let attributedString =
-            NSMutableAttributedString(string: "TAP NEAR THE PLANETS TO ACTIVATE\n THEIR GRAVITATIONAL FIELDS")
+            NSMutableAttributedString(string: "HOLD ANYWHERE TO USE THE\n NEAREST GRAVITATIONAL ORBITS")
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle,
                                       range: NSMakeRange(0, attributedString.length))
-
         label.attributedText = attributedString
         label.textAlignment = .center
 
@@ -52,7 +50,7 @@ class TutorialViewController: UIViewController {
         stack.layer.borderWidth = 1
         stack.layer.cornerRadius = 30
         stack.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 100)
-        stack.layoutMargins = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
+        stack.layoutMargins = UIEdgeInsets(top: 0, left: 5, bottom: 3, right: 5)
         stack.isLayoutMarginsRelativeArrangement = true
 
         NSLayoutConstraint.activate([
@@ -95,7 +93,7 @@ class TutorialViewController: UIViewController {
         stack.layer.borderWidth = 1
         stack.layer.cornerRadius = 30
         stack.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 100)
-        stack.layoutMargins = UIEdgeInsets(top: 0, left: 12, bottom: 5, right: 12)
+        stack.layoutMargins = UIEdgeInsets(top: 0, left: 12, bottom: 3, right: 12)
         stack.isLayoutMarginsRelativeArrangement = true
 
         NSLayoutConstraint.activate([
