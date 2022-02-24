@@ -319,7 +319,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func spawnPlanet() {
-        let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 27).nextInt()
+        let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 21).nextInt()
 
         let asteroidPosition = GameplayConfiguration.AsteroidBelt.positionScreenWidthMultiplier
         let xCoordinateInterval: ClosedRange<CGFloat> = -asteroidPosition...asteroidPosition
