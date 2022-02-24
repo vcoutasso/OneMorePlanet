@@ -17,97 +17,39 @@ class TutorialViewController: UIViewController {
         return stack
     }()
 
-    private lazy var tutorial1: UIStackView = {
-        let imageView = UIImageView(image: UIImage(asset: Assets.Images.tutorial1))
+    private lazy var tutorial1: UIImageView = {
+        let image = UIImage(asset: Assets.Images.tutorial1)
+        let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-
-        let label = UILabel()
-        label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 15)
-        label.text = "HOLD ANYWHERE TO USE THE\n NEAREST GRAVITATIONAL FIELDS"
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textColor = .white
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-        let attributedString =
-            NSMutableAttributedString(string: "HOLD ANYWHERE TO USE THE\n NEAREST GRAVITATIONAL ORBITS")
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle,
-                                      range: NSRange(location: 0, length: attributedString.length))
-        label.attributedText = attributedString
-        label.textAlignment = .center
-
-        let stack = UIStackView(arrangedSubviews: [
-            imageView,
-            label,
-        ])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.spacing = 15
-        stack.distribution = .fillProportionally
-        stack.contentMode = .scaleAspectFit
-        stack.layer.borderWidth = 1
-        stack.layer.cornerRadius = 30
-        stack.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 100)
-        stack.layoutMargins = UIEdgeInsets(top: 0, left: 5, bottom: 3, right: 5)
-        stack.isLayoutMarginsRelativeArrangement = true
-
-        NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalTo: imageView.widthAnchor),
-        ])
-
-        return stack
+        return imageView
     }()
 
-    private lazy var tutorial2: UIStackView = {
-        let imageView = UIImageView(image: UIImage(asset: Assets.Images.tutorial2))
+    private lazy var tutorial2: UIImageView = {
+        let image = UIImage(asset: Assets.Images.tutorial2)
+        let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
 
-        let label = UILabel()
-        label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 15)
-        label.text = "DON'T HIT THE PLANETS OR\n ASTEROIDS DIRECTLY"
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textColor = .white
+    private lazy var backgroundGradientLayer: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = checkButton.bounds
+        gradientLayer.colors = [
+            Assets.Colors.buttonDarkBackgroundGradient.color.cgColor,
+            Assets.Colors.buttonLightBackgroundGradient.color.cgColor,
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradientLayer.locations = [0.7, 1.0]
 
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        let attributedString = NSMutableAttributedString(string: "DON'T HIT THE PLANETS OR\n ASTEROIDS DIRECTLY")
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle,
-                                      range: NSRange(location: 0, length: attributedString.length))
-
-        label.attributedText = attributedString
-        label.textAlignment = .center
-
-        let stack = UIStackView(arrangedSubviews: [
-            imageView,
-            label,
-        ])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.spacing = 15
-        stack.distribution = .fillProportionally
-        stack.contentMode = .scaleAspectFit
-        stack.layer.borderWidth = 1
-        stack.layer.cornerRadius = 30
-        stack.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 100)
-        stack.layoutMargins = UIEdgeInsets(top: 0, left: 12, bottom: 3, right: 12)
-        stack.isLayoutMarginsRelativeArrangement = true
-
-        NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalTo: imageView.widthAnchor),
-        ])
-
-        return stack
+        return gradientLayer
     }()
 
     private lazy var checkButton: UIButton = {
         let symbol = UIImage(systemName: "checkmark.circle.fill")
         let button = UIButton()
         button.setImage(symbol, for: .normal)
-        let configuration = UIImage.SymbolConfiguration(pointSize: 38.0, weight: .medium)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 50.0, weight: .medium)
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = UIColor(asset: Assets.Colors.buttonDarkBackgroundGradient)
@@ -123,24 +65,32 @@ class TutorialViewController: UIViewController {
         setupConstraints()
     }
 
+    override func viewDidLayoutSubviews() {
+//        checkButton.layer.insertSublayer(backgroundGradientLayer, at: 0)
+    }
+
     private func setupConstraints() {
-        let constraints = [
-            titleStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+        titleStackView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.topMargin.equalToSuperview().offset(40)
+        }
 
-            tutorial1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tutorial1.topAnchor.constraint(equalTo: titleStackView.bottomAnchor,
-                                           constant: 30),
+        tutorial1.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(titleStackView.snp.bottom).offset(50)
+            make.leadingMargin.trailingMargin.equalToSuperview().inset(30)
+        }
 
-            tutorial2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tutorial2.topAnchor.constraint(equalTo: tutorial1.bottomAnchor,
-                                           constant: LayoutMetrics.distanceBetweenImages),
+        tutorial2.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(tutorial1.snp.bottom).offset(50)
+            make.leading.trailing.equalToSuperview().inset(30)
+        }
 
-            checkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            checkButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                constant: -30),
-        ]
-        NSLayoutConstraint.activate(constraints)
+        checkButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottomMargin.equalToSuperview().offset(-40)
+        }
     }
 
     private func setupViews() {
