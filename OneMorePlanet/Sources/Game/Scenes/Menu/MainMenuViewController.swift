@@ -40,6 +40,8 @@ final class MainMenuViewController: UIViewController {
 
     private lazy var stars: UIImageView = {
         let imageView = UIImageView(image: UIImage(asset: Assets.Images.starsCover))
+        imageView.contentMode = .scaleToFill
+        imageView.layer.compositingFilter = "screenBlendMode"
         imageView.layer.zPosition = -1
         return imageView
     }()
@@ -136,6 +138,10 @@ final class MainMenuViewController: UIViewController {
         alien.snp.makeConstraints { make in
             make.centerX.equalToSuperview().multipliedBy(1.2)
             make.centerY.equalToSuperview().multipliedBy(0.8)
+        }
+
+        stars.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
 

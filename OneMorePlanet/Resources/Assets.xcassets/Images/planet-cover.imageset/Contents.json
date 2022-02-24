@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "planet-cover.png",
+      "filename" : "menu-planet.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "planet-cover@2x.png",
+      "filename" : "menu-planet@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "planet-cover@3x.png",
+      "filename" : "menu-planet@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

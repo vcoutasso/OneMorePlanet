@@ -9,7 +9,7 @@ struct GameplayConfiguration {
         static let physicsBodyCircleRadius: CGFloat = 48
 
         /// Scaling of planet nodes. Also used to calculate the scaled physicsBody
-        static let renderComponentScale: CGFloat = 0.5
+        static let renderComponentScale: CGFloat = 0.4
 
         /// The range that defines which positions are invalid for the very first planet
         /// This is needed to give a chance for the player to actually play the game every time instead of bumping into a planet as the only option

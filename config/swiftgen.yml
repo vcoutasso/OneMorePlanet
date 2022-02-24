@@ -22,6 +22,16 @@ xcassets:
         enumName: StarAssets
         imageTypeName: StarImageAsset
         imageAliasName: StarAssetImageTypeAlias
+        allValues: true
+  - inputs: PlanetAssets.xcassets
+    outputs:
+      templateName: swift5
+      output: PlanetAssets.swift
+      params:
+        enumName: PlanetAssets
+        imageTypeName: PlanetImageAsset
+        imageAliasName: PlanetAssetImageTypeAlias
+        allValues: true
 fonts:
   inputs: Fonts
   outputs:

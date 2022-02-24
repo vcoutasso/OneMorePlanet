@@ -140,6 +140,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         registerForPauseNotifications()
 
         backgroundColor = UIColor(named: "Colors/SpaceBackground")!
+        backgroundStarsNode.setScale(1.2)
+        backgroundStarsNode.blendMode = .screen
         backgroundStarsNode.position = .zero
         backgroundStarsNode.zPosition = -1
 
@@ -319,8 +321,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func spawnPlanet() {
-        let randomPlanetID = GKRandomDistribution(lowestValue: 1, highestValue: 21).nextInt()
-
         let asteroidPosition = GameplayConfiguration.AsteroidBelt.positionScreenWidthMultiplier
         let xCoordinateInterval: ClosedRange<CGFloat> = -asteroidPosition...asteroidPosition
         var xCoordinate = CGFloat.random(in: xCoordinateInterval) * GameplayConfiguration.Planet
@@ -338,7 +338,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let initialPosition: SIMD2<Float> = .init(x: Float(xCoordinate),
                                                   y: Float(camera!.frame.maxY + view!.frame.height))
-        let newPlanet = Planet(imageName: "Images/planet\(randomPlanetID)", initialPosition: initialPosition)
+        let newPlanet = Planet(imageName: PlanetAssets.allImages.randomElement()!.name,
+                               initialPosition: initialPosition)
         setEntityNodePosition(entity: newPlanet, position: CGPoint(x: initialPosition.x, y: initialPosition.y))
 
         entityCoordinator.addEntity(newPlanet, to: .interactable)

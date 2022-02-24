@@ -54,6 +54,8 @@
 		4CE37F9B27B4B0C3009EA7E6 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */; };
 		4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CEB293027BE7F6A0076ADC4 /* GoogleService-Info.plist */; };
 		4CEB293727BF27870076ADC4 /* GameOverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB293627BF27870076ADC4 /* GameOverDelegate.swift */; };
+		4CF26B3E27C7D1C5003E18C4 /* PlanetAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CF26B3D27C7D1C5003E18C4 /* PlanetAssets.xcassets */; };
+		4CF26B4027C7D1F3003E18C4 /* PlanetAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF26B3F27C7D1F3003E18C4 /* PlanetAssets.swift */; };
 		DC6C5561403DC1424EFB3FFA /* Pods_OneMorePlanet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +110,8 @@
 		4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		4CEB293027BE7F6A0076ADC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4CEB293627BF27870076ADC4 /* GameOverDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverDelegate.swift; sourceTree = "<group>"; };
+		4CF26B3D27C7D1C5003E18C4 /* PlanetAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PlanetAssets.xcassets; sourceTree = "<group>"; };
+		4CF26B3F27C7D1F3003E18C4 /* PlanetAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetAssets.swift; sourceTree = "<group>"; };
 		A8C9EDB32E1D4A4DA50435BE /* Pods_OneMorePlanet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneMorePlanet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA24520B4CD22E0C227C85CE /* Pods-OneMorePlanet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.debug.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,6 +202,7 @@
 				4C41CDF127AD674000057151 /* Fonts */,
 				4C7D6B9927A3778A0016C962 /* Assets.xcassets */,
 				4C0026A727C66D95004DC741 /* StarAssets.xcassets */,
+				4CF26B3D27C7D1C5003E18C4 /* PlanetAssets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -348,6 +353,7 @@
 		4C84D4AD27B369AC00EF42EB /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				4CF26B3F27C7D1F3003E18C4 /* PlanetAssets.swift */,
 				4C0026AB27C67180004DC741 /* Assets.swift */,
 				4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */,
 				4CE37F9727B4B0C3009EA7E6 /* Strings.swift */,
@@ -464,6 +470,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CF26B3E27C7D1C5003E18C4 /* PlanetAssets.xcassets in Resources */,
 				4C7D6B9A27A3778A0016C962 /* Assets.xcassets in Resources */,
 				4C996CEB27B40DEB00C88725 /* MyBokeh.sks in Resources */,
 				4C0026A827C66D95004DC741 /* StarAssets.xcassets in Resources */,
@@ -599,6 +606,7 @@
 				4C59A50627BB3BAE003951A4 /* SceneDelegate.swift in Sources */,
 				3A78303827B48879002B101E /* TutorialViewController.swift in Sources */,
 				4C41CDF027AD5D0B00057151 /* GameScenePauseState.swift in Sources */,
+				4CF26B4027C7D1F3003E18C4 /* PlanetAssets.swift in Sources */,
 				4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */,
 				4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */,
 				4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */,
