@@ -1,18 +1,24 @@
 import FBSDKCoreKit
 import FirebaseAnalytics
+import GameKit
 import GameplayKit
 import GoogleMobileAds
 import SpriteKit
 import UIKit
 
 final class GameViewController: UIViewController {
-    private var interstitialAdView: GADInterstitialAd?
+    // MARK: Properties
 
     #if DEBUG
         private let interstitialID: String = "ca-app-pub-3940256099942544/4411468910"
+        private let rewardedID: String = "ca-app-pub-3940256099942544/1712485313"
     #else
         private let interstitialID: String = "ca-app-pub-3502520160790339/8584420650"
+        private let rewardedID: String = "ca-app-pub-3502520160790339/7067835606"
     #endif
+
+    private var interstitialAd: GADInterstitialAd?
+    private var rewardedAd: GADRewardedAd?
 
     // FIXME: Come on we can do better than this
     private var gameScene: GameScene {
@@ -20,6 +26,9 @@ final class GameViewController: UIViewController {
     }
 
     private var gamesPlayed: Int = 0
+
+    var _isPresentingInterstitial = false
+    var _isPresentingRewarded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +46,7 @@ final class GameViewController: UIViewController {
         #endif
 
         loadInterstitialAd()
+        loadRewardedAd()
     }
 
     override func loadView() {
@@ -63,6 +73,24 @@ final class GameViewController: UIViewController {
 // MARK: - InterstitialAdDelegate extension
 
 extension GameViewController: GameOverDelegate {
+    var isPresentingInterstitial: Bool {
+        get {
+            _isPresentingInterstitial
+        }
+        set {
+            _isPresentingInterstitial = newValue
+        }
+    }
+
+    var isPresentingRewarded: Bool {
+        get {
+            _isPresentingRewarded
+        }
+        set {
+            _isPresentingRewarded = newValue
+        }
+    }
+
     func gameOver() {
         gamesPlayed += 1
         if gamesPlayed % GameplayConfiguration.Ads.interstitialAdInterval == 0 {
@@ -81,19 +109,64 @@ extension GameViewController: GameOverDelegate {
                 return
             }
 
-            self?.interstitialAdView = loadedAd
-            self?.interstitialAdView?.fullScreenContentDelegate = self
+            self?.interstitialAd = loadedAd
+            self?.interstitialAd?.fullScreenContentDelegate = self
         }
     }
 
     func presentInterstitialAd() {
-        if let interstitialAdView = interstitialAdView {
+        isPresentingInterstitial = true
+        if let interstitialAdView = interstitialAd {
             Analytics.logEvent("interstitial_success", parameters: nil)
             interstitialAdView.present(fromRootViewController: self)
         } else {
             Analytics.logEvent("interstitial_fail", parameters: nil)
             gameScene.gameOverHandlingDidFinish()
         }
+    }
+
+    func loadRewardedAd() {
+        let request = GADRequest()
+        GADRewardedAd.load(withAdUnitID: rewardedID, request: request) { [weak self] loadedAd, error in
+            guard error == nil else {
+                print("Failed to load rewarded ad with error: \(error!.localizedDescription)")
+                return
+            }
+
+            self?.rewardedAd = loadedAd
+            self?.rewardedAd?.fullScreenContentDelegate = self
+        }
+    }
+
+    func presentRewardedAd() {
+        isPresentingRewarded = true
+        if let rewardedAd = rewardedAd {
+            Analytics.logEvent("rewarded_success", parameters: nil)
+            rewardedAd.present(fromRootViewController: self) { [weak self] in
+                self?.gameScene.continueWithExtraLife()
+            }
+        } else {
+            Analytics.logEvent("rewarded_fail", parameters: nil)
+            gameScene.gameOverHandlingDidFinish()
+        }
+    }
+
+    func presentLeaderboard() {
+        let leaderboardID = "AllTimeBests"
+        GKAccessPoint.shared.isActive = false
+        let gcVC = GKGameCenterViewController(leaderboardID: leaderboardID, playerScope: .global, timeScope: .allTime)
+        gcVC.gameCenterDelegate = self
+        present(gcVC, animated: true)
+    }
+
+    func presentLimitExceededAlert() {
+        let alert = UIAlertController(title: "Exceeded reward limit", message: "Maximum of one extra life per match",
+                                      preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .cancel) { [weak self] _ in
+            self?.gameScene.gameOverHandlingDidFinish()
+        }
+        alert.addAction(alertAction)
+        present(alert, animated: true)
     }
 }
 
@@ -103,7 +176,7 @@ extension GameViewController: GADFullScreenContentDelegate {
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print("ad:didFailToPresentFullScreenContentWithError: \(error.localizedDescription)")
         gameScene.gameOverHandlingDidFinish()
-        loadInterstitialAd()
+        loadAds()
     }
 
     func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
@@ -111,7 +184,27 @@ extension GameViewController: GADFullScreenContentDelegate {
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        gameScene.gameOverHandlingDidFinish()
-        loadInterstitialAd()
+        if isPresentingInterstitial {
+            gameScene.gameOverHandlingDidFinish()
+        } else if isPresentingRewarded {
+            gameScene.continueWithExtraLife()
+        }
+        loadAds()
+    }
+
+    private func loadAds() {
+        if isPresentingInterstitial {
+            loadInterstitialAd()
+            _isPresentingInterstitial = false
+        } else if isPresentingRewarded {
+            loadRewardedAd()
+            _isPresentingRewarded = false
+        }
+    }
+}
+
+extension GameViewController: GKGameCenterControllerDelegate {
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }

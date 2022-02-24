@@ -9,19 +9,25 @@ import UIKit
 
 final class MainMenuViewController: UIViewController {
     private lazy var playButton: RoundedButton = {
-        let button = RoundedButton.createPurpleButton(title: Strings.MainMenu.PlayButton.title)
+        let button = RoundedButton(title: Strings.MainMenu.PlayButton.title,
+                                   iconSystemName: Strings.MainMenu.PlayButton.icon)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         return button
     }()
 
     private lazy var tutorialButton: RoundedButton = {
-        let button = RoundedButton.createPurpleButton(title: Strings.MainMenu.TutorialButton.title)
+        let button = RoundedButton(title: Strings.MainMenu.TutorialButton.title,
+                                   iconSystemName: Strings.MainMenu.TutorialButton.icon)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(tutorialButtonTapped), for: .touchUpInside)
         return button
     }()
 
     private lazy var leaderboardButton: RoundedButton = {
-        let button = RoundedButton.createPurpleButton(title: Strings.MainMenu.LeaderboardButton.title)
+        let button = RoundedButton(title: Strings.MainMenu.LeaderboardButton.title,
+                                   iconSystemName: Strings.MainMenu.LeaderboardButton.icon)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(scoreboardButtonTapped), for: .touchUpInside)
         return button
     }()

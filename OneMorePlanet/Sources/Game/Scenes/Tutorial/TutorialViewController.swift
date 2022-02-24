@@ -34,7 +34,7 @@ class TutorialViewController: UIViewController {
         let attributedString =
             NSMutableAttributedString(string: "HOLD ANYWHERE TO USE THE\n NEAREST GRAVITATIONAL ORBITS")
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle,
-                                      range: NSMakeRange(0, attributedString.length))
+                                      range: NSRange(location: 0, length: attributedString.length))
         label.attributedText = attributedString
         label.textAlignment = .center
 
@@ -76,7 +76,7 @@ class TutorialViewController: UIViewController {
 
         let attributedString = NSMutableAttributedString(string: "DON'T HIT THE PLANETS OR\n ASTEROIDS DIRECTLY")
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle,
-                                      range: NSMakeRange(0, attributedString.length))
+                                      range: NSRange(location: 0, length: attributedString.length))
 
         label.attributedText = attributedString
         label.textAlignment = .center
@@ -110,7 +110,7 @@ class TutorialViewController: UIViewController {
         let configuration = UIImage.SymbolConfiguration(pointSize: 38.0, weight: .medium)
         button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.tintColor = UIColor(asset: Assets.Colors.buttonBackground)
+        button.tintColor = UIColor(asset: Assets.Colors.buttonDarkBackgroundGradient)
 
         return button
     }()
