@@ -16,10 +16,14 @@ final class PhysicsComponent: GKComponent {
 
     init(physicsBody: SKPhysicsBody, colliderType: ColliderType) {
         self.physicsBody = physicsBody
-        self.physicsBody.categoryBitMask = colliderType.categoryMask
-        self.physicsBody.collisionBitMask = colliderType.collisionMask
-        self.physicsBody.contactTestBitMask = colliderType.contactMask
         super.init()
+        updateColliderType(colliderType)
+    }
+
+    func updateColliderType(_ colliderType: ColliderType) {
+        physicsBody.categoryBitMask = colliderType.categoryMask
+        physicsBody.collisionBitMask = colliderType.collisionMask
+        physicsBody.contactTestBitMask = colliderType.contactMask
     }
 
     @available(*, unavailable)

@@ -32,6 +32,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private lazy var stateMachine = GKStateMachine(states: [
         GameSceneActiveState(gameScene: self),
         GameScenePauseState(gameScene: self),
+        GameSceneOverlayState(gameScene: self),
         GameSceneGameOverState(gameScene: self),
         GameSceneNewGameState(gameScene: self),
     ])
@@ -52,13 +53,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private lazy var topY: CGFloat = GameplayConfiguration.Planet.planetSpawnDistance
 
-    private var score: Score = .zero {
+    private(set) var score: Score = .zero {
         didSet {
             scoreLabel.text = "\(score.value)"
         }
     }
 
-    private lazy var currentBest: Score = highScoreStore.fetchHighScore() {
+    private(set) lazy var currentBest: Score = highScoreStore.fetchHighScore() {
         didSet {
             currentBestLabel.text = "Best: \(currentBest.value)"
         }
@@ -100,16 +101,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return node
     }()
 
-    lazy var pauseButton: UIButton = {
-        let button = UIButton()
-        let symbolConfiguration = UIImage.SymbolConfiguration(textStyle: .title1)
-        let icon = UIImage(systemName: "pause.fill", withConfiguration: symbolConfiguration)
-        button.setImage(icon, for: .normal)
-        button.addTarget(self, action: #selector(pauseGame), for: .touchUpInside)
-
-        return button
-    }()
-
     lazy var resumeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 35)
@@ -119,6 +110,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         return label
     }()
+
+    private var isExtraLifeAvailable = true
 
     // MARK: Initializers
 
@@ -178,19 +171,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                   .positionScreenWidthMultiplier * size.width,
                                   y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
+        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+
         stateMachine.enter(GameSceneActiveState.self)
 
         setCameraConstraints()
 
-        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
-
-        view.addSubview(pauseButton)
         view.addSubview(resumeLabel)
-
-        pauseButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(20)
-            make.topMargin.equalToSuperview().offset(20)
-        }
 
         resumeLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -216,13 +203,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func touchesEnded(_: Set<UITouch>, with _: UIEvent?) {
         isInOrbit = false
-        if isReallyPaused {
+        if stateMachine.currentState is GameScenePauseState {
             resumeGame()
         }
     }
 
     func didBegin(_: SKPhysicsContact) {
-        stateMachine.enter(GameSceneGameOverState.self)
+        stateMachine.enter(GameSceneOverlayState.self)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -282,12 +269,28 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
         } else {
             if player.renderComponent.node.physicsBody!.velocity == .zero {
-                stateMachine.enter(GameSceneNewGameState.self)
+                // FIXME: Temporary solution
+                if stateMachine.currentState is GameSceneActiveState, isExtraLifeAvailable {
+                    stateMachine.enter(GameSceneNewGameState.self)
+                }
             }
         }
     }
 
     // MARK: Level Construction
+
+    func resetPlayer() {
+        player.physicsComponent.updateColliderType(.none)
+        player.physicsComponent.physicsBody.velocity = .zero
+        player.physicsComponent.physicsBody.angularVelocity = .zero
+        setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: player.renderComponent.node.position.y))
+        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard let self = self else { return }
+            self.player.physicsComponent.updateColliderType(.player)
+        }
+    }
 
     func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {
         guard let worldLayerNode = worldLayerNodes[worldLayer] else { return }
@@ -355,6 +358,27 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                              leaderboardIDs: ["AllTimeBests"])
         highScoreStore.tryToUpdateHighScore(with: score)
         currentBest = highScoreStore.fetchHighScore()
+    }
+
+    func continueWithExtraLife() {
+        stateMachine.enter(GameSceneActiveState.self)
+    }
+
+    @objc func extraLifeReward() {
+        if isExtraLifeAvailable {
+            gameOverDelegate.presentRewardedAd()
+            isExtraLifeAvailable = false
+        } else {
+            gameOverDelegate.presentLimitExceededAlert()
+        }
+    }
+
+    @objc func playAgain() {
+        stateMachine.enter(GameSceneGameOverState.self)
+    }
+
+    @objc func leaderboard() {
+        gameOverDelegate.presentLeaderboard()
     }
 
     private func setCameraConstraints() {

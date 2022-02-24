@@ -5,14 +5,14 @@ struct ColliderType: OptionSet, Hashable {
 
     static let requestedContactNotifications: [ColliderType: [ColliderType]] = {
         var notifications = [ColliderType: [ColliderType]]()
-        notifications[.Player] = [.Obstacle]
+        notifications[.player] = [.obstacle]
 
         return notifications
     }()
 
     static let definedCollisions: [ColliderType: [ColliderType]] = {
         var collisions = [ColliderType: [ColliderType]]()
-        collisions[.Player] = [.Obstacle]
+        collisions[.player] = [.obstacle]
 
         return collisions
     }()
@@ -21,8 +21,9 @@ struct ColliderType: OptionSet, Hashable {
 
     let rawValue: UInt32
 
-    static var Obstacle: ColliderType { return self.init(rawValue: 0x01 << 0) }
-    static var Player: ColliderType { return self.init(rawValue: 0x01 << 1) }
+    static var none: ColliderType { self.init(rawValue: 0x00 << 0) }
+    static var obstacle: ColliderType { self.init(rawValue: 0x01 << 1) }
+    static var player: ColliderType { self.init(rawValue: 0x01 << 2) }
 
     var categoryMask: UInt32 {
         return rawValue
