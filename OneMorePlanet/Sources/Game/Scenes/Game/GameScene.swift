@@ -101,16 +101,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return node
     }()
 
-    lazy var pauseButton: UIButton = {
-        let button = UIButton()
-        let symbolConfiguration = UIImage.SymbolConfiguration(textStyle: .title1)
-        let icon = UIImage(systemName: "pause.fill", withConfiguration: symbolConfiguration)
-        button.setImage(icon, for: .normal)
-        button.addTarget(self, action: #selector(pauseGame), for: .touchUpInside)
-
-        return button
-    }()
-
     lazy var resumeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 35)
@@ -120,6 +110,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         return label
     }()
+
+    private var isExtraLifeAvailable = true
 
     // MARK: Initializers
 
@@ -167,7 +159,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(camera)
 
         entityCoordinator.addEntity(player, to: .player)
-        setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
         entityCoordinator.addEntity(upperAsteroidBelt, to: .game)
         setEntityNodePosition(entity: upperAsteroidBelt,
                               position: CGPoint(x: GameplayConfiguration.AsteroidBelt
@@ -179,19 +170,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                   .positionScreenWidthMultiplier * size.width,
                                   y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
+        resetPlayer()
+
         stateMachine.enter(GameSceneActiveState.self)
 
         setCameraConstraints()
 
-        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
-
-        view.addSubview(pauseButton)
         view.addSubview(resumeLabel)
-
-        pauseButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(20)
-            make.topMargin.equalToSuperview().offset(20)
-        }
 
         resumeLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -290,6 +275,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Level Construction
 
+    func resetPlayer() {
+        setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
+        player.physicsComponent.physicsBody.velocity = .zero
+        player.physicsComponent.physicsBody.angularVelocity = .zero
+        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+    }
+
     func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {
         guard let worldLayerNode = worldLayerNodes[worldLayer] else { return }
 
@@ -358,7 +350,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         currentBest = highScoreStore.fetchHighScore()
     }
 
-    @objc func extraLifeReward() {}
+    func continueWithExtraLife() {
+        stateMachine.enter(GameSceneActiveState.self)
+    }
+
+    @objc func extraLifeReward() {
+        if isExtraLifeAvailable {
+            gameOverDelegate.presentRewardedAd()
+            isExtraLifeAvailable = false
+        } else {
+            gameOverDelegate.presentLimitExceededAlert()
+        }
+    }
 
     @objc func playAgain() {
         stateMachine.enter(GameSceneGameOverState.self)

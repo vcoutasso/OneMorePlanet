@@ -30,6 +30,11 @@ final class GameSceneOverlayState: GKState {
     override func willExit(to nextState: GKState) {
         super.willExit(to: nextState)
         gameOverOverlay.removeFromSuperview()
+
+        if nextState is GameSceneActiveState {
+            gameScene.isReallyPaused = false
+            gameScene.resetPlayer()
+        }
     }
 
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
