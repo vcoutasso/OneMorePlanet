@@ -53,6 +53,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private lazy var topY: CGFloat = GameplayConfiguration.Planet.planetSpawnDistance
 
+    private var maxY: CGFloat = 0
+
     private(set) var score: Score = .zero {
         didSet {
             scoreLabel.text = "\(score.value)"
@@ -275,6 +277,17 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+
+        let currentY = player.renderComponent.node.position.y
+        if currentY > maxY {
+            maxY = currentY
+        }
+
+        score = Score(value: Int(maxY / 100))
+
+        if score > currentBest {
+            currentBest = score
+        }
     }
 
     // MARK: Level Construction
@@ -331,7 +344,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         entityCoordinator.addEntity(newPlanet, to: .interactable)
 
         topY += CGFloat.random(in: 150...300)
-        score = Score(value: score.value + 1)
     }
 
     private func setEntityNodePosition(entity: GKEntity, position: CGPoint) {

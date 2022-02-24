@@ -6,14 +6,7 @@ final class GameSceneOverlayState: GKState {
 
     unowned let gameScene: GameScene
 
-    private(set) lazy var gameOverOverlay: GameOverOverlayView = {
-        let overlay = GameOverOverlayView(score: gameScene.score.value, bestScore: gameScene.currentBest.value)
-        overlay.extraLifeButton.addTarget(gameScene, action: #selector(gameScene.extraLifeReward), for: .touchUpInside)
-        overlay.playAgainButton.addTarget(gameScene, action: #selector(gameScene.playAgain), for: .touchUpInside)
-        overlay.leaderboardButton.addTarget(gameScene, action: #selector(gameScene.leaderboard), for: .touchUpInside)
-
-        return overlay
-    }()
+    private var gameOverOverlay: GameOverOverlayView!
 
     init(gameScene: GameScene) {
         self.gameScene = gameScene
@@ -23,8 +16,8 @@ final class GameSceneOverlayState: GKState {
 
     override func didEnter(from previousState: GKState?) {
         super.didEnter(from: previousState)
-
         gameScene.isReallyPaused = true
+        newOverlayMenu()
         setupOverlayMenu()
     }
 
@@ -42,8 +35,18 @@ final class GameSceneOverlayState: GKState {
             stateClass is GameSceneGameOverState.Type
     }
 
+    private func newOverlayMenu() {
+        gameOverOverlay = GameOverOverlayView(score: gameScene.score.value, bestScore: gameScene.currentBest.value)
+        gameOverOverlay.extraLifeButton.addTarget(gameScene, action: #selector(gameScene.extraLifeReward),
+                                                  for: .touchUpInside)
+        gameOverOverlay.playAgainButton.addTarget(gameScene, action: #selector(gameScene.playAgain),
+                                                  for: .touchUpInside)
+        gameOverOverlay.leaderboardButton.addTarget(gameScene, action: #selector(gameScene.leaderboard),
+                                                    for: .touchUpInside)
+    }
+
     private func setupOverlayMenu() {
-        gameScene.view?.addSubview(gameOverOverlay)
+        gameScene.view!.addSubview(gameOverOverlay)
 
         gameOverOverlay.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.6)
