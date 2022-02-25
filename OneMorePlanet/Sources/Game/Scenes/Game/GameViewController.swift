@@ -5,6 +5,7 @@ import GameplayKit
 import GoogleMobileAds
 import SpriteKit
 import UIKit
+import AVFoundation
 
 final class GameViewController: UIViewController {
     // MARK: Properties

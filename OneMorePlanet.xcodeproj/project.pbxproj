@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3A0D11A427B343C4000467DB /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0D11A327B343C4000467DB /* MainMenuViewController.swift */; };
+		3A6AD36127C7C54B00475F31 /* PlayerStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AD36027C7C54B00475F31 /* PlayerStats.swift */; };
 		3A78303827B48879002B101E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78303727B48879002B101E /* TutorialViewController.swift */; };
 		4C0026A827C66D95004DC741 /* StarAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C0026A727C66D95004DC741 /* StarAssets.xcassets */; };
 		4C0026AD27C67180004DC741 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026AB27C67180004DC741 /* Assets.swift */; };
 		4C0026AE27C67180004DC741 /* StarAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026AC27C67180004DC741 /* StarAssets.swift */; };
 		4C0026B227C6750D004DC741 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B127C6750D004DC741 /* Star.swift */; };
+		3A92714F27C7CBA900E118A2 /* space-invader.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3A92714E27C7CBA900E118A2 /* space-invader.mp3 */; };
 		4C0026B727C6DD11004DC741 /* GameOverOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B627C6DD11004DC741 /* GameOverOverlayView.swift */; };
 		4C0026B927C6E0CE004DC741 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B827C6E0CE004DC741 /* UIView+.swift */; };
 		4C0026BB27C6F4CC004DC741 /* GameSceneOverlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026BA27C6F4CC004DC741 /* GameSceneOverlayState.swift */; };
@@ -61,7 +63,9 @@
 
 /* Begin PBXFileReference section */
 		3A0D11A327B343C4000467DB /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		3A6AD36027C7C54B00475F31 /* PlayerStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStats.swift; sourceTree = "<group>"; };
 		3A78303727B48879002B101E /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		3A92714E27C7CBA900E118A2 /* space-invader.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "space-invader.mp3"; sourceTree = "<group>"; };
 		491CF5EF4A2B847A3A0D6BD4 /* Pods-OneMorePlanet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.release.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.release.xcconfig"; sourceTree = "<group>"; };
 		4C0026A727C66D95004DC741 /* StarAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StarAssets.xcassets; sourceTree = "<group>"; };
 		4C0026AB27C67180004DC741 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -159,6 +163,14 @@
 			path = Menu;
 			sourceTree = "<group>";
 		};
+		3A92714D27C7CB9500E118A2 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				3A92714E27C7CBA900E118A2 /* space-invader.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		4C0026B327C6D958004DC741 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +208,7 @@
 		4C2E57A727A7574C00136B4B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3A92714D27C7CB9500E118A2 /* Music */,
 				4C5F21BC27C3CC2700FB8C7D /* Strings.strings */,
 				4C996CEA27B40DEB00C88725 /* MyBokeh.sks */,
 				4C84D4AD27B369AC00EF42EB /* Generated */,
@@ -268,6 +281,7 @@
 			children = (
 				4C7D6B9427A377880016C962 /* GameViewController.swift */,
 				4C7D6B9227A377880016C962 /* GameScene.swift */,
+				3A6AD36027C7C54B00475F31 /* PlayerStats.swift */,
 				4C9E62C527C2E4A1004DCD4D /* Models */,
 				4CEB293527BF27770076ADC4 /* Ads */,
 				4C41CDEC27AD5C6200057151 /* States */,
@@ -474,6 +488,7 @@
 				4C7D6B9A27A3778A0016C962 /* Assets.xcassets in Resources */,
 				4C996CEB27B40DEB00C88725 /* MyBokeh.sks in Resources */,
 				4C0026A827C66D95004DC741 /* StarAssets.xcassets in Resources */,
+				3A92714F27C7CBA900E118A2 /* space-invader.mp3 in Resources */,
 				4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */,
 				4C41CDF327AD676A00057151 /* aldotheapache.ttf in Resources */,
 				4C7D6B9D27A3778A0016C962 /* LaunchScreen.storyboard in Resources */,
@@ -602,6 +617,7 @@
 				4C62CED227AA33A900E1D2B2 /* WorldLayer.swift in Sources */,
 				4C57300727ABF24D000407B2 /* OrbitalComponent.swift in Sources */,
 				4C7D6B8D27A377880016C962 /* AppDelegate.swift in Sources */,
+				3A6AD36127C7C54B00475F31 /* PlayerStats.swift in Sources */,
 				4CE37F9A27B4B0C3009EA7E6 /* Strings.swift in Sources */,
 				4C59A50627BB3BAE003951A4 /* SceneDelegate.swift in Sources */,
 				3A78303827B48879002B101E /* TutorialViewController.swift in Sources */,
@@ -765,7 +781,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H7BM7N56V5;
+				DEVELOPMENT_TEAM = WUUNV3D6RS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OneMorePlanet/Supporting-Files/Info.plist";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Need tracking for analytics and to deliver custom ads";
@@ -797,7 +813,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H7BM7N56V5;
+				DEVELOPMENT_TEAM = WUUNV3D6RS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "OneMorePlanet/Supporting-Files/Info.plist";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Need tracking for analytics and to deliver custom ads";
