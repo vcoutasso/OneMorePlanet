@@ -39,3 +39,11 @@ fonts:
       output: Fonts.swift
       params:
           enumName: Fonts
+files:
+  inputs: Musics
+  filter: .+\.mp3$
+  outputs:
+    - templateName: structured-swift5
+      output: Musics.swift
+      params:
+          enumName: Musics

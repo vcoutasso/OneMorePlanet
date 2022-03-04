@@ -11,6 +11,8 @@ mainMenu.tutorialButton.title = "TUTORIAL";
 mainMenu.tutorialButton.icon = "lightbulb";
 mainMenu.leaderboardButton.title = "LEADERBOARD";
 mainMenu.leaderboardButton.icon = "crown";
+mainMenu.muteButton.mutedIcon = "speaker.slash";
+mainMenu.muteButton.unmutedIcon = "speaker.wave.2";
 
 gameOver.menuButton.title = "MENU";
 gameOver.menuButton.icon = "chevron.left";
@@ -20,3 +22,5 @@ gameOver.playAgainButton.title = "PLAY AGAIN";
 gameOver.playAgainButton.icon = "arrow.triangle.2.circlepath";
 gameOver.leaderboardButton.title = "LEADERBOARD";
 gameOver.leaderboardButton.icon = "crown";
+
+userDefaults.shouldMute.key = "shouldMute";

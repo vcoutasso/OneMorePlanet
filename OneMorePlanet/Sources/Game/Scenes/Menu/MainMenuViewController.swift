@@ -32,6 +32,18 @@ final class MainMenuViewController: UIViewController {
         return button
     }()
 
+    private lazy var muteButton: UIButton = {
+        let symbol = UIImage(systemName: getMuteButtonSymbolName())
+        let button = UIButton()
+        button.setImage(symbol, for: .normal)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .medium)
+        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+        button.tintColor = UIColor(asset: Assets.Colors.buttonDarkBackgroundGradient)
+        button.addTarget(self, action: #selector(muteButtonTapped), for: .touchUpInside)
+
+        return button
+    }()
+
     private lazy var alien: UIImageView = {
         let imageView = UIImageView(image: UIImage(asset: Assets.Images.alienCover))
         imageView.layer.zPosition = 0
@@ -95,6 +107,7 @@ final class MainMenuViewController: UIViewController {
     }
 
     private func setupHierarchy() {
+        view.addSubview(muteButton)
         view.addSubview(stars)
         view.addSubview(planet)
         view.addSubview(alien)
@@ -135,6 +148,11 @@ final class MainMenuViewController: UIViewController {
 
         NSLayoutConstraint.activate(constraints)
 
+        muteButton.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(8)
+            make.trailingMargin.equalToSuperview().offset(-8)
+        }
+
         alien.snp.makeConstraints { make in
             make.centerX.equalToSuperview().multipliedBy(1.2)
             make.centerY.equalToSuperview().multipliedBy(0.8)
@@ -152,6 +170,19 @@ final class MainMenuViewController: UIViewController {
             make.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
         }
+    }
+
+    private func getMuteButtonSymbolName() -> String {
+        PlayerPreferences.shared.getShouldMute() ? Strings.MainMenu.MuteButton.mutedIcon : Strings.MainMenu.MuteButton
+            .unmutedIcon
+    }
+
+    @objc private func muteButtonTapped() {
+        PlayerPreferences.shared.toggleShouldMute()
+
+        let symbolName = getMuteButtonSymbolName()
+        let symbol = UIImage(systemName: symbolName)
+        muteButton.setImage(symbol, for: .normal)
     }
 
     @objc private func playButtonTapped() {
