@@ -11,8 +11,10 @@ mainMenu.tutorialButton.title = "TUTORIAL";
 mainMenu.tutorialButton.icon = "lightbulb";
 mainMenu.leaderboardButton.title = "LEADERBOARD";
 mainMenu.leaderboardButton.icon = "crown";
-mainMenu.muteButton.mutedIcon = "speaker.slash";
-mainMenu.muteButton.unmutedIcon = "speaker.wave.2";
+mainMenu.muteButton.mutedIcon = "speaker.slash.fill";
+mainMenu.muteButton.unmutedIcon = "speaker.wave.1.fill";
+
+tutorial.checkmarkButton.icon = "checkmark";
 
 gameOver.menuButton.title = "MENU";
 gameOver.menuButton.icon = "chevron.left";

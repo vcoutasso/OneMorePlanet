@@ -36,20 +36,20 @@ final class GameOverOverlayView: UIView {
         return label
     }()
 
-    private(set) lazy var extraLifeButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.GameOver.ExtraLifeButton.title,
+    private(set) lazy var extraLifeButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.GameOver.ExtraLifeButton.title,
                                    iconSystemName: Strings.GameOver.ExtraLifeButton.icon)
         return button
     }()
 
-    private(set) lazy var playAgainButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.GameOver.PlayAgainButton.title,
+    private(set) lazy var playAgainButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.GameOver.PlayAgainButton.title,
                                    iconSystemName: Strings.GameOver.PlayAgainButton.icon)
         return button
     }()
 
-    private(set) lazy var leaderboardButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.GameOver.LeaderboardButton.title,
+    private(set) lazy var leaderboardButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.GameOver.LeaderboardButton.title,
                                    iconSystemName: Strings.GameOver.LeaderboardButton.icon)
         return button
     }()

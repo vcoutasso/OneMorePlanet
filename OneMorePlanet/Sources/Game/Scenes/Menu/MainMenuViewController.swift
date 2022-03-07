@@ -8,39 +8,35 @@ import SnapKit
 import UIKit
 
 final class MainMenuViewController: UIViewController {
-    private lazy var playButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.MainMenu.PlayButton.title,
+    private lazy var playButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.MainMenu.PlayButton.title,
                                    iconSystemName: Strings.MainMenu.PlayButton.icon)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         return button
     }()
 
-    private lazy var tutorialButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.MainMenu.TutorialButton.title,
+    private lazy var tutorialButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.MainMenu.TutorialButton.title,
                                    iconSystemName: Strings.MainMenu.TutorialButton.icon)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(tutorialButtonTapped), for: .touchUpInside)
         return button
     }()
 
-    private lazy var leaderboardButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.MainMenu.LeaderboardButton.title,
+    private lazy var leaderboardButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.MainMenu.LeaderboardButton.title,
                                    iconSystemName: Strings.MainMenu.LeaderboardButton.icon)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(scoreboardButtonTapped), for: .touchUpInside)
         return button
     }()
 
-    private lazy var muteButton: UIButton = {
-        let symbol = UIImage(systemName: getMuteButtonSymbolName())
-        let button = UIButton()
-        button.setImage(symbol, for: .normal)
-        let configuration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .medium)
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
-        button.tintColor = UIColor(asset: Assets.Colors.buttonDarkBackgroundGradient)
+    private lazy var muteButton: RoundButton = {
+        let symbolName = getMuteButtonSymbolName()
+        let button = RoundButton(iconSystemName: symbolName,
+                                 style: .small)
         button.addTarget(self, action: #selector(muteButtonTapped), for: .touchUpInside)
-
         return button
     }()
 
@@ -181,8 +177,7 @@ final class MainMenuViewController: UIViewController {
         PlayerPreferences.shared.toggleShouldMute()
 
         let symbolName = getMuteButtonSymbolName()
-        let symbol = UIImage(systemName: symbolName)
-        muteButton.setImage(symbol, for: .normal)
+        muteButton.updateSymbol(with: symbolName)
     }
 
     @objc private func playButtonTapped() {

@@ -1,3 +1,4 @@
+import AVFoundation
 import FBSDKCoreKit
 import FirebaseAnalytics
 import GameKit
@@ -5,7 +6,6 @@ import GameplayKit
 import GoogleMobileAds
 import SpriteKit
 import UIKit
-import AVFoundation
 
 final class GameViewController: UIViewController {
     // MARK: Properties
@@ -36,7 +36,7 @@ final class GameViewController: UIViewController {
 
         guard let view = view as? SKView else { return }
 
-        let scene = GameScene(size: self.view.frame.size, delegate: self)
+        let scene = GameScene(size: view.frame.size, delegate: self)
         scene.scaleMode = .resizeFill
         view.presentScene(scene)
         view.ignoresSiblingOrder = true
