@@ -45,14 +45,10 @@ class TutorialViewController: UIViewController {
         return gradientLayer
     }()
 
-    private lazy var checkButton: UIButton = {
-        let symbol = UIImage(systemName: "checkmark.circle.fill")
-        let button = UIButton()
-        button.setImage(symbol, for: .normal)
-        let configuration = UIImage.SymbolConfiguration(pointSize: 50.0, weight: .medium)
-        button.setPreferredSymbolConfiguration(configuration, forImageIn: .normal)
+    private lazy var checkButton: RoundButton = {
+        let button = RoundButton(iconSystemName: Strings.Tutorial.CheckmarkButton.icon,
+                                 style: .large)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.tintColor = UIColor(asset: Assets.Colors.buttonDarkBackgroundGradient)
 
         return button
     }()

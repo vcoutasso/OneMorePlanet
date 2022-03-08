@@ -1,19 +1,20 @@
 import UIKit
 
-final class RoundedButton: UIButton {
+final class CapsuleButton: UIButton {
     // MARK: Properties
 
     private lazy var backgroundGradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.cornerRadius = LayoutMetrics.buttonCornerRadius
         gradientLayer.frame = bounds
+        gradientLayer.cornerRadius = gradientLayer.frame.height / 2
         gradientLayer.colors = [
             Assets.Colors.buttonDarkBackgroundGradient.color.cgColor,
             Assets.Colors.buttonLightBackgroundGradient.color.cgColor,
         ]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gradientLayer.locations = [0.7, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.locations = [0.3]
+        layer.insertSublayer(gradientLayer, at: 0)
 
         return gradientLayer
     }()
@@ -43,6 +44,7 @@ final class RoundedButton: UIButton {
         let icon = UIImage(systemName: iconSystemName, withConfiguration: symbolConfiguration)?.withTintColor(.white,
                                                                                                               renderingMode: .alwaysOriginal)
         setImage(icon, for: .normal)
+        setImage(icon, for: .highlighted)
     }
 
     @available(*, unavailable)
@@ -50,10 +52,12 @@ final class RoundedButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Life cycle
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        layer.insertSublayer(backgroundGradientLayer, at: 0)
+        backgroundGradientLayer.frame = bounds
 
         guard let imageView = imageView else { return }
 
@@ -65,11 +69,7 @@ final class RoundedButton: UIButton {
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
-        static let buttonHeight: CGFloat = 50
-        static let buttonCornerRadius: CGFloat = buttonHeight / 2
         static let buttonTitleFontSize: CGFloat = 22
-        static let buttonHorizontalPadding: CGFloat = 70
-        static let buttonVerticalPadding: CGFloat = -60
         static let imageTrailingOffset: CGFloat = 40
     }
 }

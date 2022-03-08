@@ -259,7 +259,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if isInOrbit {
             let direction = nearestPlanetPosition - player.renderComponent.node.position
-            let velocity = player.renderComponent.node.physicsBody!.velocity
+            let velocity = player.physicsComponent.physicsBody.velocity
             let velocityPoint = CGPoint(x: velocity.dx, y: velocity.dy)
             var velocityLength = velocityPoint.length()
             let maxVelocity = GameplayConfiguration.Player.maxSpeed
@@ -272,7 +272,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             let force = deltaTime * 10 * velocityLength * normalizedDirection
             player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
         } else {
-            if player.renderComponent.node.physicsBody!.velocity == .zero {
+            if player.physicsComponent.physicsBody.velocity == .zero {
                 // FIXME: Temporary solution
                 if stateMachine.currentState is GameSceneActiveState, isExtraLifeAvailable {
                     stateMachine.enter(GameSceneNewGameState.self)

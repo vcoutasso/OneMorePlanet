@@ -19,6 +19,7 @@ final class GameSceneGameOverState: GKState {
         Task {
             await gameScene.submitScore()
         }
+
         gameScene.gameOverDelegate.gameOver()
     }
 

@@ -8,27 +8,35 @@ import SnapKit
 import UIKit
 
 final class MainMenuViewController: UIViewController {
-    private lazy var playButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.MainMenu.PlayButton.title,
+    private lazy var playButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.MainMenu.PlayButton.title,
                                    iconSystemName: Strings.MainMenu.PlayButton.icon)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         return button
     }()
 
-    private lazy var tutorialButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.MainMenu.TutorialButton.title,
+    private lazy var tutorialButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.MainMenu.TutorialButton.title,
                                    iconSystemName: Strings.MainMenu.TutorialButton.icon)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(tutorialButtonTapped), for: .touchUpInside)
         return button
     }()
 
-    private lazy var leaderboardButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.MainMenu.LeaderboardButton.title,
+    private lazy var leaderboardButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.MainMenu.LeaderboardButton.title,
                                    iconSystemName: Strings.MainMenu.LeaderboardButton.icon)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(scoreboardButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var muteButton: RoundButton = {
+        let symbolName = PlayerPreferences.shared.muteButtonIconName
+        let button = RoundButton(iconSystemName: symbolName,
+                                 style: .small)
+        button.addTarget(self, action: #selector(muteButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -77,6 +85,14 @@ final class MainMenuViewController: UIViewController {
         setupConstraints()
 
         bannerView.load(GADRequest())
+
+        BackgroundMusicPlayer.shared.start()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        updateMuteButtonIcon()
     }
 
     // MARK: Private methods
@@ -95,6 +111,7 @@ final class MainMenuViewController: UIViewController {
     }
 
     private func setupHierarchy() {
+        view.addSubview(muteButton)
         view.addSubview(stars)
         view.addSubview(planet)
         view.addSubview(alien)
@@ -135,6 +152,11 @@ final class MainMenuViewController: UIViewController {
 
         NSLayoutConstraint.activate(constraints)
 
+        muteButton.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().offset(8)
+            make.trailingMargin.equalToSuperview().offset(-8)
+        }
+
         alien.snp.makeConstraints { make in
             make.centerX.equalToSuperview().multipliedBy(1.2)
             make.centerY.equalToSuperview().multipliedBy(0.8)
@@ -152,6 +174,19 @@ final class MainMenuViewController: UIViewController {
             make.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
         }
+    }
+
+    @objc private func muteButtonTapped() {
+        let shouldMute = PlayerPreferences.shared.toggleShouldMute()
+
+        BackgroundMusicPlayer.shared.changeVolume(shouldMute: shouldMute)
+
+        updateMuteButtonIcon()
+    }
+
+    private func updateMuteButtonIcon() {
+        let symbolName = PlayerPreferences.shared.muteButtonIconName
+        muteButton.updateSymbol(with: symbolName)
     }
 
     @objc private func playButtonTapped() {

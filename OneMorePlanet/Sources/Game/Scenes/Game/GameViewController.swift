@@ -1,3 +1,4 @@
+import AVFoundation
 import FBSDKCoreKit
 import FirebaseAnalytics
 import GameKit
@@ -5,7 +6,6 @@ import GameplayKit
 import GoogleMobileAds
 import SpriteKit
 import UIKit
-import AVFoundation
 
 final class GameViewController: UIViewController {
     // MARK: Properties
@@ -36,7 +36,7 @@ final class GameViewController: UIViewController {
 
         guard let view = view as? SKView else { return }
 
-        let scene = GameScene(size: self.view.frame.size, delegate: self)
+        let scene = GameScene(size: view.frame.size, delegate: self)
         scene.scaleMode = .resizeFill
         view.presentScene(scene)
         view.ignoresSiblingOrder = true
@@ -117,6 +117,7 @@ extension GameViewController: GameOverDelegate {
 
     func presentInterstitialAd() {
         isPresentingInterstitial = true
+        BackgroundMusicPlayer.shared.mute()
         if let interstitialAdView = interstitialAd {
             Analytics.logEvent("interstitial_success", parameters: nil)
             interstitialAdView.present(fromRootViewController: self)
@@ -141,6 +142,7 @@ extension GameViewController: GameOverDelegate {
 
     func presentRewardedAd() {
         isPresentingRewarded = true
+        BackgroundMusicPlayer.shared.mute()
         if let rewardedAd = rewardedAd {
             rewardedAd.present(fromRootViewController: self) {
                 Analytics.logEvent("rewarded_success", parameters: nil)
@@ -185,6 +187,7 @@ extension GameViewController: GADFullScreenContentDelegate {
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        BackgroundMusicPlayer.shared.unmute()
         if isPresentingInterstitial {
             gameScene.gameOverHandlingDidFinish()
         } else if isPresentingRewarded {

@@ -27,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        AppEvents.shared.activateApp()
+    }
+
     @available(iOS 14, *)
     private func listenForDidBecomeActiveNotification() {
         NotificationCenter.default.addObserver(self,
@@ -40,13 +44,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
             switch status {
             case .authorized:
-                Settings.shared.isAdvertiserTrackingEnabled = true
+                Settings.setAdvertiserTrackingEnabled(true)
                 Settings.shared.isAutoLogAppEventsEnabled = true
                 Settings.shared.isAdvertiserIDCollectionEnabled = true
 
                 Analytics.setUserProperty("true", forName: AnalyticsUserPropertyAllowAdPersonalizationSignals)
                 Analytics.setAnalyticsCollectionEnabled(true)
             case .denied, .notDetermined, .restricted:
+                Settings.setAdvertiserTrackingEnabled(false)
                 Settings.shared.isAdvertiserTrackingEnabled = false
                 Settings.shared.isAutoLogAppEventsEnabled = false
                 Settings.shared.isAdvertiserIDCollectionEnabled = false

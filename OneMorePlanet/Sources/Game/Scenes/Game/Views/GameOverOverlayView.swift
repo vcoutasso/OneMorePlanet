@@ -20,6 +20,14 @@ final class GameOverOverlayView: UIView {
         return button
     }()
 
+    private lazy var muteButton: RoundButton = {
+        let symbolName = PlayerPreferences.shared.muteButtonIconName
+        let button = RoundButton(iconSystemName: symbolName,
+                                 style: .small)
+        button.addTarget(self, action: #selector(muteButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     private lazy var scoreLabel: UILabel = {
         let label = UILabel()
         label.text = "SCORE: \(score)"
@@ -36,20 +44,20 @@ final class GameOverOverlayView: UIView {
         return label
     }()
 
-    private(set) lazy var extraLifeButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.GameOver.ExtraLifeButton.title,
+    private(set) lazy var extraLifeButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.GameOver.ExtraLifeButton.title,
                                    iconSystemName: Strings.GameOver.ExtraLifeButton.icon)
         return button
     }()
 
-    private(set) lazy var playAgainButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.GameOver.PlayAgainButton.title,
+    private(set) lazy var playAgainButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.GameOver.PlayAgainButton.title,
                                    iconSystemName: Strings.GameOver.PlayAgainButton.icon)
         return button
     }()
 
-    private(set) lazy var leaderboardButton: RoundedButton = {
-        let button = RoundedButton(title: Strings.GameOver.LeaderboardButton.title,
+    private(set) lazy var leaderboardButton: CapsuleButton = {
+        let button = CapsuleButton(title: Strings.GameOver.LeaderboardButton.title,
                                    iconSystemName: Strings.GameOver.LeaderboardButton.icon)
         return button
     }()
@@ -79,6 +87,7 @@ final class GameOverOverlayView: UIView {
 
     private func addSubviews() {
         setupMenuButton()
+        setupMuteButton()
         setupScoreLabel()
         setupBestScoreLabel()
         setupLeaderboardButton()
@@ -90,8 +99,16 @@ final class GameOverOverlayView: UIView {
         addSubview(menuButton)
 
         menuButton.snp.makeConstraints { make in
-            make.left.top.equalToSuperview().offset(LayoutMetrics.menuButtonOffset)
+            make.left.top.equalToSuperview().offset(LayoutMetrics.headerButtonsInset)
             make.height.equalTo(LayoutMetrics.menuButtonFontSize)
+        }
+    }
+
+    private func setupMuteButton() {
+        addSubview(muteButton)
+
+        muteButton.snp.makeConstraints { make in
+            make.right.top.equalToSuperview().inset(LayoutMetrics.headerButtonsInset)
         }
     }
 
@@ -152,12 +169,21 @@ final class GameOverOverlayView: UIView {
         findViewController()?.navigationController?.popToRootViewController(animated: true)
     }
 
+    @objc private func muteButtonTapped() {
+        let shouldMute = PlayerPreferences.shared.toggleShouldMute()
+
+        BackgroundMusicPlayer.shared.changeVolume(shouldMute: shouldMute)
+
+        let symbolName = PlayerPreferences.shared.muteButtonIconName
+        muteButton.updateSymbol(with: symbolName)
+    }
+
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
         static let cornerRadius: CGFloat = 30
         static let menuButtonFontSize: CGFloat = 25
-        static let menuButtonOffset: CGFloat = 20
+        static let headerButtonsInset: CGFloat = 20
         static let scoreLabelsVerticalSpacing: CGFloat = 20
         static let scoreLabelsFontSize: CGFloat = 35
         static let spacingBetweenDifferentElements: CGFloat = 50
