@@ -33,7 +33,7 @@ final class MainMenuViewController: UIViewController {
     }()
 
     private lazy var muteButton: RoundButton = {
-        let symbolName = getMuteButtonSymbolName()
+        let symbolName = PlayerPreferences.shared.muteButtonIconName
         let button = RoundButton(iconSystemName: symbolName,
                                  style: .small)
         button.addTarget(self, action: #selector(muteButtonTapped), for: .touchUpInside)
@@ -168,15 +168,10 @@ final class MainMenuViewController: UIViewController {
         }
     }
 
-    private func getMuteButtonSymbolName() -> String {
-        PlayerPreferences.shared.getShouldMute() ? Strings.MainMenu.MuteButton.mutedIcon : Strings.MainMenu.MuteButton
-            .unmutedIcon
-    }
-
     @objc private func muteButtonTapped() {
         PlayerPreferences.shared.toggleShouldMute()
 
-        let symbolName = getMuteButtonSymbolName()
+        let symbolName = PlayerPreferences.shared.muteButtonIconName
         muteButton.updateSymbol(with: symbolName)
     }
 

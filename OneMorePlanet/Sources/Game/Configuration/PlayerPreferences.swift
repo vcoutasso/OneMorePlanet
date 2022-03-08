@@ -2,9 +2,21 @@ import Foundation
 import SpriteKit
 
 class PlayerPreferences {
+    private typealias MuteButtonNamespace = Strings.MainMenu.MuteButton
+
+    // MARK: Singletion
+
     static let shared = PlayerPreferences()
 
+    // MARK: Properties
+
     private let shouldMuteKey = Strings.UserDefaults.ShouldMute.key
+
+    var muteButtonIconName: String {
+        getShouldMute() ? MuteButtonNamespace.mutedIcon : MuteButtonNamespace.unmutedIcon
+    }
+
+    // MARK: Initialization
 
     private init() {
         if UserDefaults.standard.object(forKey: shouldMuteKey) == nil {
@@ -12,10 +24,7 @@ class PlayerPreferences {
         }
     }
 
-    func setShouldMute(_ state: Bool) {
-        UserDefaults.standard.set(state, forKey: shouldMuteKey)
-        UserDefaults.standard.synchronize()
-    }
+    // MARK: Public methods
 
     func getShouldMute() -> Bool {
         UserDefaults.standard.bool(forKey: shouldMuteKey)
@@ -23,7 +32,13 @@ class PlayerPreferences {
 
     func toggleShouldMute() {
         let isMuted = getShouldMute()
-        let shouldMute = isMuted ? false : true
-        setShouldMute(shouldMute)
+        setShouldMute(!isMuted)
+    }
+
+    // MARK: Convenience
+
+    private func setShouldMute(_ state: Bool) {
+        UserDefaults.standard.set(state, forKey: shouldMuteKey)
+        UserDefaults.standard.synchronize()
     }
 }
