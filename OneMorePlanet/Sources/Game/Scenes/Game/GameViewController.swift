@@ -117,6 +117,7 @@ extension GameViewController: GameOverDelegate {
 
     func presentInterstitialAd() {
         isPresentingInterstitial = true
+        BackgroundMusicPlayer.shared.mute()
         if let interstitialAdView = interstitialAd {
             Analytics.logEvent("interstitial_success", parameters: nil)
             interstitialAdView.present(fromRootViewController: self)
@@ -141,6 +142,7 @@ extension GameViewController: GameOverDelegate {
 
     func presentRewardedAd() {
         isPresentingRewarded = true
+        BackgroundMusicPlayer.shared.mute()
         if let rewardedAd = rewardedAd {
             rewardedAd.present(fromRootViewController: self) {
                 Analytics.logEvent("rewarded_success", parameters: nil)
@@ -185,6 +187,7 @@ extension GameViewController: GADFullScreenContentDelegate {
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        BackgroundMusicPlayer.shared.unmute()
         if isPresentingInterstitial {
             gameScene.gameOverHandlingDidFinish()
         } else if isPresentingRewarded {

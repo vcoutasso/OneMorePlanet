@@ -43,11 +43,11 @@ final class BackgroundMusicPlayer {
         player.stop()
     }
 
-    private func mute() {
+    func mute() {
         player.volume = 0
     }
 
-    private func unmute() {
+    func unmute() {
         if !isPlaying { play() }
 
         player.volume = 1
