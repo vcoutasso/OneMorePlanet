@@ -35,7 +35,7 @@ final class Planet: GKEntity {
 
         let physicsBody = SKPhysicsBody(circleOfRadius: GameplayConfiguration.Planet.physicsBodyCircleRadius *
             GameplayConfiguration.Planet.renderComponentScale)
-        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: ColliderType.obstacle)
+        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: .planet)
         addComponent(physicsComponent)
 
         let gravitationalComponent = GravitionalComponent()

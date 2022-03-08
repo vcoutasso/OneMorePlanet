@@ -50,6 +50,17 @@ final class GameViewController: UIViewController {
         loadRewardedAd()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        // FIXME: This should probably be somewhere else
+        if !isPresentingRewarded && !isPresentingInterstitial {
+            Task {
+                await gameScene.submitScore()
+            }
+        }
+    }
+
     override func loadView() {
         view = SKView(frame: UIScreen.main.bounds)
     }

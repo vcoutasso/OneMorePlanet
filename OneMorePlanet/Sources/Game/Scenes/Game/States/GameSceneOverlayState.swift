@@ -16,6 +16,7 @@ final class GameSceneOverlayState: GKState {
 
     override func didEnter(from previousState: GKState?) {
         super.didEnter(from: previousState)
+
         gameScene.isReallyPaused = true
         newOverlayMenu()
         setupOverlayMenu()

@@ -59,4 +59,30 @@ final class Player: GKEntity {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: Public methods
+
+    func becomeInvincible(for duration: TimeInterval) {
+        let blinkForeverActionKey = "blinkForever"
+
+        physicsComponent.updateColliderType(.none)
+
+        let fadeIn = SKAction.fadeIn(withDuration: GameplayConfiguration.Player.invincibilityBlinkingFadeDuration)
+
+        let fadeOut = SKAction.fadeOut(withDuration: GameplayConfiguration.Player.invincibilityBlinkingFadeDuration)
+
+        let blinkAction = SKAction.sequence([
+            fadeOut,
+            fadeIn,
+        ])
+        let repeatBlinkAction = SKAction.repeatForever(blinkAction)
+
+        renderComponent.node.run(repeatBlinkAction, withKey: blinkForeverActionKey)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+            self?.physicsComponent.updateColliderType(.player)
+            self?.renderComponent.node.removeAction(forKey: blinkForeverActionKey)
+            self?.renderComponent.node.run(fadeIn)
+        }
+    }
 }

@@ -27,6 +27,14 @@ final class HighScoreStore {
         }
     }
 
+    func setHighScore(with newScore: Score) {
+        let currentHigh = fetchHighScore()
+
+        try! Realm().write {
+            currentHigh.value = newScore.value
+        }
+    }
+
     // MARK: Setup
 
     private func initializeRealm() {

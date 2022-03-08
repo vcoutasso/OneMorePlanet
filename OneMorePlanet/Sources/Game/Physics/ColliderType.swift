@@ -5,14 +5,16 @@ struct ColliderType: OptionSet, Hashable {
 
     static let requestedContactNotifications: [ColliderType: [ColliderType]] = {
         var notifications = [ColliderType: [ColliderType]]()
-        notifications[.player] = [.obstacle]
+        notifications[.player] = [.planet, .levelLimits]
+        notifications[.none] = [.levelLimits]
 
         return notifications
     }()
 
     static let definedCollisions: [ColliderType: [ColliderType]] = {
         var collisions = [ColliderType: [ColliderType]]()
-        collisions[.player] = [.obstacle]
+        collisions[.player] = [.planet, .levelLimits]
+        collisions[.none] = [.levelLimits]
 
         return collisions
     }()
@@ -22,8 +24,9 @@ struct ColliderType: OptionSet, Hashable {
     let rawValue: UInt32
 
     static var none: ColliderType { self.init(rawValue: 0x00 << 0) }
-    static var obstacle: ColliderType { self.init(rawValue: 0x01 << 1) }
-    static var player: ColliderType { self.init(rawValue: 0x01 << 2) }
+    static var planet: ColliderType { self.init(rawValue: 0x01 << 1) }
+    static var levelLimits: ColliderType { self.init(rawValue: 0x01 << 2) }
+    static var player: ColliderType { self.init(rawValue: 0x01 << 3) }
 
     var categoryMask: UInt32 {
         return rawValue
