@@ -14,6 +14,11 @@ final class GameSceneNewGameState: GKState {
 
     override func didEnter(from _: GKState?) {
         Analytics.logEvent("new_game", parameters: nil)
+
+        Task {
+            await gameScene.submitScore()
+        }
+
         gameScene.startNewGame()
     }
 

@@ -16,10 +16,6 @@ final class GameSceneGameOverState: GKState {
         super.didEnter(from: previousState)
         Analytics.logEvent("game_over", parameters: nil)
 
-        Task {
-            await gameScene.submitScore()
-        }
-
         gameScene.gameOverDelegate.gameOver()
     }
 

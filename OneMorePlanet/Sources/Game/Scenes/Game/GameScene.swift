@@ -295,16 +295,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: Level Construction
 
     func resetPlayer() {
+        player.becomeInvincible(for: GameplayConfiguration.Player.extraLifeInvincibilityDuration)
+
         player.physicsComponent.updateColliderType(.none)
         player.physicsComponent.physicsBody.velocity = .zero
         player.physicsComponent.physicsBody.angularVelocity = .zero
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: player.renderComponent.node.position.y))
         player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-            guard let self = self else { return }
-            self.player.physicsComponent.updateColliderType(.player)
-        }
     }
 
     func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {

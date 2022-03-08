@@ -1,4 +1,5 @@
 import CoreGraphics
+import Foundation
 
 struct GameplayConfiguration {
     enum Planet {
@@ -37,6 +38,9 @@ struct GameplayConfiguration {
 
         /// Scaling of player node. Also used to calculate the scaled physicsBody
         static let renderComponentScale: CGFloat = 0.2
+
+        /// Duration in seconds that the player  willremain invulnerable to collisions after an extra life is awarded
+        static let extraLifeInvincibilityDuration: TimeInterval = 3
     }
 
     enum AsteroidBelt {

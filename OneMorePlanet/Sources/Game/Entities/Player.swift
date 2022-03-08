@@ -59,4 +59,14 @@ final class Player: GKEntity {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: Public methods
+
+    func becomeInvincible(for duration: TimeInterval) {
+        physicsComponent.updateColliderType(.none)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+            self?.physicsComponent.updateColliderType(.player)
+        }
+    }
 }
