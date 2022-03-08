@@ -41,6 +41,8 @@ struct GameplayConfiguration {
 
         /// Duration in seconds that the player  willremain invulnerable to collisions after an extra life is awarded
         static let extraLifeInvincibilityDuration: TimeInterval = 3
+
+        static let invincibilityBlinkingFadeDuration: TimeInterval = 0.25
     }
 
     enum AsteroidBelt {
