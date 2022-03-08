@@ -1,7 +1,7 @@
 import Foundation
 import SpriteKit
 
-class PlayerPreferences {
+final class PlayerPreferences {
     private typealias MuteButtonNamespace = Strings.MainMenu.MuteButton
 
     // MARK: Singletion
@@ -30,9 +30,12 @@ class PlayerPreferences {
         UserDefaults.standard.bool(forKey: shouldMuteKey)
     }
 
-    func toggleShouldMute() {
+    func toggleShouldMute() -> Bool {
         let isMuted = getShouldMute()
-        setShouldMute(!isMuted)
+        let newState = !isMuted
+        setShouldMute(newState)
+
+        return newState
     }
 
     // MARK: Convenience

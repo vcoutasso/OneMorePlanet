@@ -6,13 +6,6 @@ final class GameSceneActiveState: GKState {
 
     unowned let gameScene: GameScene
 
-    lazy var backgroundMusic: AVAudioPlayer! = {
-        let url = Bundle.main.url(forResource: Musics.spaceInvaderMp3.name, withExtension: Musics.spaceInvaderMp3.ext)!
-        let player: AVAudioPlayer! = try? AVAudioPlayer(contentsOf: url)
-        player.numberOfLoops = -1
-        return player
-    }()
-
     init(gameScene: GameScene) {
         self.gameScene = gameScene
     }
@@ -23,16 +16,10 @@ final class GameSceneActiveState: GKState {
         super.didEnter(from: previousState)
 
         gameScene.isReallyPaused = false
-        if !PlayerPreferences.shared.getShouldMute() {
-            backgroundMusic.play()
-        }
     }
 
     override func willExit(to nextState: GKState) {
         super.willExit(to: nextState)
-        if !PlayerPreferences.shared.getShouldMute() {
-            backgroundMusic.stop()
-        }
     }
 
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {

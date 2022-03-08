@@ -85,6 +85,14 @@ final class MainMenuViewController: UIViewController {
         setupConstraints()
 
         bannerView.load(GADRequest())
+
+        BackgroundMusicPlayer.shared.start()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        updateMuteButtonIcon()
     }
 
     // MARK: Private methods
@@ -169,8 +177,14 @@ final class MainMenuViewController: UIViewController {
     }
 
     @objc private func muteButtonTapped() {
-        PlayerPreferences.shared.toggleShouldMute()
+        let shouldMute = PlayerPreferences.shared.toggleShouldMute()
 
+        BackgroundMusicPlayer.shared.changeVolume(shouldMute: shouldMute)
+
+        updateMuteButtonIcon()
+    }
+
+    private func updateMuteButtonIcon() {
         let symbolName = PlayerPreferences.shared.muteButtonIconName
         muteButton.updateSymbol(with: symbolName)
     }

@@ -170,7 +170,9 @@ final class GameOverOverlayView: UIView {
     }
 
     @objc private func muteButtonTapped() {
-        PlayerPreferences.shared.toggleShouldMute()
+        let shouldMute = PlayerPreferences.shared.toggleShouldMute()
+
+        BackgroundMusicPlayer.shared.changeVolume(shouldMute: shouldMute)
 
         let symbolName = PlayerPreferences.shared.muteButtonIconName
         muteButton.updateSymbol(with: symbolName)
