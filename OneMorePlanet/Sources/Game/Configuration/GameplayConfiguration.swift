@@ -20,7 +20,7 @@ struct GameplayConfiguration {
         static let validInitialRange: ClosedRange<CGFloat> = -0.5...0.5
 
         /// Planets spawn between asteroid belts. This multiplier assures there is room for the planet to not overlap with the asteroidi belt
-        static let asteroidPositionMultiplier: CGFloat = 0.7
+        static let asteroidPositionMultiplier: CGFloat = 0.6
     }
 
     enum Player {
@@ -50,7 +50,7 @@ struct GameplayConfiguration {
         static let speed: CGFloat = -50.0
 
         /// The screen width factor for the horizontal offset of asteroid belts
-        static let positionScreenWidthMultiplier: CGFloat = 0.85
+        static let positionScreenWidthMultiplier: CGFloat = 1
     }
 
     enum Star {
