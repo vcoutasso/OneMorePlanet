@@ -85,7 +85,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         node.text = "\(score.value)"
         node.zPosition = 1
         let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero),
-                                                       to: CGPoint(x: 0, y: size.height / 2 - 80))
+                                                       to: CGPoint(x: 0, y: size.height / 2 - 100))
         node.constraints = [positionConstraint]
 
         return node
@@ -97,7 +97,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         node.text = "Best: \(currentBest.value)"
         node.zPosition = 1
         let positionConstraint = SKConstraint.distance(SKRange(constantValue: .zero),
-                                                       to: CGPoint(x: 0, y: size.height / 2 - 110))
+                                                       to: CGPoint(x: 0, y: size.height / 2 - 130))
         node.constraints = [positionConstraint]
 
         return node
