@@ -30,6 +30,7 @@ final class GameViewController: UIViewController {
 
     var _isPresentingInterstitial = false
     var _isPresentingRewarded = false
+    var _shouldGetReward: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,6 +104,15 @@ extension GameViewController: GameOverDelegate {
         }
     }
 
+    var shouldGetReward: Bool {
+        get {
+            _shouldGetReward
+        }
+        set {
+            _shouldGetReward = newValue
+        }
+    }
+
     func gameOver() {
         gamesPlayed += 1
         if gamesPlayed % GameplayConfiguration.Ads.interstitialAdInterval == 0 {
@@ -127,13 +137,14 @@ extension GameViewController: GameOverDelegate {
     }
 
     func presentInterstitialAd() {
-        isPresentingInterstitial = true
-        BackgroundMusicPlayer.shared.mute()
         if let interstitialAdView = interstitialAd {
+            willPresentAds()
+            isPresentingInterstitial = true
             Analytics.logEvent("interstitial_success", parameters: nil)
             interstitialAdView.present(fromRootViewController: self)
         } else {
             Analytics.logEvent("interstitial_fail", parameters: nil)
+            isPresentingInterstitial = false
             gameScene.gameOverHandlingDidFinish()
         }
     }
@@ -152,10 +163,11 @@ extension GameViewController: GameOverDelegate {
     }
 
     func presentRewardedAd() {
-        isPresentingRewarded = true
-        BackgroundMusicPlayer.shared.mute()
         if let rewardedAd = rewardedAd {
-            rewardedAd.present(fromRootViewController: self) {
+            willPresentAds()
+            isPresentingRewarded = true
+            rewardedAd.present(fromRootViewController: self) { [weak self] in
+                self?.shouldGetReward = true
                 Analytics.logEvent("rewarded_success", parameters: nil)
             }
         } else {
@@ -182,6 +194,14 @@ extension GameViewController: GameOverDelegate {
         alert.addAction(alertAction)
         present(alert, animated: true)
     }
+
+    private func willPresentAds() {
+        BackgroundMusicPlayer.shared.mute()
+    }
+
+    private func didPresentAds() {
+        BackgroundMusicPlayer.shared.unmute()
+    }
 }
 
 // MARK: - GADFullScreenContentDelegate extension
@@ -190,6 +210,7 @@ extension GameViewController: GADFullScreenContentDelegate {
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print("ad:didFailToPresentFullScreenContentWithError: \(error.localizedDescription)")
         gameScene.gameOverHandlingDidFinish()
+        didPresentAds()
         loadAds()
     }
 
@@ -198,14 +219,16 @@ extension GameViewController: GADFullScreenContentDelegate {
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        BackgroundMusicPlayer.shared.unmute()
+        didPresentAds()
         if isPresentingInterstitial {
             gameScene.gameOverHandlingDidFinish()
         } else if isPresentingRewarded {
-            gameScene.continueWithExtraLife()
+            if shouldGetReward {
+                shouldGetReward = false
+                gameScene.continueWithExtraLife()
+            }
         }
         loadAds()
-        print("Did dismiss ad")
     }
 
     private func loadAds() {

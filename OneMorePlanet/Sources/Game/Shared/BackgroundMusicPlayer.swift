@@ -15,8 +15,12 @@ final class BackgroundMusicPlayer {
         return player
     }()
 
-    var isPlaying: Bool {
+    private var isPlaying: Bool {
         player.isPlaying
+    }
+
+    private var shouldPlay: Bool {
+        !PlayerPreferences.shared.getShouldMute()
     }
 
     // MARK: Initialization
@@ -26,7 +30,7 @@ final class BackgroundMusicPlayer {
     // MARK: Public methods
 
     func start() {
-        if !PlayerPreferences.shared.getShouldMute() {
+        if shouldPlay {
             BackgroundMusicPlayer.shared.play()
         }
     }
@@ -48,8 +52,10 @@ final class BackgroundMusicPlayer {
     }
 
     func unmute() {
-        if !isPlaying { play() }
+        if shouldPlay {
+            if !isPlaying { play() }
 
-        player.volume = 1
+            player.volume = 1
+        }
     }
 }
