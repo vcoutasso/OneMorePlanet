@@ -214,7 +214,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_: SKPhysicsContact) {
-        stateMachine.enter(GameSceneOverlayState.self)
+        if player.lifeComponent.numberOfLives > 1 {
+            player.lifeComponent.takeLife()
+            player.becomeInvincible(for: GameplayConfiguration.Player.collisionInvincibilityDuration)
+        } else {
+            stateMachine.enter(GameSceneOverlayState.self)
+        }
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -297,9 +302,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didSimulatePhysics() {
         super.didSimulatePhysics()
         backgroundStarsNode.position = camera!.position
-        let playerVelocity = player.physicsComponent.physicsBody.velocity
-        print(sqrt(pow(playerVelocity.dx, 2) + pow(playerVelocity.dy, 2)))
-//        debugLabel.text = String("x: \(String(format: "%.3f", playerVelocity.dx)) y: \(String(format: "%.3f", playerVelocity.dy))")
     }
 
     // MARK: Level Construction
@@ -381,6 +383,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func continueWithExtraLife() {
+        player.lifeComponent.awardLifes(GameplayConfiguration.Player.maximumLives - 1)
         stateMachine.enter(GameSceneActiveState.self)
     }
 

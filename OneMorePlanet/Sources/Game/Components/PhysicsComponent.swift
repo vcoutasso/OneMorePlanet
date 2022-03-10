@@ -9,6 +9,7 @@ final class PhysicsComponent: GKComponent {
         guard let renderComponent = entity?.component(ofType: RenderComponent.self) else {
             fatalError("A MovementComponent's entity must have a RenderComponent")
         }
+
         return renderComponent
     }
 

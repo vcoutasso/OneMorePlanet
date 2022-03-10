@@ -27,6 +27,9 @@ struct GameplayConfiguration {
         /// Maximum speed
         static let maxSpeed: CGFloat = 450.0
 
+        /// Maximum amount of lives
+        static let maximumLives: Int = 3
+
         /// The radius of  the physics body of the node
         static let physicsBodyCircleRadius: CGFloat = 16
 
@@ -39,9 +42,13 @@ struct GameplayConfiguration {
         /// Scaling of player node. Also used to calculate the scaled physicsBody
         static let renderComponentScale: CGFloat = 0.2
 
-        /// Duration in seconds that the player  willremain invulnerable to collisions after an extra life is awarded
-        static let extraLifeInvincibilityDuration: TimeInterval = 3
+        /// Duration in seconds that the player  willremain invulnerable to collisions after a life is lost
+        static let collisionInvincibilityDuration: TimeInterval = 3
 
+        /// Duration in seconds that the player  willremain invulnerable to collisions after an extra life is awarded
+        static let extraLifeInvincibilityDuration: TimeInterval = 5
+
+        /// Duration of the fade actions of invincibility animation
         static let invincibilityBlinkingFadeDuration: TimeInterval = 0.25
     }
 
