@@ -121,6 +121,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         self.gameOverDelegate = delegate
 
         super.init(size: size)
+
+        backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)!
     }
 
     @available(*, unavailable)
@@ -139,7 +141,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         registerForPauseNotifications()
 
-        backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)!
         backgroundStarsNode.setScale(1.2)
         backgroundStarsNode.blendMode = .screen
         backgroundStarsNode.position = .zero
@@ -175,7 +176,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                   .positionScreenWidthMultiplier * size.width,
                                   y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
-        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 35))
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -233,7 +234,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
 
-        backgroundStarsNode.position = camera!.position
         upperAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         lowerAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         if upperAsteroidBelt.renderComponent.node.frame.maxY < camera!.frame.minY - size.height / 2 {
@@ -269,8 +269,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                 velocityLength = maxVelocity
             }
             let normalizedDirection = direction / direction.length()
-            let force = deltaTime * 10 * velocityLength * normalizedDirection
-            player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
+            let attractionForce = deltaTime * 12.5 * velocityLength * normalizedDirection
+            player.physicsComponent.physicsBody.applyForce(CGVector(dx: attractionForce.x, dy: attractionForce.y))
+            let normalizedVelocity = 15 * (velocityPoint / velocityLength)
+            player.physicsComponent.physicsBody.applyForce(CGVector(dx: normalizedVelocity.x, dy: normalizedVelocity.y))
         } else {
             if player.physicsComponent.physicsBody.velocity == .zero {
                 // FIXME: Temporary solution
@@ -290,6 +292,14 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         if score > currentBest {
             currentBest = score
         }
+    }
+
+    override func didSimulatePhysics() {
+        super.didSimulatePhysics()
+        backgroundStarsNode.position = camera!.position
+        let playerVelocity = player.physicsComponent.physicsBody.velocity
+        print(sqrt(pow(playerVelocity.dx, 2) + pow(playerVelocity.dy, 2)))
+//        debugLabel.text = String("x: \(String(format: "%.3f", playerVelocity.dx)) y: \(String(format: "%.3f", playerVelocity.dy))")
     }
 
     // MARK: Level Construction

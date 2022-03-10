@@ -25,7 +25,7 @@ struct GameplayConfiguration {
 
     enum Player {
         /// Maximum speed
-        static let maxSpeed: CGFloat = 350.0
+        static let maxSpeed: CGFloat = 450.0
 
         /// The radius of  the physics body of the node
         static let physicsBodyCircleRadius: CGFloat = 16
@@ -34,7 +34,7 @@ struct GameplayConfiguration {
         static let physicsBodyMass: CGFloat = 0.05
 
         /// Linear damping of the physics body
-        static let physicsBodyLinearDamping: CGFloat = 0.05
+        static let physicsBodyLinearDamping: CGFloat = 0.2
 
         /// Scaling of player node. Also used to calculate the scaled physicsBody
         static let renderComponentScale: CGFloat = 0.2
