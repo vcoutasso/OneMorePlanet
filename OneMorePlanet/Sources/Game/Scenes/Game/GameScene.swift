@@ -115,6 +115,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var isExtraLifeAvailable = true
 
+    private let initialImpulse = CGVector(dx: 0, dy: 35)
+
     // MARK: Initializers
 
     init(size: CGSize, delegate: GameOverDelegate) {
@@ -176,7 +178,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                   .positionScreenWidthMultiplier * size.width,
                                   y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
-        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 35))
+        player.physicsComponent.physicsBody.applyImpulse(initialImpulse)
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -313,7 +315,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsComponent.physicsBody.velocity = .zero
         player.physicsComponent.physicsBody.angularVelocity = .zero
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: player.renderComponent.node.position.y))
-        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+        player.physicsComponent.physicsBody.applyImpulse(initialImpulse)
     }
 
     func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {
