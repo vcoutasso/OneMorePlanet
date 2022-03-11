@@ -103,6 +103,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return node
     }()
 
+    private let filledHeart = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.red)
+    private let emptyHeart = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal).withTintColor(.red)
+
+    private lazy var lifesIndicator: UIStackView = {
+        let stack = UIStackView()
+
+        stack.axis = .horizontal
+        stack.alignment = .center
+
+        return stack
+    }()
+
     lazy var resumeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 35)
@@ -191,6 +203,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             make.centerY.equalTo(view.snp.bottomMargin).offset(-50)
         }
 
+        view.addSubview(lifesIndicator)
+
+        lifesIndicator.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(40)
+            make.trailing.equalToSuperview().inset(20)
+        }
+
+        updateLifesIndicator()
+
         #if DEBUG
             view.showsPhysics = true
         #endif
@@ -217,9 +238,11 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func didBegin(_: SKPhysicsContact) {
         if player.lifeComponent.numberOfLives > 1 {
-            player.lifeComponent.takeLife()
             player.becomeInvincible(for: GameplayConfiguration.Player.collisionInvincibilityDuration)
-        } else {
+        }
+        player.lifeComponent.takeLife()
+        updateLifesIndicator()
+        if !player.lifeComponent.isAlive {
             stateMachine.enter(GameSceneOverlayState.self)
         }
     }
@@ -366,6 +389,24 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Convenience
 
+    private func updateLifesIndicator() {
+        for view in lifesIndicator.arrangedSubviews {
+            view.removeFromSuperview()
+        }
+
+        let lifesLost = player.lifeComponent.maximumLives - player.lifeComponent.numberOfLives
+
+        for _ in 0..<lifesLost {
+            lifesIndicator.addArrangedSubview(UIImageView(image: emptyHeart))
+        }
+
+        for _ in 0..<player.lifeComponent.numberOfLives {
+            lifesIndicator.addArrangedSubview(UIImageView(image: filledHeart))
+        }
+
+        lifesIndicator.layoutSubviews()
+    }
+
     func gameOverHandlingDidFinish() {
         stateMachine.enter(GameSceneNewGameState.self)
     }
@@ -386,6 +427,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func continueWithExtraLife() {
         player.lifeComponent.awardLifes(GameplayConfiguration.Player.maximumLives - 1)
+        updateLifesIndicator()
         stateMachine.enter(GameSceneActiveState.self)
     }
 

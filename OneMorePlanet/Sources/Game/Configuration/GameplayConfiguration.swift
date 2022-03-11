@@ -67,6 +67,6 @@ struct GameplayConfiguration {
 
     enum Ads {
         /// Games the player has to play before seeing an interstitial ad
-        static let interstitialAdInterval: Int = 4
+        static let interstitialAdInterval: Int = 3
     }
 }
