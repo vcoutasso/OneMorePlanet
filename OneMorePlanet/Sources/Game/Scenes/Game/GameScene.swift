@@ -305,9 +305,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             player.physicsComponent.physicsBody.applyForce(CGVector(dx: normalizedVelocity.x, dy: normalizedVelocity.y))
         } else {
             if player.physicsComponent.physicsBody.velocity == .zero {
-                // FIXME: Temporary solution
-                if stateMachine.currentState is GameSceneActiveState, isExtraLifeAvailable {
-                    stateMachine.enter(GameSceneNewGameState.self)
+                if stateMachine.currentState is GameSceneActiveState {
+                    stateMachine.enter(GameSceneOverlayState.self)
                 }
             }
         }
@@ -421,8 +420,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     func submitScore() async {
         try? await GKLeaderboard.submitScore(score.value, context: 0, player: GKLocalPlayer.local,
                                              leaderboardIDs: ["AllTimeBests"])
-        highScoreStore.tryToUpdateHighScore(with: score)
-        currentBest = highScoreStore.fetchHighScore()
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.highScoreStore.tryToUpdateHighScore(with: self.score)
+            self.currentBest = self.highScoreStore.fetchHighScore()
+        }
     }
 
     func continueWithExtraLife() {

@@ -186,7 +186,7 @@ extension GameViewController: GameOverDelegate {
     }
 
     func presentLimitExceededAlert() {
-        let alert = UIAlertController(title: "Exceeded reward limit", message: "Maximum of one extra life per match",
+        let alert = UIAlertController(title: "Exceeded reward limit", message: "Maximum of one reward per game",
                                       preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "OK", style: .cancel) { [weak self] _ in
             self?.gameScene.gameOverHandlingDidFinish()
