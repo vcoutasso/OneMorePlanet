@@ -25,7 +25,10 @@ struct GameplayConfiguration {
 
     enum Player {
         /// Maximum speed
-        static let maxSpeed: CGFloat = 350.0
+        static let maxSpeed: CGFloat = 450.0
+
+        /// Maximum amount of lives
+        static let maximumLives: Int = 3
 
         /// The radius of  the physics body of the node
         static let physicsBodyCircleRadius: CGFloat = 16
@@ -34,14 +37,18 @@ struct GameplayConfiguration {
         static let physicsBodyMass: CGFloat = 0.05
 
         /// Linear damping of the physics body
-        static let physicsBodyLinearDamping: CGFloat = 0.05
+        static let physicsBodyLinearDamping: CGFloat = 0.2
 
         /// Scaling of player node. Also used to calculate the scaled physicsBody
         static let renderComponentScale: CGFloat = 0.2
 
-        /// Duration in seconds that the player  willremain invulnerable to collisions after an extra life is awarded
-        static let extraLifeInvincibilityDuration: TimeInterval = 3
+        /// Duration in seconds that the player  willremain invulnerable to collisions after a life is lost
+        static let collisionInvincibilityDuration: TimeInterval = 3
 
+        /// Duration in seconds that the player  willremain invulnerable to collisions after an extra life is awarded
+        static let extraLifeInvincibilityDuration: TimeInterval = 5
+
+        /// Duration of the fade actions of invincibility animation
         static let invincibilityBlinkingFadeDuration: TimeInterval = 0.25
     }
 
@@ -60,6 +67,6 @@ struct GameplayConfiguration {
 
     enum Ads {
         /// Games the player has to play before seeing an interstitial ad
-        static let interstitialAdInterval: Int = 4
+        static let interstitialAdInterval: Int = 3
     }
 }

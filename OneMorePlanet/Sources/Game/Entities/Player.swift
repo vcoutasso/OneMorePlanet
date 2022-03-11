@@ -1,7 +1,7 @@
 import GameKit
 
 final class Player: GKEntity {
-    // MARK: Properties
+    // MARK: - Components
 
     var renderComponent: RenderComponent {
         guard let renderComponent = component(ofType: RenderComponent.self) else {
@@ -31,28 +31,19 @@ final class Player: GKEntity {
         return physicsComponent
     }
 
+    var lifeComponent: LifeComponent {
+        guard let lifeComponent = component(ofType: LifeComponent.self) else {
+            fatalError("A Player must have a LifeComponent")
+        }
+        return lifeComponent
+    }
+
     // MARK: Initialization
 
     init(imageName: String) {
         super.init()
 
-        let texture = SKTexture(imageNamed: imageName)
-        let renderComponent = RenderComponent(texture: texture)
-        renderComponent.node.setScale(GameplayConfiguration.Player.renderComponentScale)
-        addComponent(renderComponent)
-
-        let movementComponent = MovementComponent(behavior: nil)
-        addComponent(movementComponent)
-
-        let orbitalComponent = OrbitalComponent()
-        addComponent(orbitalComponent)
-
-        let physicsBody = SKPhysicsBody(circleOfRadius: GameplayConfiguration.Player.physicsBodyCircleRadius)
-        physicsBody.linearDamping = GameplayConfiguration.Player.physicsBodyLinearDamping
-        physicsBody.mass = GameplayConfiguration.Player.physicsBodyMass
-        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: .player)
-        addComponent(physicsComponent)
-        renderComponent.node.physicsBody = physicsBody
+        createComponents(with: imageName)
     }
 
     @available(*, unavailable)
@@ -60,7 +51,7 @@ final class Player: GKEntity {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: Public methods
+    // MARK: Methods
 
     func becomeInvincible(for duration: TimeInterval) {
         let blinkForeverActionKey = "blinkForever"
@@ -84,5 +75,51 @@ final class Player: GKEntity {
             self?.renderComponent.node.removeAction(forKey: blinkForeverActionKey)
             self?.renderComponent.node.run(fadeIn)
         }
+    }
+}
+
+// MARK: - Convenience Methods
+
+extension Player {
+    private func createComponents(with imageName: String) {
+        createRenderComponent(with: imageName)
+        createMovementComponent()
+        createOrbitalComponent()
+        createPhysicsComponent()
+        createLifeComponent()
+    }
+
+    private func createRenderComponent(with imageName: String) {
+        let texture = SKTexture(imageNamed: imageName)
+
+        let renderComponent = RenderComponent(texture: texture)
+        renderComponent.node.setScale(GameplayConfiguration.Player.renderComponentScale)
+        addComponent(renderComponent)
+    }
+
+    private func createMovementComponent() {
+        let movementComponent = MovementComponent(behavior: nil)
+        addComponent(movementComponent)
+    }
+
+    private func createOrbitalComponent() {
+        let orbitalComponent = OrbitalComponent()
+        addComponent(orbitalComponent)
+    }
+
+    private func createPhysicsComponent() {
+        let physicsBody = SKPhysicsBody(circleOfRadius: GameplayConfiguration.Player.physicsBodyCircleRadius)
+        physicsBody.linearDamping = GameplayConfiguration.Player.physicsBodyLinearDamping
+        physicsBody.mass = GameplayConfiguration.Player.physicsBodyMass
+        physicsBody.allowsRotation = false
+
+        let physicsComponent = PhysicsComponent(physicsBody: physicsBody, colliderType: .player)
+        renderComponent.node.physicsBody = physicsBody
+        addComponent(physicsComponent)
+    }
+
+    private func createLifeComponent() {
+        let lifeComponent = LifeComponent(maximumLives: GameplayConfiguration.Player.maximumLives)
+        addComponent(lifeComponent)
     }
 }

@@ -103,6 +103,18 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return node
     }()
 
+    private let filledHeart = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.red)
+    private let emptyHeart = UIImage(systemName: "heart")?.withRenderingMode(.alwaysOriginal).withTintColor(.red)
+
+    private lazy var lifesIndicator: UIStackView = {
+        let stack = UIStackView()
+
+        stack.axis = .horizontal
+        stack.alignment = .center
+
+        return stack
+    }()
+
     lazy var resumeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(font: Fonts.AldoTheApache.regular, size: 35)
@@ -115,12 +127,16 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var isExtraLifeAvailable = true
 
+    private let initialImpulse = CGVector(dx: 0, dy: 35)
+
     // MARK: Initializers
 
     init(size: CGSize, delegate: GameOverDelegate) {
         self.gameOverDelegate = delegate
 
         super.init(size: size)
+
+        backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)!
     }
 
     @available(*, unavailable)
@@ -139,7 +155,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         registerForPauseNotifications()
 
-        backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)!
         backgroundStarsNode.setScale(1.2)
         backgroundStarsNode.blendMode = .screen
         backgroundStarsNode.position = .zero
@@ -175,7 +190,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                   .positionScreenWidthMultiplier * size.width,
                                   y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
-        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+        player.physicsComponent.physicsBody.applyImpulse(initialImpulse)
 
         stateMachine.enter(GameSceneActiveState.self)
 
@@ -187,6 +202,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             make.centerX.equalToSuperview()
             make.centerY.equalTo(view.snp.bottomMargin).offset(-50)
         }
+
+        view.addSubview(lifesIndicator)
+
+        lifesIndicator.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(40)
+            make.trailing.equalToSuperview().inset(20)
+        }
+
+        updateLifesIndicator()
 
         #if DEBUG
             view.showsPhysics = true
@@ -213,7 +237,14 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_: SKPhysicsContact) {
-        stateMachine.enter(GameSceneOverlayState.self)
+        if player.lifeComponent.numberOfLives > 1 {
+            player.becomeInvincible(for: GameplayConfiguration.Player.collisionInvincibilityDuration)
+        }
+        player.lifeComponent.takeLife()
+        updateLifesIndicator()
+        if !player.lifeComponent.isAlive {
+            stateMachine.enter(GameSceneOverlayState.self)
+        }
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -233,7 +264,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
 
-        backgroundStarsNode.position = camera!.position
         upperAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         lowerAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         if upperAsteroidBelt.renderComponent.node.frame.maxY < camera!.frame.minY - size.height / 2 {
@@ -269,13 +299,14 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                 velocityLength = maxVelocity
             }
             let normalizedDirection = direction / direction.length()
-            let force = deltaTime * 10 * velocityLength * normalizedDirection
-            player.physicsComponent.physicsBody.applyForce(CGVector(dx: force.x, dy: force.y))
+            let attractionForce = deltaTime * 12.5 * velocityLength * normalizedDirection
+            player.physicsComponent.physicsBody.applyForce(CGVector(dx: attractionForce.x, dy: attractionForce.y))
+            let normalizedVelocity = 15 * (velocityPoint / velocityLength)
+            player.physicsComponent.physicsBody.applyForce(CGVector(dx: normalizedVelocity.x, dy: normalizedVelocity.y))
         } else {
             if player.physicsComponent.physicsBody.velocity == .zero {
-                // FIXME: Temporary solution
-                if stateMachine.currentState is GameSceneActiveState, isExtraLifeAvailable {
-                    stateMachine.enter(GameSceneNewGameState.self)
+                if stateMachine.currentState is GameSceneActiveState {
+                    stateMachine.enter(GameSceneOverlayState.self)
                 }
             }
         }
@@ -292,6 +323,11 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    override func didSimulatePhysics() {
+        super.didSimulatePhysics()
+        backgroundStarsNode.position = camera!.position
+    }
+
     // MARK: Level Construction
 
     func resetPlayer() {
@@ -301,7 +337,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsComponent.physicsBody.velocity = .zero
         player.physicsComponent.physicsBody.angularVelocity = .zero
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: player.renderComponent.node.position.y))
-        player.physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0, dy: 20))
+        player.physicsComponent.physicsBody.applyImpulse(initialImpulse)
     }
 
     func addNode(node: SKNode, toWorldLayer worldLayer: WorldLayer) {
@@ -352,6 +388,24 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Convenience
 
+    private func updateLifesIndicator() {
+        for view in lifesIndicator.arrangedSubviews {
+            view.removeFromSuperview()
+        }
+
+        let lifesLost = player.lifeComponent.maximumLives - player.lifeComponent.numberOfLives
+
+        for _ in 0..<lifesLost {
+            lifesIndicator.addArrangedSubview(UIImageView(image: emptyHeart))
+        }
+
+        for _ in 0..<player.lifeComponent.numberOfLives {
+            lifesIndicator.addArrangedSubview(UIImageView(image: filledHeart))
+        }
+
+        lifesIndicator.layoutSubviews()
+    }
+
     func gameOverHandlingDidFinish() {
         stateMachine.enter(GameSceneNewGameState.self)
     }
@@ -366,11 +420,17 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     func submitScore() async {
         try? await GKLeaderboard.submitScore(score.value, context: 0, player: GKLocalPlayer.local,
                                              leaderboardIDs: ["AllTimeBests"])
-        highScoreStore.tryToUpdateHighScore(with: score)
-        currentBest = highScoreStore.fetchHighScore()
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.highScoreStore.tryToUpdateHighScore(with: self.score)
+            self.currentBest = self.highScoreStore.fetchHighScore()
+        }
     }
 
     func continueWithExtraLife() {
+        player.lifeComponent.awardLifes(GameplayConfiguration.Player.maximumLives - 1)
+        updateLifesIndicator()
         stateMachine.enter(GameSceneActiveState.self)
     }
 
