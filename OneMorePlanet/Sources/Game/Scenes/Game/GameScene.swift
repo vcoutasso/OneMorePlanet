@@ -43,8 +43,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var isInOrbit = false
 
-    private let backgroundStarsNode = SKSpriteNode(texture: SKTexture(imageNamed: Assets.Images.stars.name))
-
     private var nearestPlanetPosition: CGPoint = .zero
 
     private var nearestPlanetSize: CGFloat = .zero
@@ -55,11 +53,24 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var maxY: CGFloat = 0
 
+    private let backgroundStars: [Star] = {
+        var stars = [Star]()
+
+        for i in 0..<GameplayConfiguration.Star.backgroundStarsCount {
+            let star = Star(imageName: StarAssets.star1.name, distance: .random())
+            stars.append(star)
+        }
+
+        return stars
+    }()
+
     private(set) var score: Score = .zero {
         didSet {
             scoreLabel.text = "\(score.value)"
         }
     }
+
+    private var lastPlayerPosition = CGPoint()
 
     private(set) lazy var currentBest: Score = highScoreStore.fetchHighScore() {
         didSet {
@@ -137,6 +148,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         super.init(size: size)
 
         backgroundColor = UIColor(asset: Assets.Colors.spaceBackground)!
+
+        physicsWorld.gravity = .zero
+        physicsWorld.contactDelegate = self
     }
 
     @available(*, unavailable)
@@ -155,14 +169,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         registerForPauseNotifications()
 
-        backgroundStarsNode.setScale(1.2)
-        backgroundStarsNode.blendMode = .screen
-        backgroundStarsNode.position = .zero
-        backgroundStarsNode.zPosition = -1
-
-        physicsWorld.gravity = .zero
-        physicsWorld.contactDelegate = self
-
         let emitter = SKEmitterNode(fileNamed: "MyBokeh")!
         player.renderComponent.node.addChild(emitter)
         emitter.targetNode = self
@@ -174,9 +180,16 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         camera.addChild(currentBestLabel)
         self.camera = camera
 
-        addChild(backgroundStarsNode)
         addChild(camera)
 
+        backgroundStars.forEach {
+            entityCoordinator.addEntity($0, to: .stars)
+            let randomX = CGFloat
+                .random(in: -GameplayConfiguration.Scene.halfWidth...GameplayConfiguration.Scene.halfWidth)
+            let randomY = CGFloat
+                .random(in: -GameplayConfiguration.Scene.halfHeight...GameplayConfiguration.Scene.halfHeight)
+            setEntityNodePosition(entity: $0, position: CGPoint(x: randomX, y: randomY))
+        }
         entityCoordinator.addEntity(player, to: .player)
         setEntityNodePosition(entity: player, position: CGPoint(x: 0.0, y: -size.height * 0.3))
         entityCoordinator.addEntity(upperAsteroidBelt, to: .interactable)
@@ -262,8 +275,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         stateMachine.update(deltaTime: deltaTime)
 
-        entityCoordinator.updateComponentSystems(deltaTime: deltaTime)
-
         upperAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         lowerAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         if upperAsteroidBelt.renderComponent.node.frame.maxY < camera!.frame.minY - size.height / 2 {
@@ -311,6 +322,19 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
 
+        let currentPlayerPosition = player.renderComponent.node.position
+        let dx = lastPlayerPosition.x - currentPlayerPosition.x
+        let dy = lastPlayerPosition.y - currentPlayerPosition.y
+        let displacement = CGPoint(x: dx, y: dy)
+
+        backgroundStars.forEach {
+            $0.movementComponent.updatePosition(displacement: displacement,
+                                                referencePoint: currentPlayerPosition,
+                                                factor: $0.displacementFactor)
+        }
+
+        lastPlayerPosition = currentPlayerPosition
+
         let currentY = player.renderComponent.node.position.y
         if currentY > maxY {
             maxY = currentY
@@ -321,11 +345,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         if score > currentBest {
             currentBest = score
         }
-    }
-
-    override func didSimulatePhysics() {
-        super.didSimulatePhysics()
-        backgroundStarsNode.position = camera!.position
     }
 
     // MARK: Level Construction

@@ -13,13 +13,8 @@ final class MovementComponent: GKAgent2D {
 
     // MARK: Initialization
 
-    init(behavior: GKBehavior?) {
+    override init() {
         super.init()
-
-        delegate = self
-        if let behavior = behavior {
-            self.behavior = behavior
-        }
     }
 
     @available(*, unavailable)
@@ -27,28 +22,21 @@ final class MovementComponent: GKAgent2D {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func changeBehavior(behavior: GKBehavior?) {
-        self.behavior = behavior
-    }
+    // MARK: Methods
 
-    // MARK: GKAgent2D
+    func updatePosition(displacement: CGPoint, referencePoint: CGPoint, factor: CGFloat) {
+        let dx = renderComponent.node.position.x - (displacement.x * factor)
+        let dy = renderComponent.node.position.y - (displacement.y * factor)
+        renderComponent.node.position = CGPoint(x: dx, y: dy)
 
-    override func update(deltaTime seconds: TimeInterval) {
-        super.update(deltaTime: seconds)
-    }
-}
-
-extension MovementComponent: GKAgentDelegate {
-    func agentWillUpdate(_: GKAgent) {
-        guard let renderComponent = entity?.component(ofType: RenderComponent.self) else { return }
-
-        position = SIMD2<Float>(x: renderComponent.node.position.x,
-                                y: renderComponent.node.position.y)
-    }
-
-    func agentDidUpdate(_: GKAgent) {
-        guard let renderComponent = entity?.component(ofType: RenderComponent.self) else { return }
-
-        renderComponent.node.position = CGPoint(x: position.x, y: position.y)
+        if renderComponent.node.position.x > referencePoint.x + GameplayConfiguration.Scene.halfWidth {
+            renderComponent.node.position.x -= 2 * GameplayConfiguration.Scene.halfWidth
+        } else if renderComponent.node.position.x < referencePoint.x - GameplayConfiguration.Scene.halfWidth {
+            renderComponent.node.position.x += 2 * GameplayConfiguration.Scene.halfWidth
+        } else if renderComponent.node.position.y > referencePoint.y - GameplayConfiguration.Scene.halfHeight {
+            renderComponent.node.position.y -= 2 * GameplayConfiguration.Scene.halfHeight
+        } else if renderComponent.node.position.y < referencePoint.y - GameplayConfiguration.Scene.halfHeight {
+            renderComponent.node.position.y += 2 * GameplayConfiguration.Scene.halfHeight
+        }
     }
 }

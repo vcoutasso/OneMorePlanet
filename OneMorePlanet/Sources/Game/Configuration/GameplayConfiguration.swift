@@ -2,6 +2,20 @@ import CoreGraphics
 import Foundation
 
 struct GameplayConfiguration {
+    enum Scene {
+        /// Scene width
+        static let width: CGFloat = 414
+
+        /// Scene width divided by two
+        static let halfWidth: CGFloat = width / 2
+
+        /// Scene height
+        static let height: CGFloat = 896
+
+        /// Scene height divided by two
+        static let halfHeight: CGFloat = height / 2
+    }
+
     enum Planet {
         /// Distance between planets to trigger a spawn
         static let planetSpawnDistance: CGFloat = 200.0
@@ -61,8 +75,20 @@ struct GameplayConfiguration {
     }
 
     enum Star {
-        /// Scaling of star nodes
-        static let renderComponentScale: CGFloat = 1
+        /// Number of stars that make up the background
+        static let backgroundStarsCount: Int = 250
+
+        /// Scaling of star nodes relative to their displacement multiplier
+        static let renderComponentScaleFactor: CGFloat = 0.7
+
+        /// Displacement multiplier for stars near the player
+        static let nearDisplacementMultiplierRange: ClosedRange<CGFloat> = 0.67...0.8
+
+        /// Displacement multiplier for stars at a moderate distance from the player
+        static let moderateDisplacementMultiplierRange: ClosedRange<CGFloat> = 0.34...0.66
+
+        /// Displacement multiplier for stars far apart from the player
+        static let farDisplacementMultiplierRange: ClosedRange<CGFloat> = 0.2...0.33
     }
 
     enum Ads {

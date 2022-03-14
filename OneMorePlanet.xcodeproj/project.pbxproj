@@ -24,7 +24,7 @@
 		4C2E57B027A76B9C00136B4B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57AF27A76B9C00136B4B /* Player.swift */; };
 		4C2E57B227A76D6500136B4B /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57B127A76D6500136B4B /* Planet.swift */; };
 		4C2E57B427A76E1E00136B4B /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E57B327A76E1E00136B4B /* MovementComponent.swift */; };
-		4C3BCBC527DA421100496A68 /* LifeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BCBC427DA421000496A68 /* LifeComponent.swift */; };
+		4C3BCBC527DA421100496A68 /* LivesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BCBC427DA421000496A68 /* LivesComponent.swift */; };
 		4C41CDEA27AD549900057151 /* AsteroidBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41CDE927AD549900057151 /* AsteroidBelt.swift */; };
 		4C41CDEE27AD5C7F00057151 /* GameSceneActiveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41CDED27AD5C7F00057151 /* GameSceneActiveState.swift */; };
 		4C41CDF027AD5D0B00057151 /* GameScenePauseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C41CDEF27AD5D0B00057151 /* GameScenePauseState.swift */; };
@@ -84,7 +84,7 @@
 		4C2E57AF27A76B9C00136B4B /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		4C2E57B127A76D6500136B4B /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		4C2E57B327A76E1E00136B4B /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
-		4C3BCBC427DA421000496A68 /* LifeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeComponent.swift; sourceTree = "<group>"; };
+		4C3BCBC427DA421000496A68 /* LivesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivesComponent.swift; sourceTree = "<group>"; };
 		4C41CDE927AD549900057151 /* AsteroidBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidBelt.swift; sourceTree = "<group>"; };
 		4C41CDED27AD5C7F00057151 /* GameSceneActiveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneActiveState.swift; sourceTree = "<group>"; };
 		4C41CDEF27AD5D0B00057151 /* GameScenePauseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScenePauseState.swift; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 				4C57300627ABF24D000407B2 /* OrbitalComponent.swift */,
 				4C57300827ABF74D000407B2 /* PhysicsComponent.swift */,
 				4C57300F27AC0056000407B2 /* GravitationalComponent.swift */,
-				4C3BCBC427DA421000496A68 /* LifeComponent.swift */,
+				4C3BCBC427DA421000496A68 /* LivesComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -657,7 +657,7 @@
 				4C57300927ABF74D000407B2 /* PhysicsComponent.swift in Sources */,
 				4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */,
 				4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */,
-				4C3BCBC527DA421100496A68 /* LifeComponent.swift in Sources */,
+				4C3BCBC527DA421100496A68 /* LivesComponent.swift in Sources */,
 				3A0D11A427B343C4000467DB /* MainMenuViewController.swift in Sources */,
 				4CD7826F27A80A8E00689BB8 /* SIMD2+.swift in Sources */,
 				4C41CDEE27AD5C7F00057151 /* GameSceneActiveState.swift in Sources */,
