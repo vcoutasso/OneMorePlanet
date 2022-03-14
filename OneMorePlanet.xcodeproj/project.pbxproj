@@ -11,9 +11,7 @@
 		3A6AD36127C7C54B00475F31 /* PlayerPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6AD36027C7C54B00475F31 /* PlayerPreferences.swift */; };
 		3A78303827B48879002B101E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A78303727B48879002B101E /* TutorialViewController.swift */; };
 		3A92714F27C7CBA900E118A2 /* space-invader.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3A92714E27C7CBA900E118A2 /* space-invader.mp3 */; };
-		4C0026A827C66D95004DC741 /* StarAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C0026A727C66D95004DC741 /* StarAssets.xcassets */; };
 		4C0026AD27C67180004DC741 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026AB27C67180004DC741 /* Assets.swift */; };
-		4C0026AE27C67180004DC741 /* StarAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026AC27C67180004DC741 /* StarAssets.swift */; };
 		4C0026B227C6750D004DC741 /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B127C6750D004DC741 /* Star.swift */; };
 		4C0026B727C6DD11004DC741 /* GameOverOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B627C6DD11004DC741 /* GameOverOverlayView.swift */; };
 		4C0026B927C6E0CE004DC741 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0026B827C6E0CE004DC741 /* UIView+.swift */; };
@@ -71,9 +69,7 @@
 		3A78303727B48879002B101E /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		3A92714E27C7CBA900E118A2 /* space-invader.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "space-invader.mp3"; sourceTree = "<group>"; };
 		491CF5EF4A2B847A3A0D6BD4 /* Pods-OneMorePlanet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneMorePlanet.release.xcconfig"; path = "Target Support Files/Pods-OneMorePlanet/Pods-OneMorePlanet.release.xcconfig"; sourceTree = "<group>"; };
-		4C0026A727C66D95004DC741 /* StarAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = StarAssets.xcassets; sourceTree = "<group>"; };
 		4C0026AB27C67180004DC741 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
-		4C0026AC27C67180004DC741 /* StarAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarAssets.swift; sourceTree = "<group>"; };
 		4C0026B127C6750D004DC741 /* Star.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
 		4C0026B627C6DD11004DC741 /* GameOverOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverOverlayView.swift; sourceTree = "<group>"; };
 		4C0026B827C6E0CE004DC741 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
@@ -223,7 +219,6 @@
 				4C84D4AD27B369AC00EF42EB /* Generated */,
 				4C41CDF127AD674000057151 /* Fonts */,
 				4C7D6B9927A3778A0016C962 /* Assets.xcassets */,
-				4C0026A727C66D95004DC741 /* StarAssets.xcassets */,
 				4CF26B3D27C7D1C5003E18C4 /* PlanetAssets.xcassets */,
 			);
 			path = Resources;
@@ -382,7 +377,6 @@
 				4C0026AB27C67180004DC741 /* Assets.swift */,
 				4CE37F9827B4B0C3009EA7E6 /* Fonts.swift */,
 				4CE37F9727B4B0C3009EA7E6 /* Strings.swift */,
-				4C0026AC27C67180004DC741 /* StarAssets.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -515,7 +509,6 @@
 				4CF26B3E27C7D1C5003E18C4 /* PlanetAssets.xcassets in Resources */,
 				4C7D6B9A27A3778A0016C962 /* Assets.xcassets in Resources */,
 				4C996CEB27B40DEB00C88725 /* MyBokeh.sks in Resources */,
-				4C0026A827C66D95004DC741 /* StarAssets.xcassets in Resources */,
 				3A92714F27C7CBA900E118A2 /* space-invader.mp3 in Resources */,
 				4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */,
 				4C41CDF327AD676A00057151 /* aldotheapache.ttf in Resources */,
@@ -629,7 +622,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C0026AE27C67180004DC741 /* StarAssets.swift in Sources */,
 				4C7D6B9327A377880016C962 /* GameScene.swift in Sources */,
 				4C57301027AC0056000407B2 /* GravitationalComponent.swift in Sources */,
 				4C57300E27ABFB8D000407B2 /* ContactNotifiableType.swift in Sources */,

@@ -57,7 +57,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         var stars = [Star]()
 
         for i in 0..<GameplayConfiguration.Star.backgroundStarsCount {
-            let star = Star(imageName: StarAssets.star1.name, distance: .random())
+            let star = Star(distance: .random())
             stars.append(star)
         }
 

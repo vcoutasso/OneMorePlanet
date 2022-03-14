@@ -22,13 +22,13 @@ final class Star: GKEntity {
 
     // MARK: - Initialization
 
-    init(imageName: String, distance: DistanceQualifier) {
+    init(distance: DistanceQualifier) {
         self.distance = distance
         self.displacementFactor = distance.randomDisplacementFactor
 
         super.init()
 
-        let renderComponent = RenderComponent(texture: SKTexture(imageNamed: imageName))
+        let renderComponent = RenderComponent(texture: SKTexture(imageNamed: Assets.Images.backgroundStar.name))
         renderComponent.node.setScale(displacementFactor * GameplayConfiguration.Star.renderComponentScaleFactor)
         renderComponent.node.blendMode = .screen
         addComponent(renderComponent)
