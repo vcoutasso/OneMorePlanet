@@ -21,7 +21,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private var player = Player(imageName: "Images/alien")
+    private lazy var player: Player = {
+        let player = Player(imageName: Assets.Images.alien.name)
+
+        let emitter = SKEmitterNode(fileNamed: "BokehParticles")!
+        player.renderComponent.node.addChild(emitter)
+        emitter.targetNode = self
+
+        return player
+    }()
 
     private lazy var upperAsteroidBelt = AsteroidBelt()
     private lazy var lowerAsteroidBelt = AsteroidBelt()
@@ -151,6 +159,16 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
+
+        registerForPauseNotifications()
+
+        addWorldLayers()
+
+        setupCamera()
+
+        setupEntities()
+
+        setCameraConstraints()
     }
 
     @available(*, unavailable)
@@ -167,21 +185,26 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         super.didMove(to: view)
 
-        registerForPauseNotifications()
+        stateMachine.enter(GameSceneActiveState.self)
 
-        let emitter = SKEmitterNode(fileNamed: "MyBokeh")!
-        player.renderComponent.node.addChild(emitter)
-        emitter.targetNode = self
+        setupSubviews()
 
-        addWorldLayers()
+        updateLifesIndicator()
 
+        #if DEBUG
+            view.showsPhysics = true
+        #endif
+    }
+
+    private func setupCamera() {
         let camera = SKCameraNode()
         camera.addChild(scoreLabel)
         camera.addChild(currentBestLabel)
         self.camera = camera
-
         addChild(camera)
+    }
 
+    private func setupEntities() {
         backgroundStars.forEach {
             entityCoordinator.addEntity($0, to: .stars)
             let randomX = CGFloat
@@ -204,30 +227,22 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                   y: -lowerAsteroidBelt.renderComponent.node.size.height))
 
         player.physicsComponent.physicsBody.applyImpulse(initialImpulse)
+    }
 
-        stateMachine.enter(GameSceneActiveState.self)
-
-        setCameraConstraints()
-
-        view.addSubview(resumeLabel)
+    private func setupSubviews() {
+        view!.addSubview(resumeLabel)
 
         resumeLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalTo(view.snp.bottomMargin).offset(-50)
+            make.centerY.equalTo(view!.snp.bottomMargin).offset(-50)
         }
 
-        view.addSubview(lifesIndicator)
+        view!.addSubview(lifesIndicator)
 
         lifesIndicator.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(40)
             make.trailing.equalToSuperview().inset(20)
         }
-
-        updateLifesIndicator()
-
-        #if DEBUG
-            view.showsPhysics = true
-        #endif
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
@@ -275,6 +290,29 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         stateMachine.update(deltaTime: deltaTime)
 
+        updateAsteroidBelts(deltaTime: deltaTime)
+
+        if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {
+            spawnPlanet()
+        }
+
+        updatePlayer(deltaTime: deltaTime)
+
+        updateBackgroundStars()
+
+        let currentY = player.renderComponent.node.position.y
+        if currentY > maxY {
+            maxY = currentY
+        }
+
+        score = Score(value: Int(maxY / 100))
+
+        if score > currentBest {
+            currentBest = score
+        }
+    }
+
+    private func updateAsteroidBelts(deltaTime: TimeInterval) {
         upperAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         lowerAsteroidBelt.renderComponent.node.position.y += GameplayConfiguration.AsteroidBelt.speed * deltaTime
         if upperAsteroidBelt.renderComponent.node.frame.maxY < camera!.frame.minY - size.height / 2 {
@@ -293,11 +331,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             upperAsteroidBelt.renderComponent.node.position.x = xPosition
             lowerAsteroidBelt.renderComponent.node.position.x = xPosition
         }
+    }
 
-        if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {
-            spawnPlanet()
-        }
-
+    private func updatePlayer(deltaTime: TimeInterval) {
         if isInOrbit {
             let direction = nearestPlanetPosition - player.renderComponent.node.position
             let velocity = player.physicsComponent.physicsBody.velocity
@@ -321,7 +357,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+    }
 
+    private func updateBackgroundStars() {
         let currentPlayerPosition = player.renderComponent.node.position
         let dx = lastPlayerPosition.x - currentPlayerPosition.x
         let dy = lastPlayerPosition.y - currentPlayerPosition.y
@@ -334,17 +372,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         lastPlayerPosition = currentPlayerPosition
-
-        let currentY = player.renderComponent.node.position.y
-        if currentY > maxY {
-            maxY = currentY
-        }
-
-        score = Score(value: Int(maxY / 100))
-
-        if score > currentBest {
-            currentBest = score
-        }
     }
 
     // MARK: Level Construction

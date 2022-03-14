@@ -47,7 +47,7 @@
 		4C9746AF27A95E5D00679315 /* GameplayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */; };
 		4C996CE327B3E4CD00C88725 /* GameSceneGameOverState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C996CE227B3E4CD00C88725 /* GameSceneGameOverState.swift */; };
 		4C996CE527B3EE5300C88725 /* GameSceneNewGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C996CE427B3EE5300C88725 /* GameSceneNewGameState.swift */; };
-		4C996CEB27B40DEB00C88725 /* MyBokeh.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4C996CEA27B40DEB00C88725 /* MyBokeh.sks */; };
+		4C996CEB27B40DEB00C88725 /* BokehParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4C996CEA27B40DEB00C88725 /* BokehParticles.sks */; };
 		4C9E62C727C2E4B1004DCD4D /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E62C627C2E4B1004DCD4D /* Score.swift */; };
 		4C9E62C927C2E522004DCD4D /* HighScoreStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E62C827C2E522004DCD4D /* HighScoreStore.swift */; };
 		4CD7826D27A809E700689BB8 /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7826C27A809E700689BB8 /* CGPoint+.swift */; };
@@ -107,7 +107,7 @@
 		4C9746AE27A95E5D00679315 /* GameplayConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayConfiguration.swift; sourceTree = "<group>"; };
 		4C996CE227B3E4CD00C88725 /* GameSceneGameOverState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneGameOverState.swift; sourceTree = "<group>"; };
 		4C996CE427B3EE5300C88725 /* GameSceneNewGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneNewGameState.swift; sourceTree = "<group>"; };
-		4C996CEA27B40DEB00C88725 /* MyBokeh.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyBokeh.sks; sourceTree = "<group>"; };
+		4C996CEA27B40DEB00C88725 /* BokehParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BokehParticles.sks; sourceTree = "<group>"; };
 		4C9E62C627C2E4B1004DCD4D /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		4C9E62C827C2E522004DCD4D /* HighScoreStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreStore.swift; sourceTree = "<group>"; };
 		4CD7826C27A809E700689BB8 /* CGPoint+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 			children = (
 				3A92714D27C7CB9500E118A2 /* Musics */,
 				4C5F21BC27C3CC2700FB8C7D /* Strings.strings */,
-				4C996CEA27B40DEB00C88725 /* MyBokeh.sks */,
+				4C996CEA27B40DEB00C88725 /* BokehParticles.sks */,
 				4C84D4AD27B369AC00EF42EB /* Generated */,
 				4C41CDF127AD674000057151 /* Fonts */,
 				4C7D6B9927A3778A0016C962 /* Assets.xcassets */,
@@ -508,7 +508,7 @@
 			files = (
 				4CF26B3E27C7D1C5003E18C4 /* PlanetAssets.xcassets in Resources */,
 				4C7D6B9A27A3778A0016C962 /* Assets.xcassets in Resources */,
-				4C996CEB27B40DEB00C88725 /* MyBokeh.sks in Resources */,
+				4C996CEB27B40DEB00C88725 /* BokehParticles.sks in Resources */,
 				3A92714F27C7CBA900E118A2 /* space-invader.mp3 in Resources */,
 				4CEB293127BE7F6A0076ADC4 /* GoogleService-Info.plist in Resources */,
 				4C41CDF327AD676A00057151 /* aldotheapache.ttf in Resources */,
