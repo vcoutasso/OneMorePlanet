@@ -1,6 +1,6 @@
 import GameplayKit
 
-final class LifeComponent: GKComponent {
+final class LivesComponent: GKComponent {
     // MARK: Properties
 
     private(set) var maximumLives: Int

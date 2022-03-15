@@ -10,13 +10,6 @@ final class Player: GKEntity {
         return renderComponent
     }
 
-    var movementComponent: MovementComponent {
-        guard let movementComponent = component(ofType: MovementComponent.self) else {
-            fatalError("A Player must have a MovementComponent")
-        }
-        return movementComponent
-    }
-
     var orbitalComponent: OrbitalComponent {
         guard let orbitalComponent = component(ofType: OrbitalComponent.self) else {
             fatalError("A Player must have an OrbitalComponent")
@@ -31,9 +24,9 @@ final class Player: GKEntity {
         return physicsComponent
     }
 
-    var lifeComponent: LifeComponent {
-        guard let lifeComponent = component(ofType: LifeComponent.self) else {
-            fatalError("A Player must have a LifeComponent")
+    var lifeComponent: LivesComponent {
+        guard let lifeComponent = component(ofType: LivesComponent.self) else {
+            fatalError("A Player must have a LivesComponent")
         }
         return lifeComponent
     }
@@ -83,7 +76,6 @@ final class Player: GKEntity {
 extension Player {
     private func createComponents(with imageName: String) {
         createRenderComponent(with: imageName)
-        createMovementComponent()
         createOrbitalComponent()
         createPhysicsComponent()
         createLifeComponent()
@@ -95,11 +87,6 @@ extension Player {
         let renderComponent = RenderComponent(texture: texture)
         renderComponent.node.setScale(GameplayConfiguration.Player.renderComponentScale)
         addComponent(renderComponent)
-    }
-
-    private func createMovementComponent() {
-        let movementComponent = MovementComponent(behavior: nil)
-        addComponent(movementComponent)
     }
 
     private func createOrbitalComponent() {
@@ -119,7 +106,7 @@ extension Player {
     }
 
     private func createLifeComponent() {
-        let lifeComponent = LifeComponent(maximumLives: GameplayConfiguration.Player.maximumLives)
+        let lifeComponent = LivesComponent(maximumLives: GameplayConfiguration.Player.maximumLives)
         addComponent(lifeComponent)
     }
 }

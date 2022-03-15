@@ -21,12 +21,6 @@ final class EntityCoordinator {
         self.scene = scene
     }
 
-    func updateComponentSystems(deltaTime: TimeInterval) {
-        for componentSystem in componentSystems {
-            componentSystem.update(deltaTime: deltaTime)
-        }
-    }
-
     func addEntity(_ entity: GKEntity, to layer: WorldLayer) {
         entities.insert(entity)
 

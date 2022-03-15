@@ -14,15 +14,6 @@ xcassets:
       output: Assets.swift
       params:
         enumName: Assets
-  - inputs: StarAssets.xcassets
-    outputs:
-      templateName: swift5
-      output: StarAssets.swift
-      params:
-        enumName: StarAssets
-        imageTypeName: StarImageAsset
-        imageAliasName: StarAssetImageTypeAlias
-        allValues: true
   - inputs: PlanetAssets.xcassets
     outputs:
       templateName: swift5
