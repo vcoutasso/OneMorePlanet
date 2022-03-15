@@ -31,6 +31,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         return player
     }()
 
+    private lazy var arrow: SKSpriteNode = {
+        let node = SKSpriteNode(imageNamed: Assets.Images.arrow.name)
+
+        return node
+    }()
+
     private lazy var upperAsteroidBelt = AsteroidBelt()
     private lazy var lowerAsteroidBelt = AsteroidBelt()
 
@@ -52,8 +58,6 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private var isInOrbit = false
 
     private var nearestPlanetPosition: CGPoint = .zero
-
-    private var nearestPlanetSize: CGFloat = .zero
 
     private var isFirstPlanet: Bool = true
 
@@ -168,6 +172,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         setupEntities()
 
+        setupChildren()
+
         setCameraConstraints()
     }
 
@@ -229,6 +235,20 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsComponent.physicsBody.applyImpulse(initialImpulse)
     }
 
+    private func setupChildren() {
+        let initialPoint = CGPoint(x: 0, y: GameplayConfiguration.Scene.height)
+        arrow.position = initialPoint
+        addChild(arrow)
+
+        let lookAtConstraint = SKConstraint.orient(to: initialPoint,
+                                                   offset: SKRange(constantValue: -.pi / 2))
+        let playerNode = player.renderComponent.node
+        let playerLocationConstraint = SKConstraint
+            .distance(SKRange(constantValue: player.renderComponent.node.size.width * 0.6),
+                      to: playerNode)
+        arrow.constraints = [lookAtConstraint, playerLocationConstraint]
+    }
+
     private func setupSubviews() {
         view!.addSubview(resumeLabel)
 
@@ -253,11 +273,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                                            to: referencePoint) else { return }
 
         nearestPlanetPosition = nearestPlanet.renderComponent.node.position
-        nearestPlanetSize = nearestPlanet.renderComponent.node.size.width
+        arrow.isHidden = true
         isInOrbit = true
     }
 
     override func touchesEnded(_: Set<UITouch>, with _: UIEvent?) {
+        arrow.isHidden = false
         isInOrbit = false
         if stateMachine.currentState is GameScenePauseState {
             resumeGame()
@@ -291,6 +312,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         stateMachine.update(deltaTime: deltaTime)
 
         updateAsteroidBelts(deltaTime: deltaTime)
+
+        if let nextPlanet = player.orbitalComponent
+            .nearestGravitationalComponent(in: entityCoordinator,
+                                           to: player.renderComponent.node.position) {
+            let nextPlanetPosition = nextPlanet.renderComponent.node.position
+            let lookAtConstraint = SKConstraint.orient(to: nextPlanetPosition, offset: SKRange(constantValue: -.pi / 2))
+            arrow.constraints![0] = lookAtConstraint
+            arrow.position = nextPlanetPosition
+        }
 
         if topY - player.renderComponent.node.position.y < GameplayConfiguration.Planet.planetSpawnDistance {
             spawnPlanet()
