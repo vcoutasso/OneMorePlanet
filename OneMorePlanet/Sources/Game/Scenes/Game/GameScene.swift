@@ -265,10 +265,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_: SKPhysicsContact) {
-        if player.lifeComponent.numberOfLives > 1 {
+        if player.lifeComponent.numberOfLives >= 1 {
             player.becomeInvincible(for: GameplayConfiguration.Player.collisionInvincibilityDuration)
+            player.lifeComponent.takeLife()
         }
-        player.lifeComponent.takeLife()
         updateLifesIndicator()
         if !player.lifeComponent.isAlive {
             stateMachine.enter(GameSceneOverlayState.self)
